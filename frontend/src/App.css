@@ -1,0 +1,32 @@
+/* src/styles/App.css */
+.app-container {
+  display: flex;
+  height: 100vh;
+  font-family: sans-serif;
+}
+
+.sidebar {
+  width: 15%;
+  background: #f0f0f0;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.org-list {
+  list-style: none;
+  padding: 0;
+}
+
+.org-list li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.org-list li.selected {
+  background-color: #ddd;
+}
