@@ -1,0 +1,88 @@
+/* src/styles/Modal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-window {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  min-width: 300px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Увеличен отступ между элементами */
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #000;
+}
+
+/* Стиль для полей формы */
+.modal-window input,
+.modal-window textarea {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box; /* Чтобы поле не выходило за границы контейнера */
+}
+
+.modal-window textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.modal-window button {
+  padding: 10px 20px;
+  background-color: #09c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 150px;
+  margin-top: 10px; /* Добавил отступ сверху */
+}
+
+.modal-window button:hover {
+  background-color: #007bb5;
+}
+
+/* Плавное изменение размеров формы */
+.modal-window {
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+}
+
+/* Если форма становится слишком длинной, её максимальная высота будет автоматически уменьшаться */
+.modal-window.expanded {
+  max-height: 90vh; /* Увеличивает максимальную высоту, если форма растет */
+}
+
