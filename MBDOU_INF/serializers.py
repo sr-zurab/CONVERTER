@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import Organization
+from .models import Organization, PlanPaymentIndex, PlanPaymentTRU
+
+#Serializer для Организаций
 
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,3 +22,19 @@ class OrganizationSerializer(serializers.ModelSerializer):
         if len(value.strip()) != 8:
             raise serializers.ValidationError("Поле УБП должно содержать ровно 8 символов.")
         return value
+
+#Serializer для ФХД
+
+#Лист 1
+
+class PlanPaymentIndexSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlanPaymentIndex
+        fields = '__all__'
+
+#Лист 2
+
+class PlanPaymentTRUSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlanPaymentTRU
+        fields = '__all__'
