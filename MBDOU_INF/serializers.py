@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Organization, PlanPaymentIndex, PlanPaymentTRU
-
-#Serializer для Организаций
+from .fields import NullableDecimalField
 
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,18 +22,26 @@ class OrganizationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Поле УБП должно содержать ровно 8 символов.")
         return value
 
-#Serializer для ФХД
-
-#Лист 1
-
 class PlanPaymentIndexSerializer(serializers.ModelSerializer):
+    kbk = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    analyticCode = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    financialYearSum = serializers.DecimalField(max_digits=20, decimal_places=2, allow_null=True, required=False)
+    planFirstYearSum = serializers.DecimalField(max_digits=20, decimal_places=2, allow_null=True, required=False)
+    planLastYearSum = serializers.DecimalField(max_digits=20, decimal_places=2, allow_null=True, required=False)
+    AutPlanYearSumm = serializers.DecimalField(max_digits=20, decimal_places=2, allow_null=True, required=False)
+
     class Meta:
         model = PlanPaymentIndex
         fields = '__all__'
 
-#Лист 2
-
 class PlanPaymentTRUSerializer(serializers.ModelSerializer):
+    kbk = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    analyticCode = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    financialYearSum = NullableDecimalField(max_digits=20, decimal_places=2, allow_null=True, required=False)
+    planFirstYearSum = NullableDecimalField(max_digits=20, decimal_places=2, allow_null=True, required=False)
+    planLastYearSum = NullableDecimalField(max_digits=20, decimal_places=2, allow_null=True, required=False)
+    AutPlanYearSumm = NullableDecimalField(max_digits=20, decimal_places=2, allow_null=True, required=False)
+
     class Meta:
         model = PlanPaymentTRU
         fields = '__all__'
