@@ -1,3 +1,4 @@
+// store/organizationSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const API_URL = 'http://127.0.0.1:8000/api/organizations/';
@@ -35,10 +36,15 @@ const orgSlice = createSlice({
   initialState: {
     list: [],
     selected: null,
+    selectedReport: null, // ← добавлено
   },
   reducers: {
     selectOrganization: (state, action) => {
       state.selected = action.payload;
+      state.selectedReport = null; // сброс отчёта при выборе новой организации
+    },
+    selectReport: (state, action) => {
+      state.selectedReport = action.payload; // например: 'planFhd'
     },
   },
   extraReducers: (builder) => {
@@ -57,10 +63,10 @@ const orgSlice = createSlice({
       .addCase(deleteOrganization.fulfilled, (state, action) => {
         state.list = state.list.filter(o => o.id !== action.payload);
         state.selected = null;
+        state.selectedReport = null;
       });
   },
 });
 
-export const { selectOrganization } = orgSlice.actions;
+export const { selectOrganization, selectReport } = orgSlice.actions;
 export default orgSlice.reducer;
-

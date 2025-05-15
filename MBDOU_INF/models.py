@@ -13,21 +13,18 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
-#ФХД первый лист
-
 class PlanPaymentIndex(models.Model):
     organization = models.ForeignKey(
         Organization,
         on_delete=models.CASCADE,
-        related_name="plan_payment_indices",
+        related_name="plan_payment_index",
         verbose_name="Организация"
     )
     year = models.PositiveIntegerField(verbose_name="Год формирования отчета")
-    name = models.CharField("Наименование показателя", max_length=255)
-    lineCode = models.CharField("Код строки", max_length=50)
-    kbk = models.CharField("Код по бюджетной классификации", max_length=100)
-    analyticCode = models.CharField("Аналитический код", max_length=100)
-
+    name = models.CharField("Наименование показателя", max_length=255, blank=True, null=True, default="")
+    lineCode = models.CharField("Код строки", max_length=50, blank=True, null=True, default="")
+    kbk = models.CharField("Код по бюджетной классификации", max_length=100, blank=True, null=True, default="")
+    analyticCode = models.CharField("Аналитический код", max_length=5, blank=True, null=True)
     manually = models.BooleanField("Признак добавленной строки", default=False)
 
     financialYearSum = models.DecimalField("Сумма на текущий финансовый год", max_digits=20, decimal_places=2, blank=True, null=True)
@@ -40,22 +37,22 @@ class PlanPaymentIndex(models.Model):
         verbose_name_plural = "Показатели плана платежей"
 
     def __str__(self):
-        return f"{self.lineCode} - {self.name}"
-
-#ФХД второй лист
+        return f"{self.lineCode} - {self.name}" if self.lineCode and self.name else "Показатель без данных"
 
 class PlanPaymentTRU(models.Model):
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='plan_payment_tru')
+    organization = models.ForeignKey(
+        Organization,
+        on_delete=models.CASCADE,
+        related_name="plan_payment_tru"
+    )
     year = models.PositiveIntegerField(verbose_name="Год формирования отчета")
-    lineNum = models.PositiveIntegerField(verbose_name="Номер строки", null=True, blank=True)
-    kbk = models.CharField(max_length=100, verbose_name="Код бюджетной классификации")
-    name = models.TextField(verbose_name="Наименование показателя")
-    lineCode = models.CharField(max_length=50, verbose_name="Код строки")
-    yearStart = models.PositiveIntegerField(verbose_name="Год начала закупки", null=True, blank=True)
-    uniqueCode = models.CharField(max_length=255, verbose_name="Уникальный код объекта", null=True, blank=True)
-
+    lineNum = models.CharField(max_length=20, verbose_name="Номер строки", blank=True, null=True)
+    kbk = models.CharField(max_length=100, verbose_name="Код бюджетной классификации", blank=True, null=True, default="")
+    name = models.TextField(verbose_name="Наименование показателя", blank=True, null=True)
+    lineCode = models.CharField(max_length=50, verbose_name="Код строки", blank=True, null=True, default="")
+    yearStart = models.CharField(max_length=10, verbose_name="Год начала закупки", blank=True, null=True, default="")
+    uniqueCode = models.CharField(max_length=255, verbose_name="Уникальный код объекта", null=True, blank=True, default="")
     manually = models.BooleanField(default=False, verbose_name="Признак добавленной строки")
-
     financialYearSum = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True, verbose_name="Сумма на текущий финансовый год")
     planFirstYearSum = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True, verbose_name="Сумма на первый год планового периода")
     planLastYearSum = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True, verbose_name="Сумма на второй год планового периода")
@@ -66,4 +63,4 @@ class PlanPaymentTRU(models.Model):
         verbose_name_plural = "Планируемые платежи"
 
     def __str__(self):
-        return f"{self.name} ({self.kbk})"
+        return f"{self.name} ({self.kbk})" if self.name and self.kbk else "Платёж без данных"
