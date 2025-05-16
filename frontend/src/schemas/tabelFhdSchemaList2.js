@@ -11,6 +11,7 @@ export const fhdSchemaList2={
         {field:"planFirstYearSum", label:"Сумма на первый год планового периода"},
         {field:"planLastYearSum", label:"Сумма на второй год планового периода"},
         {field:"AutPlanYearSumm", label:"Сумма за пределами планового периода"},
+        {field:"actions", label:""}
     ],
      defaultPaymentTRU:[
          {
@@ -252,19 +253,6 @@ export const fhdSchemaList2={
             "kbk": "",
             "name": "в соответствии с Федеральным законом № 44-ФЗ из них:",
             "lineCode": "26451",
-            "yearStart": "X",
-            "uniqueCode": "",
-            "manually": "false",
-            "financialYearSum": "",
-            "planFirstYearSum": "",
-            "planLastYearSum": "",
-            "AutPlanYearSumm": ""
-         },
-         {
-            "lineNum": "1.4.5.2.",
-            "kbk": "",
-            "name": "в соответствии с Федеральным законом № 223-ФЗ",
-            "lineCode": "26452",
             "yearStart": "X",
             "uniqueCode": "",
             "manually": "false",

@@ -26,6 +26,7 @@ class PlanPaymentIndex(models.Model):
     kbk = models.CharField("Код по бюджетной классификации", max_length=100, blank=True, null=True, default="")
     analyticCode = models.CharField("Аналитический код", max_length=5, blank=True, null=True)
     manually = models.BooleanField("Признак добавленной строки", default=False)
+    afterLineCode = models.CharField("Код строки, после которой добавлена", max_length=50, blank=True, null=True)
 
     financialYearSum = models.DecimalField("Сумма на текущий финансовый год", max_digits=20, decimal_places=2, blank=True, null=True)
     planFirstYearSum = models.DecimalField("Сумма на первый год планового периода", max_digits=20, decimal_places=2, blank=True, null=True)
@@ -53,6 +54,8 @@ class PlanPaymentTRU(models.Model):
     yearStart = models.CharField(max_length=10, verbose_name="Год начала закупки", blank=True, null=True, default="")
     uniqueCode = models.CharField(max_length=255, verbose_name="Уникальный код объекта", null=True, blank=True, default="")
     manually = models.BooleanField(default=False, verbose_name="Признак добавленной строки")
+    afterLineCode = models.CharField(max_length=50, verbose_name="Код строки, после которой добавлена", blank=True, null=True)
+    
     financialYearSum = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True, verbose_name="Сумма на текущий финансовый год")
     planFirstYearSum = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True, verbose_name="Сумма на первый год планового периода")
     planLastYearSum = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True, verbose_name="Сумма на второй год планового периода")

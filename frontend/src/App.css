@@ -3,6 +3,7 @@
   display: flex;
   overflow: hidden;
 }
+
 .sidebar {
   background: #f9f9f9;
   padding: 12px;
@@ -32,6 +33,8 @@
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
+  padding: 20px;
+  background: #f8f9fa;
 }
 
 .org-list {
@@ -69,7 +72,7 @@
   padding: 10px 16px;
   background-color: #007bff;
   color: white;
-  font-size: 25px; /* текст кнопки */
+  font-size: 25px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -81,7 +84,266 @@
 }
 
 .my-icon {
-  font-size: 40px; /* размер иконки */
+  font-size: 40px;
+}
+
+/* Стили для таблицы ФХД */
+.fhd-table-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.fhd-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin-bottom: 20px;
+}
+
+/* Стили для первого листа */
+.fhd-table:not(.second-sheet) th:nth-child(1) { width: 35%; }
+.fhd-table:not(.second-sheet) th:nth-child(2) { width: 10%; }
+.fhd-table:not(.second-sheet) th:nth-child(3) { width: 15%; }
+.fhd-table:not(.second-sheet) th:nth-child(4) { width: 8%; }
+.fhd-table:not(.second-sheet) th:nth-child(5),
+.fhd-table:not(.second-sheet) th:nth-child(6),
+.fhd-table:not(.second-sheet) th:nth-child(7),
+.fhd-table:not(.second-sheet) th:nth-child(8) { width: 8%; }
+
+/* Общие стили для ячеек */
+.fhd-table th {
+  background: #f8f9fa;
+  padding: 12px 8px;
+  font-weight: 600;
+  text-align: left;
+  border: 1px solid #dee2e6;
+  color: #495057;
+  font-size: 13px;
+  white-space: normal;
+  height: auto;
+  vertical-align: top;
+}
+
+.fhd-table td {
+  border: 1px solid #dee2e6;
+  padding: 4px;
+  vertical-align: top;
+  background: white;
+  height: auto;
+}
+
+.fhd-table textarea {
+  width: 100%;
+  min-height: 28px;
+  resize: vertical;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  padding: 4px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  transition: all 0.2s;
+  font-size: 13px;
+  line-height: 1.3;
+  max-height: 300px;
+}
+
+.fhd-table textarea:focus {
+  background-color: #f8f9fa;
+  outline: none;
+  box-shadow: inset 0 0 0 2px #09c;
+  min-height: 60px;
+}
+
+.fhd-table td:nth-child(5) textarea,
+.fhd-table td:nth-child(6) textarea,
+.fhd-table td:nth-child(7) textarea,
+.fhd-table td:nth-child(8) textarea {
+  text-align: right;
+  font-family: 'Consolas', monospace;
+  font-size: 13px;
+}
+
+.fhd-table td:first-child textarea {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  min-height: 28px;
+}
+
+.fhd-controls {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  background: white;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.fhd-controls select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  font-size: 14px;
+  background-color: white;
+  min-width: 120px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.fhd-controls select:hover {
+  border-color: #09c;
+}
+
+.fhd-controls button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #09c;
+  color: white;
+  font-weight: 500;
+  transition: all 0.2s;
+  min-width: 120px;
+  font-size: 14px;
+}
+
+.fhd-controls button:hover {
+  background-color: #007bb5;
+  transform: translateY(-1px);
+}
+
+.fhd-controls .active {
+  background-color: #007bb5;
+}
+
+.fhd-add-row {
+  display: flex;
+  justify-content: flex-start;
+  padding: 4px;
+}
+
+.fhd-add-row button {
+  padding: 6px 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  min-width: auto;
+}
+
+.fhd-add-row button:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+}
+
+.fhd-table td button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 6px;
+  color: #dc3545;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.fhd-table td button:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.fhd-table tr:hover td {
+  background-color: #f8f9fa;
+}
+
+/* Стили для второго листа */
+.fhd-table.second-sheet {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.fhd-table.second-sheet th,
+.fhd-table.second-sheet td {
+  border: 1px solid #dee2e6;
+  padding: 4px;
+  font-size: 12px;
+}
+
+.fhd-table.second-sheet th:nth-child(1) { width: 5%; }  /* Номер строки */
+.fhd-table.second-sheet th:nth-child(2) { width: 8%; }  /* КБК */
+.fhd-table.second-sheet th:nth-child(3) { width: 22%; } /* Наименование показателя */
+.fhd-table.second-sheet th:nth-child(4) { width: 5%; }  /* Код строки */
+.fhd-table.second-sheet th:nth-child(5) { width: 6%; }  /* Год начала закупки */
+.fhd-table.second-sheet th:nth-child(6) { width: 8%; }  /* Уникальный код */
+.fhd-table.second-sheet th:nth-child(7),
+.fhd-table.second-sheet th:nth-child(8),
+.fhd-table.second-sheet th:nth-child(9),
+.fhd-table.second-sheet th:nth-child(10) { width: 9%; } /* Суммы */
+.fhd-table.second-sheet th:nth-child(11) { width: 4%; } /* Кнопка удаления */
+
+/* Стили для числовых ячеек второго листа */
+.fhd-table.second-sheet td:nth-child(7) textarea,
+.fhd-table.second-sheet td:nth-child(8) textarea,
+.fhd-table.second-sheet td:nth-child(9) textarea,
+.fhd-table.second-sheet td:nth-child(10) textarea {
+  text-align: right;
+  font-family: 'Consolas', monospace;
+}
+
+/* Общие стили для textarea */
+.fhd-table textarea {
+  width: 100%;
+  min-height: 28px;
+  resize: vertical;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  padding: 4px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  transition: all 0.2s;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+/* Контейнер таблицы */
+.fhd-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px;
+  margin: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Адаптивность */
+@media screen and (max-width: 1600px) {
+  .fhd-table.second-sheet {
+    min-width: 1200px;
+  }
+}
+
+@media screen and (min-width: 1601px) {
+  .fhd-table.second-sheet th:last-child {
+    font-size: 12px;
+  }
 }
 
 /* 📱 Мобильная адаптация */
@@ -103,85 +365,114 @@
   .main-content {
     padding: 12px;
   }
-  /* FHD таблица: прокрутка, авторазмер, ввод */
-.fhd-table-wrapper {
-  flex: 1;
-  min-height: 0;
-  overflow: auto;
-  border: 1px solid #ccc;
-  max-height: 100%;
 }
 
-.fhd-table {
-  min-width: 100%; /* горизонтальная прокрутка при необходимости */
-  border-collapse: collapse;
-  table-layout: auto;
-}
-
-.fhd-table th,
-.fhd-table td {
-  border: 1px solid #ccc;
-  padding: 6px;
-  vertical-align: top;
-  max-width: 400px;
-}
-
-.fhd-table textarea {
-  width: 100%;
-  min-height: 30px;
-  resize: vertical;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  border: none;
-  background: transparent;
-  font-family: inherit;
-  padding: 4px;
-  box-sizing: border-box;
-}
-
-.fhd-controls {
-  margin-bottom: 12px;
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.fhd-controls button {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  background-color: #007bff;
-  color: white;
-  font-weight: bold;
-  transition: background-color 0.2s;
-}
-
-.fhd-controls button:hover {
-  background-color: #0056b3;
-}
-
-.fhd-controls .active {
-  background-color: #0056b3;
-}
-
-.fhd-add-row {
-  display: flex;
-  justify-content: flex-start;
-  padding: 8px 0 8px 8px;
-}
-
-.fhd-table td button {
+/* Стили для кнопки редактирования */
+.edit-button {
   background: none;
   border: none;
-  font-size: 18px;
+  font-size: 20px;
+  color: #09c;
   cursor: pointer;
-  padding: 2px 6px;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.fhd-table td button:hover {
-  color: darkred;
+.edit-button:hover {
+  color: #007bb5;
 }
 
+.del-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #dc3545;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.del-button:hover {
+  color: #dc3545;
+}
+
+.org-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+button {
+  outline: none;
+  border: none;
+  background: none;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.add-button:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+}
+
+.add-button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.cancel-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+  transform: translateY(-1px);
+}
+
+.cancel-button:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }

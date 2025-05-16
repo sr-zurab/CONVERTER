@@ -8,14 +8,16 @@ export const fhdSchemaList1={
         {field: "financialYearSum", label: "Сумма на текущий финансовый год"},
         {field: "planFirstYearSum", label: "Сумма на первый год планового периода"},
         {field: "planLastYearSum", label: "Сумма на второй год планового периода"},
-        {field: "AutPlanYearSumm", label: "Сумма за пределами планового периода"}
+        {field: "AutPlanYearSumm", label: "Сумма за пределами планового периода"},
+        {field: "actions", label: ""}
     ],
     defaultPaymentIndex:[
         { "name": "Остаток средств на начало текущего финансового года",
           "lineCode": "0001",
           "kbk": "X",
           "analyticCode": "X",
-          "manually": "false","financialYearSum": "",
+          "manually": false,
+          "financialYearSum": "",
           "planFirstYearSum": "",
           "planLastYearSum": "",
           "AutPlanYearSumm": ""},

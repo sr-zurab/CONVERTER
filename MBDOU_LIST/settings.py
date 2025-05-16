@@ -151,8 +151,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5175",  # Адрес фронтенда
-    "http://192.168.1.33:5175",
+    "http://localhost:5173",  # Адрес фронтенда
+    "http://192.168.1.33:5173",
     "https://myfrontend.com",  # Пример продакшен-домена
 ]
 

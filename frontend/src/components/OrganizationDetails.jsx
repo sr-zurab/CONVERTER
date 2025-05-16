@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteOrganization } from '../store/organizationSlice';
-
+import { BsFeather } from "react-icons/bs";
+import { FiTrash2 } from "react-icons/fi";
 const OrganizationDetails = ({ org, onEdit }) => {
   const dispatch = useDispatch();
 
@@ -21,8 +22,8 @@ const OrganizationDetails = ({ org, onEdit }) => {
       <p><strong>Адрес:</strong> {org.address}</p>
       <p><strong>Телефон:</strong> {org.phone}</p>
       <p><strong>Банковские реквизиты:</strong> {org.BANK}</p>
-      <button onClick={onEdit}>Редактировать</button>
-      <button onClick={handleDelete} style={{ marginLeft: '10px', color: 'red' }}>Удалить</button>
+      <button className="edit-button" onClick={onEdit}><BsFeather /></button>
+      <button onClick={handleDelete} className="del-button"><FiTrash2 /></button>
     </div>
   );
 };

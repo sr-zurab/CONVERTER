@@ -6,19 +6,39 @@ import FhdTable from './FhdTable';
 import {
   fetchPlanPaymentIndex,
   addPlanPaymentIndex,
-  updatePlanPaymentIndex
+  updatePlanPaymentIndex,
+  deletePlanPaymentIndex
 } from '../store/planPaymentIndexSlice';
 import {
   fetchPlanPaymentTru,
   addPlanPaymentTru,
-  updatePlanPaymentTru
+  updatePlanPaymentTru,
+  deletePlanPaymentTru
 } from '../store/paymentTruSlice';
 import { mergeDefaultAndServerData } from '../utils/mergeFhdData';
+
+// Стили для уведомления
+const notificationStyle = {
+  position: 'fixed',
+  top: '20px',
+  left: '50%',
+  transform: 'translateX(-50%)',
+  backgroundColor: '#4CAF50',
+  color: 'white',
+  padding: '15px 30px',
+  borderRadius: '4px',
+  boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
+  zIndex: 1000,
+  animation: 'fadeOut 3s forwards',
+  fontSize: '16px'
+};
 
 const PlanFhdTabs = ({ organization }) => {
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState('list1');
   const [year, setYear] = useState(new Date().getFullYear());
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
 
   const serverIndex = useSelector(state => state.planPaymentIndex.items);
   const serverTru = useSelector(state => state.paymentTru.list);
@@ -49,26 +69,43 @@ const PlanFhdTabs = ({ organization }) => {
     setTruData(merged);
   }, [serverTru, year]);
 
+  const showNotificationMessage = (message) => {
+    setNotificationMessage(message);
+    setShowNotification(true);
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 3000);
+  };
+
   const handleSave = () => {
     const rows = activeTab === 'list1' ? indexData : truData;
-    const payload = rows.map(row => ({
-      ...row,
-      organization: organization.id,
-      year,
-    }));
+    const manuallyAddedRows = rows.filter(row => row.manually === true && !row.id);
+    
+    if (manuallyAddedRows.length > 0) {
+      const addAction = activeTab === 'list1' ? addPlanPaymentIndex : addPlanPaymentTru;
+      
+      manuallyAddedRows.forEach((row, idx) => {
+        const rowIndex = rows.findIndex(r => r === row);
+        const prevRow = rows[rowIndex - 1];
+        
+        dispatch(addAction({
+          ...row,
+          organization: organization.id,
+          year,
+          afterLineCode: prevRow?.lineCode || null
+        }));
+      });
 
-    const addAction = activeTab === 'list1' ? addPlanPaymentIndex : addPlanPaymentTru;
-    payload.forEach(row => dispatch(addAction(row)));
+      setTimeout(() => {
+        if (activeTab === 'list1') {
+          dispatch(fetchPlanPaymentIndex({ orgId: organization.id, year }));
+        } else {
+          dispatch(fetchPlanPaymentTru({ organizationId: organization.id, year }));
+        }
+      }, 500);
 
-    setTimeout(() => {
-      if (activeTab === 'list1') {
-        dispatch(fetchPlanPaymentIndex({ orgId: organization.id, year }));
-      } else {
-        dispatch(fetchPlanPaymentTru({ organizationId: organization.id, year }));
-      }
-    }, 500);
-
-    alert('Все строки отправлены на сервер');
+      showNotificationMessage('Новые строки успешно сохранены');
+    }
   };
 
   const handleCellUpdate = (rowId, field, value) => {
@@ -77,11 +114,24 @@ const PlanFhdTabs = ({ organization }) => {
     dispatch(action({ id: rowId, data: { [field]: parsedValue } }));
   };
 
+  const handleDeleteRow = (rowId) => {
+    const deleteAction = activeTab === 'list1' ? deletePlanPaymentIndex : deletePlanPaymentTru;
+    if (rowId) {
+      dispatch(deleteAction(rowId));
+      showNotificationMessage('Строка успешно удалена');
+    }
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
+      {showNotification && (
+        <div style={notificationStyle}>
+          {notificationMessage}
+        </div>
+      )}
       <div className="fhd-controls">
         <select value={year} onChange={e => setYear(parseInt(e.target.value, 10))}>
-          {[2023, 2024, 2025, 2026].map(y => (
+          {[2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => (
             <option key={y} value={y}>{y}</option>
           ))}
         </select>
@@ -107,6 +157,7 @@ const PlanFhdTabs = ({ organization }) => {
             data={indexData}
             onDataChange={setIndexData}
             onCellUpdate={handleCellUpdate}
+            onDeleteRow={handleDeleteRow}
           />
         ) : (
           <FhdTable
@@ -114,6 +165,8 @@ const PlanFhdTabs = ({ organization }) => {
             data={truData}
             onDataChange={setTruData}
             onCellUpdate={handleCellUpdate}
+            onDeleteRow={handleDeleteRow}
+            className="second-sheet"
           />
         )}
       </div>

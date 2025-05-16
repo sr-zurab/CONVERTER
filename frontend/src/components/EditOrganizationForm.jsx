@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateOrganization } from '../store/organizationSlice';
+import { RiSave2Fill } from "react-icons/ri";
+import { TbCancel } from "react-icons/tb";
 
 const EditOrganizationForm = ({ onClose, organization }) => {
   const [formData, setFormData] = useState(organization);
@@ -31,9 +33,9 @@ const EditOrganizationForm = ({ onClose, organization }) => {
       <input name="address" value={formData.address} onChange={handleChange} required />
       <input name="phone" value={formData.phone} onChange={handleChange} required />
       <textarea name="BANK" value={formData.BANK} onChange={handleChange} />
-      <div>
-        <button type="submit">Сохранить</button>
-        <button type="button" onClick={onClose}>Отмена</button>
+      <div className="form-buttons">
+        <button type="submit" className="edit-button"><RiSave2Fill /> Сохранить</button>
+        <button type="button" onClick={onClose} className="cancel-button"><TbCancel /> Отмена</button>
       </div>
     </form>
   );

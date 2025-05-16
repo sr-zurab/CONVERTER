@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addOrganization } from '../store/organizationSlice';
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { TbCancel } from "react-icons/tb";
 
 const AddOrganizationForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -28,7 +30,10 @@ const AddOrganizationForm = ({ onClose }) => {
       <input name="INN" placeholder="ИНН" onChange={handleChange} required />
       <input name="KPP" placeholder="КПП" onChange={handleChange} required />
       <textarea name="BANK" placeholder="Банковские реквизиты" onChange={handleChange} />
-      <button type="submit">Создать</button>
+      <div className="form-buttons">
+        <button type="submit" className="add-button"><IoIosAddCircleOutline /> Создать</button>
+        <button type="button" onClick={onClose} className="cancel-button"><TbCancel /> Отмена</button>
+      </div>
     </form>
   );
 };
