@@ -1,11 +1,19 @@
+// Компонент отображения детальной информации об организации
+// Показывает все поля организации и кнопки для редактирования/удаления
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteOrganization } from '../store/organizationSlice';
 import { BsFeather } from "react-icons/bs";
 import { FiTrash2 } from "react-icons/fi";
+
+// Основной компонент деталей организации
+// @param {Object} org - Объект с данными организации
+// @param {Function} onEdit - Функция вызова редактирования
 const OrganizationDetails = ({ org, onEdit }) => {
   const dispatch = useDispatch();
 
+  // Обработчик удаления организации
+  // Запрашивает подтверждение перед удалением
   const handleDelete = () => {
     if (window.confirm(`Удалить организацию "${org.name}"?`)) {
       dispatch(deleteOrganization(org.id));

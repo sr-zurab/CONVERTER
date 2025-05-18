@@ -1,5 +1,7 @@
+# Представления для обработки запросов в приложении MBDOU_INF
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 from .models import Organization, PlanPaymentIndex, PlanPaymentTRU
 from .serializers import (
     OrganizationSerializer,
@@ -8,11 +10,15 @@ from .serializers import (
 )
 
 
+# ViewSet для работы с организациями
+# Обеспечивает CRUD операции над организациями
 class OrganizationViewSet(viewsets.ModelViewSet):
     queryset = Organization.objects.all().order_by('name')
     serializer_class = OrganizationSerializer
 
 
+# ViewSet для работы с индексами платежей
+# Обрабатывает операции с показателями плана ФХД
 class PlanPaymentIndexViewSet(viewsets.ModelViewSet):
     queryset = PlanPaymentIndex.objects.all()
     serializer_class = PlanPaymentIndexSerializer
@@ -37,6 +43,8 @@ class PlanPaymentIndexViewSet(viewsets.ModelViewSet):
         return super().update(request, *args, **kwargs)
 
 
+# ViewSet для работы с платежами ТРУ
+# Управляет данными о планируемых закупках
 class PlanPaymentTRUViewSet(viewsets.ModelViewSet):
     queryset = PlanPaymentTRU.objects.all()
     serializer_class = PlanPaymentTRUSerializer

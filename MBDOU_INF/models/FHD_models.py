@@ -1,18 +1,8 @@
 from django.db import models
+from .organization_models import Organization
 
-class Organization(models.Model):
-    name = models.CharField(max_length=255)
-    FIO = models.TextField()
-    INN = models.CharField(max_length=10)
-    KPP = models.CharField(max_length=9)
-    address = models.TextField()
-    phone = models.CharField(max_length=50)
-    BANK = models.TextField()
-    UBP = models.CharField(max_length=8)
-
-    def __str__(self):
-        return self.name
-
+# Модель индекса платежей плана ФХД
+# Хранит данные о платежах и их классификации
 class PlanPaymentIndex(models.Model):
     organization = models.ForeignKey(
         Organization,
@@ -40,6 +30,8 @@ class PlanPaymentIndex(models.Model):
     def __str__(self):
         return f"{self.lineCode} - {self.name}" if self.lineCode and self.name else "Показатель без данных"
 
+# Модель платежей ТРУ (товары, работы, услуги)
+# Хранит информацию о планируемых закупках
 class PlanPaymentTRU(models.Model):
     organization = models.ForeignKey(
         Organization,

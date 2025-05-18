@@ -1,6 +1,12 @@
+// Компонент модального окна
+// Используется для отображения форм и других элементов поверх основного контента
 import React from 'react';
 import './Modal.css';
 
+// Основной компонент модального окна
+// @param {boolean} isOpen - Флаг открытия/закрытия окна
+// @param {Function} onClose - Функция закрытия окна
+// @param {ReactNode} children - Дочерние элементы для отображения в окне
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 

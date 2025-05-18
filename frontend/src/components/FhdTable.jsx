@@ -1,11 +1,24 @@
+// Компонент таблицы для плана ФХД
+// Отображает данные в табличном виде с возможностью редактирования
 import React, { useState } from 'react';
 import { FiTrash2 } from "react-icons/fi";
 import { BsFeather } from "react-icons/bs";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
+// Основной компонент таблицы
+// @param {Array} schema - Схема таблицы с описанием колонок
+// @param {Array} data - Данные для отображения
+// @param {Function} onDataChange - Функция обработки изменений данных
+// @param {Function} onCellUpdate - Функция обработки изменения ячейки
+// @param {Function} onDeleteRow - Функция удаления строки
+// @param {string} className - Дополнительные CSS классы
 const FhdTable = ({ schema, data, onDataChange, onCellUpdate, onDeleteRow, className }) => {
   const [lastAddedIndex, setLastAddedIndex] = useState(null);
 
+  // Обработчик изменения значения в ячейке
+  // @param {number} rowIndex - Индекс строки
+  // @param {string} field - Название поля
+  // @param {any} value - Новое значение
   const handleChange = (rowIndex, field, value) => {
     const updated = [...data];
     const currentRow = updated[rowIndex];
@@ -25,6 +38,10 @@ const FhdTable = ({ schema, data, onDataChange, onCellUpdate, onDeleteRow, class
     }
   };
 
+  // Обработчик нажатия клавиш при редактировании
+  // @param {Event} e - Событие клавиатуры
+  // @param {number} rowIndex - Индекс текущей строки
+  // @param {number} colIndex - Индекс текущей колонки
   const handleKeyDown = (e, rowIndex, colIndex) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -33,6 +50,8 @@ const FhdTable = ({ schema, data, onDataChange, onCellUpdate, onDeleteRow, class
     }
   };
 
+  // Добавляет новую строку после указанной позиции
+  // @param {number} insertAfterIndex - Индекс строки, после которой нужно вставить новую
   const handleAddRow = (insertAfterIndex) => {
     const emptyRow = schema.reduce((acc, col) => ({ ...acc, [col.field]: '' }), {});
     const updated = [...data];

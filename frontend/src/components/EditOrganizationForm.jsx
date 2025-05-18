@@ -1,21 +1,32 @@
+// Компонент формы редактирования организации
+// Позволяет изменять данные существующей организации
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateOrganization } from '../store/organizationSlice';
 import { RiSave2Fill } from "react-icons/ri";
 import { TbCancel } from "react-icons/tb";
 
+// Основной компонент формы редактирования
+// @param {Function} onClose - Функция закрытия формы
+// @param {Object} organization - Объект с данными организации для редактирования
 const EditOrganizationForm = ({ onClose, organization }) => {
+  // Состояние формы с данными организации
   const [formData, setFormData] = useState(organization);
   const dispatch = useDispatch();
 
+  // Обновление данных формы при изменении организации
   useEffect(() => {
     setFormData(organization);
   }, [organization]);
 
+  // Обработчик изменения полей формы
+  // @param {Event} e - Событие изменения поля
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  // Обработчик отправки формы
+  // @param {Event} e - Событие отправки формы
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateOrganization({ id: organization.id, data: formData }))

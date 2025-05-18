@@ -1,3 +1,5 @@
+// Главный компонент приложения
+// Управляет структурой приложения и основной навигацией
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -13,21 +15,27 @@ import Modal from './components/Modal';
 import './App.css';
 import { IoIosAddCircleOutline } from "react-icons/io";
 
+// Основной компонент приложения
 const App = () => {
   const dispatch = useDispatch();
+  // Получение данных из Redux store
   const organizations = useSelector(state => state.organizations.list);
   const selectedOrg = useSelector(state => state.organizations.selected);
   const selectedReport = useSelector(state => state.organizations.selectedReport);
 
+  // Состояния для управления модальными окнами и шириной сайдбара
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(240);
   const [isResizing, setIsResizing] = useState(false);
+  const [collapsedOrgs, setCollapsedOrgs] = useState(new Set());
 
+  // Загрузка списка организаций при монтировании компонента
   useEffect(() => {
     dispatch(fetchOrganizations());
   }, [dispatch]);
 
+  // Обработчик изменения размера сайдбара
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (isResizing) {
@@ -44,6 +52,19 @@ const App = () => {
     };
   }, [isResizing]);
 
+  const handleOrgClick = (org) => {
+    dispatch(selectOrganization(org));
+    setCollapsedOrgs(prev => {
+      const newCollapsed = new Set(prev);
+      if (newCollapsed.has(org.id)) {
+        newCollapsed.delete(org.id);
+      } else {
+        newCollapsed.add(org.id);
+      }
+      return newCollapsed;
+    });
+  };
+
   return (
     <div className="app-container">
       <div className="sidebar" style={{ width: sidebarWidth }}>
@@ -52,18 +73,23 @@ const App = () => {
         </button>
         <ul className="org-list">
           {organizations.map(org => (
-            <li key={org.id}>
+            <li 
+              key={org.id} 
+              className={`${selectedOrg?.id === org.id ? 'selected' : ''} ${collapsedOrgs.has(org.id) ? 'collapsed' : ''}`}
+            >
               <div
-                className={`org-item ${selectedOrg?.id === org.id ? 'selected' : ''}`}
-                onClick={() => dispatch(selectOrganization(org))}
+                className="org-header"
+                onClick={() => handleOrgClick(org)}
               >
                 {org.name}
               </div>
-              {selectedOrg?.id === org.id && (
-                <ul className="report-submenu">
-                  <li onClick={() => dispatch(selectReport('planFhd'))}>📄 План ФХД</li>
-                </ul>
-              )}
+              <div className="org-content">
+                {selectedOrg?.id === org.id && (
+                  <div className="report-item" onClick={() => dispatch(selectReport('planFhd'))}>
+                    📄 План ФХД
+                  </div>
+                )}
+              </div>
             </li>
           ))}
         </ul>

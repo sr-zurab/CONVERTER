@@ -141,3 +141,13 @@
   max-height: 90vh;
 }
 
+/* Анимация появления модального окна */
+@keyframes modalFadeIn {
+  // ... existing code ...
+}
+
+/* Анимация исчезновения уведомления */
+@keyframes fadeOut {
+  // ... existing code ...
+}
+
