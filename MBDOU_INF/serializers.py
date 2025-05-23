@@ -1,10 +1,7 @@
-# Сериализаторы для преобразования данных в JSON формат
 from rest_framework import serializers
 from .models import Organization, PlanPaymentIndex, PlanPaymentTRU
 from .fields import NullableDecimalField
 
-# Сериализатор для модели организации
-# Преобразует данные организации в JSON и обратно
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization
@@ -25,9 +22,9 @@ class OrganizationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Поле УБП должно содержать ровно 8 символов.")
         return value
 
-# Сериализатор для модели индекса платежей
-# Обрабатывает данные показателей плана ФХД
+
 class PlanPaymentIndexSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)  # Обязательно!
     kbk = serializers.CharField(allow_blank=True, allow_null=True, required=False)
     analyticCode = serializers.CharField(allow_blank=True, allow_null=True, required=False)
     financialYearSum = serializers.DecimalField(max_digits=20, decimal_places=2, allow_null=True, required=False)
@@ -39,9 +36,9 @@ class PlanPaymentIndexSerializer(serializers.ModelSerializer):
         model = PlanPaymentIndex
         fields = '__all__'
 
-# Сериализатор для модели платежей ТРУ
-# Обрабатывает данные о планируемых закупках
+
 class PlanPaymentTRUSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)  # Обязательно!
     kbk = serializers.CharField(allow_blank=True, allow_null=True, required=False)
     analyticCode = serializers.CharField(allow_blank=True, allow_null=True, required=False)
     financialYearSum = NullableDecimalField(max_digits=20, decimal_places=2, allow_null=True, required=False)

@@ -24,6 +24,7 @@ class PlanPaymentIndex(models.Model):
     AutPlanYearSumm = models.DecimalField("Сумма за пределами планового периода", max_digits=20, decimal_places=2, blank=True, null=True)
 
     class Meta:
+        ordering = ['lineCode']
         verbose_name = "Показатель плана платежей"
         verbose_name_plural = "Показатели плана платежей"
 
@@ -54,6 +55,7 @@ class PlanPaymentTRU(models.Model):
     AutPlanYearSumm = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True, verbose_name="Сумма за пределами планового периода")
 
     class Meta:
+        ordering=['lineCode']
         verbose_name = "Планируемый платёж"
         verbose_name_plural = "Планируемые платежи"
 

@@ -1,5 +1,3 @@
-// Компонент для отображения и управления вкладками плана ФХД
-// Позволяет переключаться между двумя листами плана и управлять их данными
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fhdSchemaList1 } from '../schemas/tabelFhdSchemaList1';
@@ -19,7 +17,6 @@ import {
 } from '../store/paymentTruSlice';
 import { mergeDefaultAndServerData } from '../utils/mergeFhdData';
 
-// Стили для уведомления
 const notificationStyle = {
   position: 'fixed',
   top: '20px',
@@ -35,8 +32,6 @@ const notificationStyle = {
   fontSize: '16px'
 };
 
-// Основной компонент вкладок плана ФХД
-// @param {Object} organization - Объект с данными организации
 const PlanFhdTabs = ({ organization }) => {
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState('list1');
@@ -58,22 +53,25 @@ const PlanFhdTabs = ({ organization }) => {
   }, [organization, year, dispatch]);
 
   useEffect(() => {
-    const merged = mergeDefaultAndServerData(
-      fhdSchemaList1.defaultPaymentIndex,
-      serverIndex.filter(i => i.year === year)
-    );
-    setIndexData(merged);
+    if (serverIndex.length) {
+      const merged = mergeDefaultAndServerData(
+        fhdSchemaList1.defaultPaymentIndex,
+        serverIndex.filter(i => i.year === year)
+      );
+      setIndexData(merged);
+    }
   }, [serverIndex, year]);
 
   useEffect(() => {
-    const merged = mergeDefaultAndServerData(
-      fhdSchemaList2.defaultPaymentTRU,
-      serverTru.filter(i => i.year === year)
-    );
-    setTruData(merged);
+    if (serverTru.length) {
+      const merged = mergeDefaultAndServerData(
+        fhdSchemaList2.defaultPaymentTRU,
+        serverTru.filter(i => i.year === year)
+      );
+      setTruData(merged);
+    }
   }, [serverTru, year]);
 
-  // Отображает уведомление с заданным сообщением на 3 секунды
   const showNotificationMessage = (message) => {
     setNotificationMessage(message);
     setShowNotification(true);
@@ -82,18 +80,16 @@ const PlanFhdTabs = ({ organization }) => {
     }, 3000);
   };
 
-  // Сохраняет все вручную добавленные строки в базу данных
   const handleSave = () => {
     const rows = activeTab === 'list1' ? indexData : truData;
     const manuallyAddedRows = rows.filter(row => row.manually === true && !row.id);
-    
+
     if (manuallyAddedRows.length > 0) {
       const addAction = activeTab === 'list1' ? addPlanPaymentIndex : addPlanPaymentTru;
-      
-      manuallyAddedRows.forEach((row, idx) => {
+
+      manuallyAddedRows.forEach(row => {
         const rowIndex = rows.findIndex(r => r === row);
         const prevRow = rows[rowIndex - 1];
-        
         dispatch(addAction({
           ...row,
           organization: organization.id,
@@ -114,18 +110,13 @@ const PlanFhdTabs = ({ organization }) => {
     }
   };
 
-  // Обновляет значение ячейки в таблице
-  // @param {string} rowId - ID строки
-  // @param {string} field - Название поля
-  // @param {any} value - Новое значение
   const handleCellUpdate = (rowId, field, value) => {
+    if (!rowId) return;
     const action = activeTab === 'list1' ? updatePlanPaymentIndex : updatePlanPaymentTru;
     const parsedValue = value === '' ? null : value;
     dispatch(action({ id: rowId, data: { [field]: parsedValue } }));
   };
 
-  // Удаляет строку из таблицы
-  // @param {string} rowId - ID строки для удаления
   const handleDeleteRow = (rowId) => {
     const deleteAction = activeTab === 'list1' ? deletePlanPaymentIndex : deletePlanPaymentTru;
     if (rowId) {

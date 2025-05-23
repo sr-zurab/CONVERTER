@@ -1,24 +1,10 @@
-// Компонент таблицы для плана ФХД
-// Отображает данные в табличном виде с возможностью редактирования
 import React, { useState } from 'react';
 import { FiTrash2 } from "react-icons/fi";
-import { BsFeather } from "react-icons/bs";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
-// Основной компонент таблицы
-// @param {Array} schema - Схема таблицы с описанием колонок
-// @param {Array} data - Данные для отображения
-// @param {Function} onDataChange - Функция обработки изменений данных
-// @param {Function} onCellUpdate - Функция обработки изменения ячейки
-// @param {Function} onDeleteRow - Функция удаления строки
-// @param {string} className - Дополнительные CSS классы
 const FhdTable = ({ schema, data, onDataChange, onCellUpdate, onDeleteRow, className }) => {
   const [lastAddedIndex, setLastAddedIndex] = useState(null);
 
-  // Обработчик изменения значения в ячейке
-  // @param {number} rowIndex - Индекс строки
-  // @param {string} field - Название поля
-  // @param {any} value - Новое значение
   const handleChange = (rowIndex, field, value) => {
     const updated = [...data];
     const currentRow = updated[rowIndex];
@@ -31,17 +17,12 @@ const FhdTable = ({ schema, data, onDataChange, onCellUpdate, onDeleteRow, class
 
     onDataChange(updated);
 
-    // Обновляем на сервере только если строка уже существует
     if (currentRow.id && onCellUpdate) {
       const parsedValue = value === '' ? null : value;
       onCellUpdate(currentRow.id, field, parsedValue);
     }
   };
 
-  // Обработчик нажатия клавиш при редактировании
-  // @param {Event} e - Событие клавиатуры
-  // @param {number} rowIndex - Индекс текущей строки
-  // @param {number} colIndex - Индекс текущей колонки
   const handleKeyDown = (e, rowIndex, colIndex) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -50,43 +31,31 @@ const FhdTable = ({ schema, data, onDataChange, onCellUpdate, onDeleteRow, class
     }
   };
 
-  // Добавляет новую строку после указанной позиции
-  // @param {number} insertAfterIndex - Индекс строки, после которой нужно вставить новую
   const handleAddRow = (insertAfterIndex) => {
     const emptyRow = schema.reduce((acc, col) => ({ ...acc, [col.field]: '' }), {});
     const updated = [...data];
-    
-    // Определяем позицию для вставки
     const insertPosition = lastAddedIndex !== null ? lastAddedIndex + 1 : insertAfterIndex + 1;
-    
-    // Вставляем новую строку и явно помечаем её как добавленную
     updated.splice(insertPosition, 0, { ...emptyRow, manually: true });
-    
-    // Обновляем последнюю позицию добавления
     setLastAddedIndex(insertPosition);
-    
     onDataChange(updated);
   };
 
   const handleDeleteRow = (rowIndex) => {
     const row = data[rowIndex];
     const updated = [...data];
-    
-    // Если строка существует в базе данных, удаляем её
+
     if (row.id) {
       onDeleteRow(row.id);
     }
-    
-    // Удаляем строку из локального состояния
+
     updated.splice(rowIndex, 1);
-    
-    // Обновляем lastAddedIndex
+
     if (rowIndex === lastAddedIndex) {
       setLastAddedIndex(null);
     } else if (rowIndex < lastAddedIndex) {
       setLastAddedIndex(lastAddedIndex - 1);
     }
-    
+
     onDataChange(updated);
   };
 
