@@ -142,15 +142,15 @@ const PlanFhdTabs = ({ organization }) => {
           onClick={() => setActiveTab('list1')}
           className={activeTab === 'list1' ? 'active' : ''}
         >
-          Лист 1
+          Раздел 1. Поступления и выплаты
         </button>
         <button
           onClick={() => setActiveTab('list2')}
           className={activeTab === 'list2' ? 'active' : ''}
         >
-          Лист 2
+          Раздел 2. Сведения по выплатам на закупки товаров, работ, услуг
         </button>
-        <button onClick={handleSave}>Сохранить</button>
+        <button onClick={handleSave}>Сохранить добавленные строки</button>
       </div>
 
       <div style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>

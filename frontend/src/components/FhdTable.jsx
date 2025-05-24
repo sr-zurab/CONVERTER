@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { FiTrash2 } from "react-icons/fi";
 import { IoIosAddCircleOutline } from "react-icons/io";
+import DecimalTextarea from './DecimalTextarea';
 
 const FhdTable = ({ schema, data, onDataChange, onCellUpdate, onDeleteRow, className }) => {
   const [lastAddedIndex, setLastAddedIndex] = useState(null);
+
+  const decimalFields = ['financialYearSum', 'planFirstYearSum', 'planLastYearSum', 'AutPlanYearSumm'];
 
   const handleChange = (rowIndex, field, value) => {
     const updated = [...data];
@@ -87,6 +90,14 @@ const FhdTable = ({ schema, data, onDataChange, onCellUpdate, onDeleteRow, class
                           <FiTrash2 />
                         </button>
                       )
+                    ) : decimalFields.includes(col.field) ? (
+                      <DecimalTextarea
+                        value={row[col.field]}
+                        onChange={(val) => handleChange(rowIndex, col.field, val)}
+                        onBlur={() => {}}
+                        onKeyDown={(e) => handleKeyDown(e, rowIndex, colIndex)}
+                        dataCell={`${rowIndex}-${colIndex}`}
+                      />
                     ) : (
                       <textarea
                         data-cell={`${rowIndex}-${colIndex}`}

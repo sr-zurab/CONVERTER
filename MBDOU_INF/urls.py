@@ -1,7 +1,7 @@
 # urls.py
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import OrganizationViewSet, PlanPaymentIndexViewSet, PlanPaymentTRUViewSet
+from MBDOU_INF.views import OrganizationViewSet, PlanPaymentIndexViewSet, PlanPaymentTRUViewSet
 
 router = DefaultRouter()
 router.register(r'organizations', OrganizationViewSet)

@@ -1,0 +1,153 @@
+import json
+import os
+from django.conf import settings
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+from MBDOU_INF.models import Organization, PlanPaymentIndex, PlanPaymentTRU
+from MBDOU_INF.serializers import (
+    OrganizationSerializer,
+    PlanPaymentIndexSerializer,
+    PlanPaymentTRUSerializer
+)
+
+
+class OrganizationViewSet(viewsets.ModelViewSet):
+    queryset = Organization.objects.all().order_by('name')
+    serializer_class = OrganizationSerializer
+
+
+class PlanPaymentIndexViewSet(viewsets.ModelViewSet):
+    queryset = PlanPaymentIndex.objects.all()
+    serializer_class = PlanPaymentIndexSerializer
+
+    def get_queryset(self):
+        org_id = self.request.query_params.get('organization')
+        year = self.request.query_params.get('year')
+
+        if not org_id or not year:
+            return PlanPaymentIndex.objects.none()
+
+        queryset = PlanPaymentIndex.objects.filter(organization_id=org_id, year=year)
+        if not queryset.exists():
+            self._init_defaults_for(org_id, year)
+            queryset = PlanPaymentIndex.objects.filter(organization_id=org_id, year=year)
+
+        return queryset.order_by("lineCode")
+
+    def get_object(self):
+        return get_object_or_404(PlanPaymentIndex, pk=self.kwargs['pk'])
+
+    def _init_defaults_for(self, org_id, year):
+        def _clean_decimal(value):
+            return None if value in ["", None] else value
+
+        def _clean_bool(value):
+            if isinstance(value, bool):
+                return value
+            if isinstance(value, str):
+                return value.lower() in ["true", "1"]
+            return False
+
+        filepath = os.path.join(settings.BASE_DIR, "data", "default_payment_index.json")
+        try:
+            with open(filepath, encoding="utf-8") as f:
+                defaults = json.load(f)
+        except Exception as e:
+            print(f"[ERROR] Не удалось загрузить default_payment_index.json: {e}")
+            return
+
+        for row in defaults:
+            PlanPaymentIndex.objects.create(
+                organization_id=org_id,
+                year=year,
+                name=row.get("name", ""),
+                lineCode=row.get("lineCode", ""),
+                kbk=row.get("kbk", ""),
+                analyticCode=row.get("analyticCode", ""),
+                manually=_clean_bool(row.get("manually")),
+                afterLineCode=row.get("afterLineCode", ""),
+                financialYearSum=_clean_decimal(row.get("financialYearSum")),
+                planFirstYearSum=_clean_decimal(row.get("planFirstYearSum")),
+                planLastYearSum=_clean_decimal(row.get("planLastYearSum")),
+                AutPlanYearSumm=_clean_decimal(row.get("AutPlanYearSumm")),
+            )
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return super().update(request, *args, **kwargs)
+
+
+class PlanPaymentTRUViewSet(viewsets.ModelViewSet):
+    queryset = PlanPaymentTRU.objects.all()
+    serializer_class = PlanPaymentTRUSerializer
+
+    def get_queryset(self):
+        org_id = self.request.query_params.get('organization')
+        year = self.request.query_params.get('year')
+
+        if not org_id or not year:
+            return PlanPaymentTRU.objects.none()
+
+        queryset = PlanPaymentTRU.objects.filter(organization_id=org_id, year=year)
+        if not queryset.exists():
+            self._init_defaults_for(org_id, year)
+            queryset = PlanPaymentTRU.objects.filter(organization_id=org_id, year=year)
+
+        return queryset.order_by("lineCode")
+
+    def get_object(self):
+        return get_object_or_404(PlanPaymentTRU, pk=self.kwargs['pk'])
+
+    def _init_defaults_for(self, org_id, year):
+        def _clean_decimal(value):
+            return None if value in ["", None] else value
+
+        def _clean_bool(value):
+            if isinstance(value, bool):
+                return value
+            if isinstance(value, str):
+                return value.lower() in ["true", "1"]
+            return False
+
+        filepath = os.path.join(settings.BASE_DIR, "data", "default_payment_tru.json")
+        try:
+            with open(filepath, encoding="utf-8") as f:
+                defaults = json.load(f)
+        except Exception as e:
+            print(f"[ERROR] Не удалось загрузить default_payment_tru.json: {e}")
+            return
+
+        for row in defaults:
+            PlanPaymentTRU.objects.create(
+                organization_id=org_id,
+                year=year,
+                name=row.get("name", ""),
+                lineCode=row.get("lineCode", ""),
+                kbk=row.get("kbk", ""),
+                lineNum=row.get("lineNum", ""),
+                yearStart=row.get("yearStart", ""),
+                uniqueCode=row.get("uniqueCode", ""),
+                manually=_clean_bool(row.get("manually")),
+                afterLineCode=row.get("afterLineCode", ""),
+                financialYearSum=_clean_decimal(row.get("financialYearSum")),
+                planFirstYearSum=_clean_decimal(row.get("planFirstYearSum")),
+                planLastYearSum=_clean_decimal(row.get("planLastYearSum")),
+                AutPlanYearSumm=_clean_decimal(row.get("AutPlanYearSumm")),
+            )
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return super().create(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return super().update(request, *args, **kwargs)
