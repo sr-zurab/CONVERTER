@@ -125,6 +125,36 @@ const PlanFhdTabs = ({ organization }) => {
     }
   };
 
+  const handleExportXml = async () => {
+  if (!organization?.id || !year) {
+    alert('Выберите организацию и год');
+    return;
+  }
+
+  const url = `http://localhost:8000/api/export-fhd-xml/?org_id=${organization.id}&year=${year}`;
+  try {
+    const response = await fetch(url, { method: 'GET' });
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || `Ошибка: ${response.status}`);
+    }
+
+    const blob = await response.blob();
+    const downloadUrl = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = downloadUrl;
+    a.download = `fhd_${organization.id}_${year}.xml`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(downloadUrl);
+  } catch (error) {
+    console.error('Ошибка при экспорте XML:', error);
+    alert(`Ошибка при выгрузке XML: ${error.message}`);
+  }
+  };
+
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
       {showNotification && (
@@ -151,6 +181,7 @@ const PlanFhdTabs = ({ organization }) => {
           Раздел 2. Сведения по выплатам на закупки товаров, работ, услуг
         </button>
         <button onClick={handleSave}>Сохранить добавленные строки</button>
+        <button onClick={handleExportXml}>Выгрузить в XML</button>
       </div>
 
       <div style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
