@@ -72,6 +72,7 @@ const PlanFhdTabs = ({ organization }) => {
     }
   }, [serverTru, year]);
 
+  //Информационное сообщение
   const showNotificationMessage = (message) => {
     setNotificationMessage(message);
     setShowNotification(true);
@@ -80,6 +81,7 @@ const PlanFhdTabs = ({ organization }) => {
     }, 3000);
   };
 
+//Функция сохранения добавленной строки
   const handleSave = () => {
     const rows = activeTab === 'list1' ? indexData : truData;
     const manuallyAddedRows = rows.filter(row => row.manually === true && !row.id);
@@ -110,6 +112,7 @@ const PlanFhdTabs = ({ organization }) => {
     }
   };
 
+  //Функция обновления ячейки
   const handleCellUpdate = (rowId, field, value) => {
     if (!rowId) return;
     const action = activeTab === 'list1' ? updatePlanPaymentIndex : updatePlanPaymentTru;
@@ -117,6 +120,7 @@ const PlanFhdTabs = ({ organization }) => {
     dispatch(action({ id: rowId, data: { [field]: parsedValue } }));
   };
 
+  //Функция удаления строки
   const handleDeleteRow = (rowId) => {
     const deleteAction = activeTab === 'list1' ? deletePlanPaymentIndex : deletePlanPaymentTru;
     if (rowId) {
@@ -125,6 +129,7 @@ const PlanFhdTabs = ({ organization }) => {
     }
   };
 
+  //Функция экспорта ФХД в XML
   const handleExportXml = async () => {
   if (!organization?.id || !year) {
     alert('Выберите организацию и год');
