@@ -6,6 +6,7 @@ from ..models import PlanPaymentTRU
 from django.shortcuts import get_object_or_404
 from MBDOU_INF.serializers import PlanPaymentTRUSerializer
 
+
 class PlanPaymentTRUViewSet(viewsets.ModelViewSet):
     queryset = PlanPaymentTRU.objects.all()
     serializer_class = PlanPaymentTRUSerializer

@@ -1,15 +1,19 @@
 # Генерация и заполнение xml Плана ФХД
-#UUID импорт и Datetime
+# UUID импорт и Datetime
 import uuid
 from xml.dom import minidom
+
 uuid.uuid4()
 import datetime as DT
+
 DT.datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
-#Парсинг в xml из xls отчет о результатах деятельности
+# Парсинг в xml из xls отчет о результатах деятельности
 import xml.etree.ElementTree as ET
 from xml.etree.ElementTree import tostring
+
+
 def generate_xml(index_data, tru_data):
-    year= None
+    year = None
     if index_data and hasattr(index_data[0], 'year'):
         year = index_data[0].year
     elif tru_data and hasattr(tru_data[0], 'year'):
@@ -17,35 +21,35 @@ def generate_xml(index_data, tru_data):
     else:
         year = '0000'
 
-    #заголовок xml
-    financialActivityPlan2020=ET.Element('{http://bus.gov.ru/external/1}financialActivityPlan2020')
-    header_financialActivityPlan2020=ET.SubElement(financialActivityPlan2020, '{http://bus.gov.ru/types/1}header')
-    body_financialActivityPlan2020=ET.SubElement(financialActivityPlan2020, '{http://bus.gov.ru/external/1}body')
+    # заголовок xml
+    financialActivityPlan2020 = ET.Element('{http://bus.gov.ru/external/1}financialActivityPlan2020')
+    header_financialActivityPlan2020 = ET.SubElement(financialActivityPlan2020, '{http://bus.gov.ru/types/1}header')
+    body_financialActivityPlan2020 = ET.SubElement(financialActivityPlan2020, '{http://bus.gov.ru/external/1}body')
 
     # header
-    id=ET.SubElement(header_financialActivityPlan2020, '{http://bus.gov.ru/types/1}id')
-    id.text=str(uuid.uuid4())
-    creatDateTime=ET.SubElement(header_financialActivityPlan2020, '{http://bus.gov.ru/types/1}createDateTime')
-    creatDateTime.text=str(DT.datetime.now().strftime('%Y-%m-%dT%H:%M:%S'))
+    id = ET.SubElement(header_financialActivityPlan2020, '{http://bus.gov.ru/types/1}id')
+    id.text = str(uuid.uuid4())
+    creatDateTime = ET.SubElement(header_financialActivityPlan2020, '{http://bus.gov.ru/types/1}createDateTime')
+    creatDateTime.text = str(DT.datetime.now().strftime('%Y-%m-%dT%H:%M:%S'))
 
     # body
-    position=ET.SubElement(body_financialActivityPlan2020, '{http://bus.gov.ru/external/1}position')
-    position_id=ET.SubElement(position, '{http://bus.gov.ru/types/1}positionId')
-    position_id.text=str(uuid.uuid4())
-    position_changeDate=ET.SubElement(position, '{http://bus.gov.ru/types/1}changeDate')
-    position_changeDate.text=str(DT.datetime.now().strftime('%Y-%m-%dT%H:%M:%S'))
-    position_financialYear=ET.SubElement(position, '{http://bus.gov.ru/types/3}financialYear')
-    position_financialYear.text=str(year)
-    position_generalData=ET.SubElement(position, '{http://bus.gov.ru/types/3}generalData')
+    position = ET.SubElement(body_financialActivityPlan2020, '{http://bus.gov.ru/external/1}position')
+    position_id = ET.SubElement(position, '{http://bus.gov.ru/types/1}positionId')
+    position_id.text = str(uuid.uuid4())
+    position_changeDate = ET.SubElement(position, '{http://bus.gov.ru/types/1}changeDate')
+    position_changeDate.text = str(DT.datetime.now().strftime('%Y-%m-%dT%H:%M:%S'))
+    position_financialYear = ET.SubElement(position, '{http://bus.gov.ru/types/3}financialYear')
+    position_financialYear.text = str(year)
+    position_generalData = ET.SubElement(position, '{http://bus.gov.ru/types/3}generalData')
 
     # generalData
-    generalData_date=ET.SubElement(position_generalData, '{http://bus.gov.ru/types/3}date')
-    generalData_date.text=str(DT.datetime.now().strftime('%Y-%m-%d'))
-    generalData_dateApprovel=ET.SubElement(position_generalData, '{http://bus.gov.ru/types/3}dateApprovel')
-    generalData_dateApprovel.text=str(DT.datetime.now().strftime('%Y-%m-%d'))
+    generalData_date = ET.SubElement(position_generalData, '{http://bus.gov.ru/types/3}date')
+    generalData_date.text = str(DT.datetime.now().strftime('%Y-%m-%d'))
+    generalData_dateApprovel = ET.SubElement(position_generalData, '{http://bus.gov.ru/types/3}dateApprovel')
+    generalData_dateApprovel.text = str(DT.datetime.now().strftime('%Y-%m-%d'))
 
     # founderAuthority
-    generalData_founderAuthority=ET.SubElement(position_generalData, '{http://bus.gov.ru/types/3}founderAuthority')
+    generalData_founderAuthority = ET.SubElement(position_generalData, '{http://bus.gov.ru/types/3}founderAuthority')
     founderAuthority_regNum = ET.SubElement(generalData_founderAuthority, '{http://bus.gov.ru/types/1}regNum')
     founderAuthority_regNum.text = '96301014'
 
@@ -57,13 +61,13 @@ def generate_xml(index_data, tru_data):
 
     # position_planPaymentIndex
     for item in index_data:
-        position_planPaymentIndex = ET.SubElement(position,'{http://bus.gov.ru/types/3}planPaymentIndex')
+        position_planPaymentIndex = ET.SubElement(position, '{http://bus.gov.ru/types/3}planPaymentIndex')
         name = ET.SubElement(position_planPaymentIndex, '{http://bus.gov.ru/types/3}name')
         name.text = str(item.name)
         lineCode = ET.SubElement(position_planPaymentIndex, '{http://bus.gov.ru/types/3}lineCode')
         lineCode.text = item.lineCode
         kbk = ET.SubElement(position_planPaymentIndex, '{http://bus.gov.ru/types/3}kbk')
-        kbk.text = '000' if item.kbk=='X' or item.kbk=='' else str(item.kbk)
+        kbk.text = '000' if item.kbk == 'X' or item.kbk == '' else str(item.kbk)
         analyticCode = ET.SubElement(position_planPaymentIndex, '{http://bus.gov.ru/types/3}analyticCode')
         analyticCode.text = str(item.analyticCode if item.analyticCode is 'X' else '000')
         manually = ET.SubElement(position_planPaymentIndex, '{http://bus.gov.ru/types/3}manually')
@@ -99,8 +103,7 @@ def generate_xml(index_data, tru_data):
         AutPlanYearSum = ET.SubElement(Sum, '{http://bus.gov.ru/types/3}autPlanYearSum')
         AutPlanYearSum.text = str(item.AutPlanYearSumm if item.AutPlanYearSumm is not None else 0)
 
- # ... конец цикла tru_data
-
+        # ... конец цикла tru_data
 
         rough_string = ET.tostring(financialActivityPlan2020, encoding='utf-8', method='xml')
         reparsed = minidom.parseString(rough_string)

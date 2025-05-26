@@ -1,4 +1,6 @@
 from django.db import models
+
+
 # Модель организации
 # Хранит основную информацию об организации
 class Organization(models.Model):

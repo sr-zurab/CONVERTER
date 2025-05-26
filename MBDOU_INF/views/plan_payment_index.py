@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from ..models import PlanPaymentIndex
 from MBDOU_INF.serializers import PlanPaymentIndexSerializer
 
+
 class PlanPaymentIndexViewSet(viewsets.ModelViewSet):
     queryset = PlanPaymentIndex.objects.all()
     serializer_class = PlanPaymentIndexSerializer

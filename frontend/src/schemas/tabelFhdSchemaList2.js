@@ -1,20 +1,23 @@
-export const fhdSchemaList2={
-    planPaymentTRU:[
-        {field:"lineNum", label:"Номер строки"},
-        {field:"kbk", label:"Код бюджетной классификации"},
-        {field:"name", label:"Наименование показателя"},
-        {field:"lineCode", label:"Код строки"},
-        {field:"yearStart", label:"Год начала закупки"},
-        {field:"uniqueCode", label:"Уникальный код объекта капитального, строительства, объекта недвижимого имущества"},
-        {field:"manually", label:"false"},
-        {field:"financialYearSum", label:"Сумма на текущий финансовый год"},
-        {field:"planFirstYearSum", label:"Сумма на первый год планового периода"},
-        {field:"planLastYearSum", label:"Сумма на второй год планового периода"},
-        {field:"AutPlanYearSumm", label:"Сумма за пределами планового периода"},
-        {field:"actions", label:""}
+export const fhdSchemaList2 = {
+    planPaymentTRU: [
+        {field: "lineNum", label: "Номер строки"},
+        {field: "kbk", label: "Код бюджетной классификации"},
+        {field: "name", label: "Наименование показателя"},
+        {field: "lineCode", label: "Код строки"},
+        {field: "yearStart", label: "Год начала закупки"},
+        {
+            field: "uniqueCode",
+            label: "Уникальный код объекта капитального, строительства, объекта недвижимого имущества"
+        },
+        {field: "manually", label: "false"},
+        {field: "financialYearSum", label: "Сумма на текущий финансовый год"},
+        {field: "planFirstYearSum", label: "Сумма на первый год планового периода"},
+        {field: "planLastYearSum", label: "Сумма на второй год планового периода"},
+        {field: "AutPlanYearSumm", label: "Сумма за пределами планового периода"},
+        {field: "actions", label: ""}
     ],
-     defaultPaymentTRU:[
-         {
+    defaultPaymentTRU: [
+        {
             "lineNum": "1.",
             "kbk": "",
             "name": "Выплаты на закупку товаров, работ, услуг, всего в том числе:",
@@ -26,8 +29,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.1.",
             "kbk": "",
             "name": "по контрактам (договорам), заключенным до начала текущего финансового года без применения норм Федерального закона от 5 апреля 2013 г. № 44-ФЗ «О контрактной системе в сфере закупок товаров, работ, услуг для обеспечения государственных и муниципальных нужд» (Собрание законодательства Российской Федерации, 2013, № 14, ст. 1652; 2018, № 32, ст. 5104) (далее — Федеральный закон № 44-ФЗ) и Федерального закона от 18 июля 2011 г. № 223-ФЗ «О закупках товаров, работ, услуг отдельными видами юридических лиц» (Собрание законодательства Российской Федерации, 2011, № 30, ст. 4571; 2018, № 32, ст. 5135) (далее — Федеральный закон № 223-ФЗ)",
@@ -39,8 +42,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.2.",
             "kbk": "",
             "name": "по контрактам (договорам), планируемым к заключению в соответствующем финансовом году без применения норм Федерального закона № 44-ФЗ и Федерального закона № 223-ФЗ",
@@ -52,8 +55,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.3.",
             "kbk": "",
             "name": "по контрактам (договорам), заключенным до начала текущего финансового года с учетом требований Федерального закона № 44-ФЗ и Федерального закона № 223-ФЗ в том числе:",
@@ -65,8 +68,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.3.1.",
             "kbk": "X",
             "name": "в соответствии с Федеральным законом № 44-ФЗ из них:",
@@ -78,8 +81,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.3.2.",
             "kbk": "X",
             "name": "в соответствии с Федеральным законом № 223-ФЗ",
@@ -91,8 +94,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.",
             "kbk": "",
             "name": "по контрактам (договорам), планируемым к заключению в соответствующем финансовом году с учетом требований Федерального закона № 44-ФЗ и Федерального закона № 223-ФЗ в том числе:",
@@ -104,8 +107,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.1.",
             "kbk": "",
             "name": "за счет субсидий, предоставляемых на финансовое обеспечение выполнения государственного (муниципального) задания в том числе:",
@@ -117,8 +120,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.1.1.",
             "kbk": "",
             "name": "в соответствии с Федеральным законом № 44-ФЗ",
@@ -130,8 +133,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.1.2.",
             "kbk": "",
             "name": "в соответствии с Федеральным законом № 223-ФЗ",
@@ -143,8 +146,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.2.",
             "kbk": "",
             "name": "за счет субсидий, предоставляемых в соответствии с абзацем вторым пункта 1 статьи 78.1 Бюджетного кодекса Российской Федерации в том числе:",
@@ -156,8 +159,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.2.1",
             "kbk": "",
             "name": "в соответствии с Федеральным законом № 44-ФЗ из них:",
@@ -169,8 +172,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.2.2.",
             "kbk": "",
             "name": "в соответствии с Федеральным законом № 223-ФЗ",
@@ -182,8 +185,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.3.",
             "kbk": "",
             "name": "за счет субсидий, предоставляемых на осуществление капитальных вложений из них:",
@@ -195,8 +198,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.4.",
             "kbk": "",
             "name": "за счет средств обязательного медицинского страхования в том числе:",
@@ -208,8 +211,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.4.1.",
             "kbk": "",
             "name": "в соответствии с Федеральным законом № 44-ФЗ",
@@ -221,8 +224,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.4.2.",
             "kbk": "",
             "name": "в соответствии с Федеральным законом № 223-ФЗ",
@@ -234,8 +237,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.5.",
             "kbk": "",
             "name": "за счет прочих источников финансового обеспечения в том числе:",
@@ -247,8 +250,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.5.1.",
             "kbk": "",
             "name": "в соответствии с Федеральным законом № 44-ФЗ из них:",
@@ -260,8 +263,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "1.4.5.2.",
             "kbk": "",
             "name": "в соответствии с Федеральным законом № 223-ФЗ",
@@ -273,8 +276,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "2.",
             "kbk": "",
             "name": "Итого по контрактам, планируемым к заключению в соответствующем финансовом году в соответствии с Федеральным законом № 44-ФЗ, по соответствующему году закупки в том числе по году начала закупки:",
@@ -286,8 +289,8 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         },
-         {
+        },
+        {
             "lineNum": "3.",
             "kbk": "",
             "name": "Итого по договорам, планируемым к заключению в соответствующем финансовом году в соответствии с Федеральным законом № 223-ФЗ, по соответствующему году закупки в том числе по году начала закупки:",
@@ -299,6 +302,6 @@ export const fhdSchemaList2={
             "planFirstYearSum": "",
             "planLastYearSum": "",
             "AutPlanYearSumm": ""
-         }
-     ]
+        }
+    ]
 }

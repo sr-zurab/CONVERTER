@@ -2,6 +2,7 @@
 from rest_framework import serializers
 from MBDOU_INF.models import Organization
 
+
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization

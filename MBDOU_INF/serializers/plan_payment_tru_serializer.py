@@ -2,6 +2,7 @@ from rest_framework import serializers
 from MBDOU_INF.models import PlanPaymentTRU
 from MBDOU_INF.fields import NullableDecimalField
 
+
 class PlanPaymentTRUSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     kbk = serializers.CharField(allow_blank=True, allow_null=True, required=False)
