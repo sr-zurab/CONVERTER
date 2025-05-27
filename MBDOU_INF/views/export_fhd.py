@@ -17,6 +17,6 @@ def export_fhd_xml(request):
 
     xml_data = generate_xml(index_data, tru_data)
 
-    response = HttpResponse(xml_data, content_type='application/xml')
+    response = HttpResponse(xml_data, content_type='application/xml; charset=utf-8')
     response['Content-Disposition'] = f'attachment; filename="fhd_{org_id}_{year}.xml"'
     return response

@@ -78,10 +78,16 @@ WSGI_APPLICATION = 'MBDOU_LIST.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  # Убедитесь, что этот параметр указан
+        'NAME': 'MBDOU',
+        'USER': 'Admin',
+        'PASSWORD': '010786',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
+
 
 
 # Password validation
