@@ -3,6 +3,8 @@
 import uuid
 from xml.dom import minidom
 
+from MBDOU_INF.models import Organization
+
 uuid.uuid4()
 import datetime as DT
 
@@ -12,7 +14,7 @@ import xml.etree.ElementTree as ET
 from xml.etree.ElementTree import tostring
 
 
-def generate_xml(index_data, tru_data):
+def generate_xml(index_data, tru_data,org_data):
     year = None
     if index_data and hasattr(index_data[0], 'year'):
         year = index_data[0].year
