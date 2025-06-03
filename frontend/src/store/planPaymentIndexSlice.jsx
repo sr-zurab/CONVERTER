@@ -1,13 +1,13 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
-const API_URL = 'http://127.0.0.1:8000/api/plan-payment-index/';
+const API_URL = '/api/plan-payment-index/';
 
 // Загрузка по organizationId и году
 export const fetchPlanPaymentIndex = createAsyncThunk(
     'planPaymentIndex/fetch',
-    async ({orgId, year}, {rejectWithValue}) => {
+    async ({organizationId, year}, {rejectWithValue}) => {
         try {
-            const res = await fetch(`${API_URL}?organization=${orgId}&year=${year}`);
+            const res = await fetch(`${API_URL}?organization=${organizationId}&year=${year}`);
             if (!res.ok) throw new Error('Ошибка при загрузке данных');
             return await res.json();
         } catch (error) {

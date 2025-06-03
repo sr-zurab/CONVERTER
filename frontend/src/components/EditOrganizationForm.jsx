@@ -27,10 +27,14 @@ const EditOrganizationForm = ({onClose, organization}) => {
 
     // Обработчик отправки формы
     // @param {Event} e - Событие отправки формы
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(updateOrganization({id: organization.id, data: formData}))
-            .then(() => onClose());
+        try {
+            await dispatch(updateOrganization({id: organization.id, data: formData})).unwrap();
+            onClose();
+        } catch (error) {
+            alert('Ошибка при обновлении организации: ' + error);
+        }
     };
 
     return (

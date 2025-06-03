@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
-const API_URL = 'http://127.0.0.1:8000/api/plan-payment-tru/';
+const API_URL = '/api/plan-payment-tru/';
 
 // Загрузка TRU по organization и year
 export const fetchPlanPaymentTru = createAsyncThunk(

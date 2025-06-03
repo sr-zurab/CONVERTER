@@ -47,7 +47,7 @@ const PlanFhdTabs = ({organization}) => {
 
     useEffect(() => {
         if (organization?.id && year) {
-            dispatch(fetchPlanPaymentIndex({orgId: organization.id, year}));
+            dispatch(fetchPlanPaymentIndex({organizationId: organization.id, year}));
             dispatch(fetchPlanPaymentTru({organizationId: organization.id, year}));
         }
     }, [organization, year, dispatch]);
@@ -102,7 +102,7 @@ const PlanFhdTabs = ({organization}) => {
 
             setTimeout(() => {
                 if (activeTab === 'list1') {
-                    dispatch(fetchPlanPaymentIndex({orgId: organization.id, year}));
+                    dispatch(fetchPlanPaymentIndex({organizationId: organization.id, year}));
                 } else {
                     dispatch(fetchPlanPaymentTru({organizationId: organization.id, year}));
                 }
@@ -136,7 +136,7 @@ const PlanFhdTabs = ({organization}) => {
             return;
         }
 
-        const url = `http://localhost:8000/api/export-fhd-xml/?org_id=${organization.id}&year=${year}`;
+        const url = `/api/export-fhd-xml/?org_id=${organization.id}&year=${year}`;
         try {
             const response = await fetch(url, {method: 'GET'});
             if (!response.ok) {

@@ -23,9 +23,14 @@ const AddOrganizationForm = ({onClose}) => {
 
     // Обработчик отправки формы
     // @param {Event} e - Событие отправки формы
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(addOrganization(formData)).then(() => onClose());
+        try {
+            await dispatch(addOrganization(formData)).unwrap();
+            onClose();
+        } catch (error) {
+            alert('Ошибка при добавлении организации: ' + error);
+        }
     };
 
     return (

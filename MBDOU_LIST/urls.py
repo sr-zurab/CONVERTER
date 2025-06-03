@@ -3,5 +3,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('MBDOU_INF.urls')),  # Подключаем маршруты приложения
+    path('api/', include('MBDOU_INF.urls')),  # Подключаем маршруты приложения
 ]
