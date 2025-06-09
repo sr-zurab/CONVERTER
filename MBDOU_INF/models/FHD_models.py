@@ -73,4 +73,4 @@ class PlanPaymentTRU(models.Model):
         verbose_name_plural = "Планируемые платежи"
 
     def __str__(self):
-        return f"{self.name} ({self.kbk})" if self.name and self.kbk else "Платёж без данных"
+        return f"{self.lineCode} - {self.name}" if self.lineCode and self.name else "Показатель без данных"
