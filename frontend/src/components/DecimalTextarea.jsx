@@ -1,47 +1,60 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-const DecimalTextarea = ({value, onChange, onKeyDown, dataCell}) => {
+const DecimalTextarea = ({ value, onChange, onKeyDown, dataCell }) => {
     const [localValue, setLocalValue] = useState(value ?? '');
+    const [allowSpace, setAllowSpace] = useState(false);
 
     useEffect(() => {
-        if (value !== localValue) {
-            setLocalValue(value ?? '');
+        setLocalValue(value ?? '');
+
+        // Если value пришло с пробелом — включаем allowSpace
+        if (typeof value === 'string' && value.includes(' ')) {
+            setAllowSpace(true);
         }
-    }, [value]);
+
+        // Если это одна из первых 4 колонок — тоже разрешаем пробел
+        const colIndex = parseInt(dataCell?.split('-')[1], 10);
+        if (!isNaN(colIndex) && colIndex < 4) {
+            setAllowSpace(true);
+        }
+
+    }, [value, dataCell]);
 
     const handleChange = (e) => {
         let input = e.target.value;
 
-        // Заменить русскую "ю" и запятую на точку
+        // Разрешаем ввод пробела, если хотя бы один раз его ввели или колонка < 4
+        if (input.includes(' ')) {
+            setAllowSpace(true);
+        }
+
+        // Заменяем только ю и , на точку
         input = input.replace(/ю|,/g, '.');
 
-        // Только допустимые символы: цифры, точка, до 2 знаков после точки
-        const regex = /^-?\d*\.?\d{0,2}$/;
-
-        if (input === '' || regex.test(input)) {
-            setLocalValue(input);
+        if (!allowSpace) {
+            input = input.replace(/\s/g, '');
         }
+
+        setLocalValue(input);
     };
 
-
     const handleBlur = () => {
-        if (localValue === '') {
+        const cleaned = localValue;
+
+        if (cleaned.trim() === '') {
             onChange(null);
             return;
         }
 
-        const parsed = parseFloat(localValue);
+        const parsed = parseFloat(cleaned);
         if (!isNaN(parsed)) {
             const formatted = parsed.toFixed(2);
             setLocalValue(formatted);
             onChange(formatted);
-        } else if (/^\d+\.$/.test(localValue)) {
-            const formatted = parseFloat(localValue).toFixed(2);
-            setLocalValue(formatted);
-            onChange(formatted);
         } else {
-            setLocalValue('');
-            onChange(null);
+            // если не число — сохранить как есть (например, текст с пробелом)
+            setLocalValue(cleaned);
+            onChange(cleaned);
         }
     };
 

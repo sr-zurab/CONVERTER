@@ -5,6 +5,7 @@ from MBDOU_INF.fields import NullableDecimalField
 
 class PlanPaymentTRUSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(allow_blank=True, allow_null=True, required=False, trim_whitespace=False)
     kbk = serializers.CharField(allow_blank=True, allow_null=True, required=False)
     analyticCode = serializers.CharField(allow_blank=True, allow_null=True, required=False)
     financialYearSum = NullableDecimalField(max_digits=20, decimal_places=2, allow_null=True, required=False)
