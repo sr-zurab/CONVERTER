@@ -158,6 +158,43 @@ const PlanFhdTabs = ({organization}) => {
             alert(`Ошибка при выгрузке XML: ${error.message}`);
         }
     };
+//Экспорт в xlsx
+    const handleExportXLSX = async () => {
+        if (!organization?.id || !year) {
+            alert('Выберите организацию и год');
+            return;
+        }
+        const formData = new FormData();
+        formData.append('org_id', organization.id);
+        formData.append('year', year);
+        try {
+            const response = await fetch('/api/export-fhd-xlsx/', {
+                method: 'POST',
+                body: formData
+            });
+            if (!response.ok) {
+                const error = await response.text();
+                alert('Ошибка: ' + error);
+                return;
+            }
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+
+            const contentDisposition =
+                response.headers.get('Content-Disposition');
+            const match = contentDisposition && contentDisposition.match(/filename="?([^"]+)"?/);
+            const filename = match ? decodeURIComponent(match[1]) : `fhd_${organization.id}_${year}.xlsx`;
+            a.href = url;
+            a.download = filename;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } catch (e) {
+            alert('Произошла ошибка при экспорте файла');
+            console.error(e);
+        }
+    }
+
 
 
     return (
@@ -177,16 +214,17 @@ const PlanFhdTabs = ({organization}) => {
                     onClick={() => setActiveTab('list1')}
                     className={activeTab === 'list1' ? 'active' : ''}
                 >
-                    Раздел 1. Поступления и выплаты
+                    Раздел 1
                 </button>
                 <button
                     onClick={() => setActiveTab('list2')}
                     className={activeTab === 'list2' ? 'active' : ''}
                 >
-                    Раздел 2. Сведения по выплатам на закупки товаров, работ, услуг
+                    Раздел 2
                 </button>
                 <button onClick={handleSave}>Сохранить добавленные строки</button>
-                <button onClick={handleExportXml}>Выгрузить в XML</button>
+                <button onClick={handleExportXml}>XML</button>
+                <button onClick={handleExportXLSX}>XLSX</button>
             </div>
 
             <div style={{flex: 1, minHeight: 0, overflow: 'auto'}}>
