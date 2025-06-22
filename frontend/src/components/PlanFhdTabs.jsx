@@ -16,6 +16,9 @@ import {
     deletePlanPaymentTru
 } from '../store/paymentTruSlice';
 import {mergeDefaultAndServerData} from '../utils/mergeFhdData';
+import { BsFiletypeXlsx, BsFiletypeXml  } from "react-icons/bs";
+import {RiSave2Fill} from "react-icons/ri"
+import { LuFileSpreadsheet } from "react-icons/lu";
 
 const notificationStyle = {
     position: 'fixed',
@@ -213,18 +216,14 @@ const PlanFhdTabs = ({organization}) => {
                 <button
                     onClick={() => setActiveTab('list1')}
                     className={activeTab === 'list1' ? 'active' : ''}
-                >
-                    Раздел 1
-                </button>
+                ><LuFileSpreadsheet/> Раздел 1</button>
                 <button
                     onClick={() => setActiveTab('list2')}
                     className={activeTab === 'list2' ? 'active' : ''}
-                >
-                    Раздел 2
-                </button>
-                <button onClick={handleSave}>Сохранить добавленные строки</button>
-                <button onClick={handleExportXml}>XML</button>
-                <button onClick={handleExportXLSX}>XLSX</button>
+                ><LuFileSpreadsheet/> Раздел 2</button>
+                <button onClick={handleSave}><RiSave2Fill/> Сохранить добавленные строки</button>
+                <button onClick={handleExportXml}><BsFiletypeXml/> Xml</button>
+                <button onClick={handleExportXLSX}><BsFiletypeXlsx/> Xlsx</button>
             </div>
 
             <div style={{flex: 1, minHeight: 0, overflow: 'auto'}}>
