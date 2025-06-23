@@ -16,9 +16,10 @@ import {
     deletePlanPaymentTru
 } from '../store/paymentTruSlice';
 import {mergeDefaultAndServerData} from '../utils/mergeFhdData';
-import { BsFiletypeXlsx, BsFiletypeXml  } from "react-icons/bs";
-import {RiSave2Fill} from "react-icons/ri"
-import { LuFileSpreadsheet } from "react-icons/lu";
+import {BsFiletypeXlsx, BsFiletypeXml} from "react-icons/bs";
+import {RiSave2Fill} from "react-icons/ri";
+import {LuFileSpreadsheet} from "react-icons/lu";
+import {FiUpload} from "react-icons/fi";
 
 const notificationStyle = {
     position: 'fixed',
@@ -56,35 +57,21 @@ const PlanFhdTabs = ({organization}) => {
     }, [organization, year, dispatch]);
 
     useEffect(() => {
-        if (serverIndex.length) {
-            const merged = mergeDefaultAndServerData(
-                fhdSchemaList1.defaultPaymentIndex,
-                serverIndex.filter(i => i.year === year)
-            );
-            setIndexData(merged);
-        }
+        const filtered = serverIndex.filter(i => i.year === year);
+        setIndexData(mergeDefaultAndServerData(fhdSchemaList1.defaultPaymentIndex, filtered));
     }, [serverIndex, year]);
 
     useEffect(() => {
-        if (serverTru.length) {
-            const merged = mergeDefaultAndServerData(
-                fhdSchemaList2.defaultPaymentTRU,
-                serverTru.filter(i => i.year === year)
-            );
-            setTruData(merged);
-        }
+        const filtered = serverTru.filter(i => i.year === year);
+        setTruData(mergeDefaultAndServerData(fhdSchemaList2.defaultPaymentTRU, filtered));
     }, [serverTru, year]);
 
-    //Информационное сообщение
     const showNotificationMessage = (message) => {
         setNotificationMessage(message);
         setShowNotification(true);
-        setTimeout(() => {
-            setShowNotification(false);
-        }, 3000);
+        setTimeout(() => setShowNotification(false), 3000);
     };
 
-//Функция сохранения добавленной строки
     const handleSave = () => {
         const rows = activeTab === 'list1' ? indexData : truData;
         const manuallyAddedRows = rows.filter(row => row.manually === true && !row.id);
@@ -115,15 +102,12 @@ const PlanFhdTabs = ({organization}) => {
         }
     };
 
-    //Функция обновления ячейки
     const handleCellUpdate = (rowId, field, value) => {
         if (!rowId) return;
         const action = activeTab === 'list1' ? updatePlanPaymentIndex : updatePlanPaymentTru;
-        const parsedValue = value === '' ? null : value;
-        dispatch(action({id: rowId, data: {[field]: parsedValue}}));
+        dispatch(action({id: rowId, data: {[field]: value === '' ? null : value}}));
     };
 
-    //Функция удаления строки
     const handleDeleteRow = (rowId) => {
         const deleteAction = activeTab === 'list1' ? deletePlanPaymentIndex : deletePlanPaymentTru;
         if (rowId) {
@@ -132,100 +116,99 @@ const PlanFhdTabs = ({organization}) => {
         }
     };
 
-    //Функция экспорта ФХД в XML
     const handleExportXml = async () => {
-        if (!organization?.id || !year) {
-            alert('Выберите организацию и год');
-            return;
-        }
-
-        const url = `/api/export-fhd-xml/?org_id=${organization.id}&year=${year}`;
+        if (!organization?.id || !year) return alert('Выберите организацию и год');
         try {
-            const response = await fetch(url, {method: 'GET'});
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(errorText || `Ошибка: ${response.status}`);
-            }
-
-            const blob = await response.blob();
-            const downloadUrl = window.URL.createObjectURL(blob);
+            const res = await fetch(`/api/export-fhd-xml/?org_id=${organization.id}&year=${year}`);
+            if (!res.ok) throw new Error(await res.text());
+            const blob = await res.blob();
             const a = document.createElement('a');
-            a.href = downloadUrl;
+            a.href = URL.createObjectURL(blob);
             a.download = `fhd_${organization.id}_${year}.xml`;
             document.body.appendChild(a);
             a.click();
             a.remove();
-            window.URL.revokeObjectURL(downloadUrl);
-        } catch (error) {
-            console.error('Ошибка при экспорте XML:', error);
-            alert(`Ошибка при выгрузке XML: ${error.message}`);
+            URL.revokeObjectURL(a.href);
+        } catch (err) {
+            alert(`Ошибка XML: ${err.message}`);
         }
     };
-//Экспорт в xlsx
+
     const handleExportXLSX = async () => {
-        if (!organization?.id || !year) {
-            alert('Выберите организацию и год');
-            return;
-        }
-        const formData = new FormData();
-        formData.append('org_id', organization.id);
-        formData.append('year', year);
+        if (!organization?.id || !year) return alert('Выберите организацию и год');
         try {
+            const formData = new FormData();
+            formData.append('org_id', organization.id);
+            formData.append('year', year);
             const response = await fetch('/api/export-fhd-xlsx/', {
                 method: 'POST',
                 body: formData
             });
-            if (!response.ok) {
-                const error = await response.text();
-                alert('Ошибка: ' + error);
-                return;
-            }
+            if (!response.ok) return alert(await response.text());
             const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
-
-            const contentDisposition =
-                response.headers.get('Content-Disposition');
-            const match = contentDisposition && contentDisposition.match(/filename="?([^"]+)"?/);
-            const filename = match ? decodeURIComponent(match[1]) : `fhd_${organization.id}_${year}.xlsx`;
-            a.href = url;
+            a.href = URL.createObjectURL(blob);
+            const cd = response.headers.get('Content-Disposition');
+            const filename = cd?.match(/filename="?(.+?)"?$/)?.[1] || `fhd_${organization.id}_${year}.xlsx`;
             a.download = filename;
             a.click();
-            window.URL.revokeObjectURL(url);
+            URL.revokeObjectURL(a.href);
         } catch (e) {
-            alert('Произошла ошибка при экспорте файла');
+            alert('Ошибка экспорта XLSX');
             console.error(e);
         }
-    }
+    };
 
+    const handleImportXLSX = async (e) => {
+        const file = e.target.files[0];
+        if (!file || !organization?.id || !year) return;
 
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('org_id', organization.id);
+        formData.append('year', year);
+        formData.append('default_codes_list1', JSON.stringify(fhdSchemaList1.defaultPaymentIndex.map(r => r.lineCode)));
+        formData.append('default_codes_list2', JSON.stringify(fhdSchemaList2.defaultPaymentTRU.map(r => r.lineCode)));
+
+        try {
+            const res = await fetch('/api/import-fhd-xlsx/', {
+                method: 'POST',
+                body: formData
+            });
+            if (!res.ok) throw new Error(await res.text());
+            showNotificationMessage('Файл успешно загружен');
+
+            dispatch(fetchPlanPaymentIndex({organizationId: organization.id, year}));
+            dispatch(fetchPlanPaymentTru({organizationId: organization.id, year}));
+        } catch (err) {
+            alert(`Ошибка загрузки XLSX: ${err.message}`);
+        }
+    };
 
     return (
         <div style={{display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0}}>
-            {showNotification && (
-                <div style={notificationStyle}>
-                    {notificationMessage}
-                </div>
-            )}
+            {showNotification && <div style={notificationStyle}>{notificationMessage}</div>}
+
             <div className="fhd-controls">
                 <select value={year} onChange={e => setYear(parseInt(e.target.value, 10))}>
                     {[2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => (
                         <option key={y} value={y}>{y}</option>
                     ))}
                 </select>
-                <button
-                    onClick={() => setActiveTab('list1')}
-                    className={activeTab === 'list1' ? 'active' : ''}
-                ><LuFileSpreadsheet/> Раздел 1</button>
-                <button
-                    onClick={() => setActiveTab('list2')}
-                    className={activeTab === 'list2' ? 'active' : ''}
-                ><LuFileSpreadsheet/> Раздел 2</button>
+                <button onClick={() => setActiveTab('list1')} className={activeTab === 'list1' ? 'active' : ''}>
+                    <LuFileSpreadsheet/> Раздел 1
+                </button>
+                <button onClick={() => setActiveTab('list2')} className={activeTab === 'list2' ? 'active' : ''}>
+                    <LuFileSpreadsheet/> Раздел 2
+                </button>
                 <button onClick={handleSave}><RiSave2Fill/> Сохранить добавленные строки</button>
                 <button onClick={handleExportXml}><BsFiletypeXml/> Xml</button>
                 <button onClick={handleExportXLSX}><BsFiletypeXlsx/> Xlsx</button>
+                <button><label className="custom-upload-button">
+                    <FiUpload/> Загрузить XLSX
+                    <input type="file" accept=".xlsx" onChange={handleImportXLSX} style={{display: 'none'}} />
+                </label></button>
             </div>
-
             <div style={{flex: 1, minHeight: 0, overflow: 'auto'}}>
                 {activeTab === 'list1' ? (
                     <FhdTable
