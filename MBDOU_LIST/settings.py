@@ -3,6 +3,7 @@ Django settings for MBDOU_LIST project.
 """
 import os
 from pathlib import Path
+from datetime import timedelta
 
 # Базовая директория проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,6 +37,8 @@ INSTALLED_APPS = [
     'rest_framework',  # Django REST Framework
     'django_extensions',  # Утилиты для разработки
 ]
+
+AUTH_USER_MODEL = 'MBDOU_INF.CustomUser'
 
 # Список используемых middleware (промежуточных обработчиков запросов)
 MIDDLEWARE = [
@@ -79,7 +82,7 @@ WSGI_APPLICATION = 'MBDOU_LIST.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',  # Движок БД (PostgreSQL)
-        'NAME': 'MBDOU',  # Имя базы данных
+        'NAME': 'mbdou',  # Имя базы данных
         'USER': 'Admin',  # Пользователь БД
         'PASSWORD': '010786',  # Пароль
         'HOST': 'localhost',  # Адрес сервера БД
@@ -154,3 +157,14 @@ CORS_ALLOW_HEADERS = [
     "authorization",
     "content-type",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework_simplejwt.authentication.JWTAuthentication',
+                                      ],
+                  }
+
+# Настройки SimpleJWT для увеличения срока жизни токенов
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=3),  # 3 часа
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # 7 дней
+}

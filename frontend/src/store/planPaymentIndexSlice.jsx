@@ -2,12 +2,24 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 const API_URL = '/api/plan-payment-index/';
 
+// Хелпер для авторизации
+function authFetch(url, options = {}) {
+    const token = localStorage.getItem('access');
+    return fetch(url, {
+        ...options,
+        headers: {
+            ...(options.headers || {}),
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+    });
+}
+
 // Загрузка по organizationId и году
 export const fetchPlanPaymentIndex = createAsyncThunk(
     'planPaymentIndex/fetch',
     async ({organizationId, year}, {rejectWithValue}) => {
         try {
-            const res = await fetch(`${API_URL}?organization=${organizationId}&year=${year}`);
+            const res = await authFetch(`${API_URL}?organization=${organizationId}&year=${year}`);
             if (!res.ok) throw new Error('Ошибка при загрузке данных');
             return await res.json();
         } catch (error) {
@@ -20,7 +32,7 @@ export const addPlanPaymentIndex = createAsyncThunk(
     'planPaymentIndex/add',
     async (data, {rejectWithValue}) => {
         try {
-            const res = await fetch(API_URL, {
+            const res = await authFetch(API_URL, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data),
@@ -38,14 +50,14 @@ export const updatePlanPaymentIndex = createAsyncThunk(
     async ({id, data}, {rejectWithValue}) => {
         try {
             const cleanedData = {...data, analyticCode: data.analyticCode || null};
-            const res = await fetch(`${API_URL}${id}/`, {
-                method: 'PATCH', // <-- заменил PUT на PATCH
+            const res = await authFetch(`${API_URL}${id}/`, {
+                method: 'PATCH',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(cleanedData),
             });
             if (!res.ok) {
                 const errorResponse = await res.json();
-                console.error("Ошибка PATCH:", errorResponse);
+                console.error('Ошибка PATCH:', errorResponse);
                 throw new Error(errorResponse.detail || 'Ошибка обновления записи');
             }
             return await res.json();
@@ -59,7 +71,7 @@ export const deletePlanPaymentIndex = createAsyncThunk(
     'planPaymentIndex/delete',
     async (id, {rejectWithValue}) => {
         try {
-            const res = await fetch(`${API_URL}${id}/`, {method: 'DELETE'});
+            const res = await authFetch(`${API_URL}${id}/`, {method: 'DELETE'});
             if (!res.ok) throw new Error('Ошибка при удалении записи');
             return id;
         } catch (error) {

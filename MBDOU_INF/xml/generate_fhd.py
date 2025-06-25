@@ -71,7 +71,7 @@ def generate_xml(index_data, tru_data,org_data):
         kbk = ET.SubElement(position_planPaymentIndex, '{http://bus.gov.ru/types/3}kbk')
         kbk.text = '000' if item.kbk == 'X' or item.kbk == '' else str(item.kbk)
         analyticCode = ET.SubElement(position_planPaymentIndex, '{http://bus.gov.ru/types/3}analyticCode')
-        analyticCode.text = str(item.analyticCode if item.analyticCode is 'X' else '000')
+        analyticCode.text = str(item.analyticCode if item.analyticCode == 'X' else '000')
         manually = ET.SubElement(position_planPaymentIndex, '{http://bus.gov.ru/types/3}manually')
         manually.text = '1' if item.manually else '0'
         Sum = ET.SubElement(position_planPaymentIndex, '{http://bus.gov.ru/types/3}sum')
@@ -105,9 +105,8 @@ def generate_xml(index_data, tru_data,org_data):
         AutPlanYearSum = ET.SubElement(Sum, '{http://bus.gov.ru/types/3}autPlanYearSum')
         AutPlanYearSum.text = str(item.AutPlanYearSumm if item.AutPlanYearSumm is not None else 0)
 
-        # ... конец цикла tru_data
-
-        rough_string = ET.tostring(financialActivityPlan2020, encoding='utf-8', method='xml')
-        reparsed = minidom.parseString(rough_string)
-        pretty_xml = reparsed.toprettyxml(indent="  ", encoding='utf-8')
-        return pretty_xml
+    # Этот блок был с неправильным отступом, выносим его из цикла
+    rough_string = ET.tostring(financialActivityPlan2020, encoding='utf-8', method='xml')
+    reparsed = minidom.parseString(rough_string)
+    pretty_xml = reparsed.toprettyxml(indent="  ", encoding='utf-8')
+    return pretty_xml

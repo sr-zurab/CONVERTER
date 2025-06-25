@@ -1,21 +1,30 @@
 import json, os
 from django.conf import settings
+import json, os
+from django.conf import settings
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from ..models import PlanPaymentIndex
+from ..models import PlanPaymentIndex, Organization
 from MBDOU_INF.serializers import PlanPaymentIndexSerializer
-
 
 class PlanPaymentIndexViewSet(viewsets.ModelViewSet):
     queryset = PlanPaymentIndex.objects.all()
     serializer_class = PlanPaymentIndexSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         org_id = self.request.query_params.get('organization')
         year = self.request.query_params.get('year')
 
         if not org_id or not year:
+            return PlanPaymentIndex.objects.none()
+
+        # Проверка, что организация принадлежит пользователю
+        try:
+            Organization.objects.get(id=org_id, user=self.request.user)
+        except Organization.DoesNotExist:
             return PlanPaymentIndex.objects.none()
 
         queryset = PlanPaymentIndex.objects.filter(organization_id=org_id, year=year)
@@ -29,16 +38,6 @@ class PlanPaymentIndexViewSet(viewsets.ModelViewSet):
         return get_object_or_404(PlanPaymentIndex, pk=self.kwargs['pk'])
 
     def _init_defaults_for(self, org_id, year):
-        def _clean_decimal(value):
-            return None if value in ["", None] else value
-
-        def _clean_bool(value):
-            if isinstance(value, bool):
-                return value
-            if isinstance(value, str):
-                return value.lower() in ["true", "1"]
-            return False
-
         filepath = os.path.join(settings.BASE_DIR, "data", "default_payment_index.json")
         try:
             with open(filepath, encoding="utf-8") as f:
@@ -55,12 +54,12 @@ class PlanPaymentIndexViewSet(viewsets.ModelViewSet):
                 lineCode=row.get("lineCode", ""),
                 kbk=row.get("kbk", ""),
                 analyticCode=row.get("analyticCode", ""),
-                manually=_clean_bool(row.get("manually")),
+                manually=row.get("manually", False),
                 afterLineCode=row.get("afterLineCode", ""),
-                financialYearSum=_clean_decimal(row.get("financialYearSum")),
-                planFirstYearSum=_clean_decimal(row.get("planFirstYearSum")),
-                planLastYearSum=_clean_decimal(row.get("planLastYearSum")),
-                AutPlanYearSumm=_clean_decimal(row.get("AutPlanYearSumm")),
+                financialYearSum=row.get("financialYearSum") or None,
+                planFirstYearSum=row.get("planFirstYearSum") or None,
+                planLastYearSum=row.get("planLastYearSum") or None,
+                AutPlanYearSumm=row.get("AutPlanYearSumm") or None,
             )
 
     def update(self, request, *args, **kwargs):

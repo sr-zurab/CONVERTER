@@ -4,10 +4,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from openpyxl import load_workbook
 from MBDOU_INF.models import PlanPaymentIndex, PlanPaymentTRU, Organization
+from rest_framework.permissions import IsAuthenticated
 import json
 
 class ImportPlanFhdXLSXView(APIView):
     parser_classes = [MultiPartParser]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         file = request.FILES.get('file')
@@ -20,20 +22,18 @@ class ImportPlanFhdXLSXView(APIView):
             return Response({'error': 'Недостаточно данных'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            organization = Organization.objects.get(pk=org_id)
+            organization = Organization.objects.get(pk=org_id, user=request.user)
         except Organization.DoesNotExist:
-            return Response({'error': 'Организация не найдена'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Организация не найдена или не принадлежит вам'}, status=status.HTTP_403_FORBIDDEN)
 
         try:
             wb = load_workbook(filename=file, data_only=True)
             ws1 = wb['Листы1-5']
             ws2 = wb['Листы6-7']
 
-            # Удаляем старые записи
             PlanPaymentIndex.objects.filter(organization=organization, year=year).delete()
             PlanPaymentTRU.objects.filter(organization=organization, year=year).delete()
 
-            # === ЛИСТ 1 ===
             row_num = 32
             while True:
                 line_code = ws1[f"AV{row_num}"].value
@@ -50,7 +50,6 @@ class ImportPlanFhdXLSXView(APIView):
 
                 manually = str(line_code) not in default_codes_list1
                 after_code = None
-
                 if manually:
                     for prev in reversed(default_codes_list1):
                         if str(prev) < str(line_code):
@@ -74,7 +73,6 @@ class ImportPlanFhdXLSXView(APIView):
 
                 row_num += 1
 
-            # === ЛИСТ 2 ===
             row_num = 9
             while True:
                 line_code = ws2[f"BD{row_num}"].value
@@ -91,7 +89,6 @@ class ImportPlanFhdXLSXView(APIView):
 
                 manually = str(line_code) not in default_codes_list2
                 after_code = None
-
                 if manually:
                     for prev in reversed(default_codes_list2):
                         if str(prev) < str(line_code):

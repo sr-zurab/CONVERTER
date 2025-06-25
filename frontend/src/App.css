@@ -1,6 +1,6 @@
 /* Основные стили приложения */
 
-/* Контейнер всего приложения */
+/* Контейнер всего приложения (flex-верстка) */
 .app-container {
     height: 100vh;
     display: flex;
@@ -10,7 +10,7 @@
 /* Боковая панель с организациями */
 .sidebar {
     background: #f9f9f9;
-    padding: 12px;
+    padding: 60px 12px 12px 12px; /* увеличен верхний отступ под кнопку выхода */
     overflow-y: auto;
     border-right: 1px solid #ddd;
     min-width: 150px;
@@ -22,7 +22,7 @@
     transition: all 0.3s ease;
 }
 
-/* Кнопка сворачивания/разворачивания */
+/* Кнопка сворачивания/разворачивания сайдбара */
 .sidebar-toggle {
     position: absolute;
     top: 10px;
@@ -45,7 +45,7 @@
     background: #f0f0f0;
 }
 
-/* Стрелка внутри кнопки */
+/* Стрелка внутри кнопки сайдбара */
 .sidebar-toggle::before {
     content: "◀";
     font-size: 12px;
@@ -84,7 +84,7 @@
     flex-direction: column;
     min-height: 0;
     overflow: hidden;
-    padding: 20px;
+    padding: 48px 20px 20px 20px; /* увеличен верхний отступ под кнопку выхода */
     background: #f8f9fa;
 }
 
@@ -122,7 +122,7 @@
     cursor: pointer;
 }
 
-/* Стрелка для заголовка */
+/* Стрелка для заголовка организации */
 .org-header::after {
     content: "▼";
     font-size: 12px;
@@ -135,7 +135,7 @@
     transform: rotate(-90deg);
 }
 
-/* Содержимое организации */
+/* Содержимое организации (отчеты) */
 .org-content {
     max-height: 1000px;
     overflow: hidden;
@@ -144,7 +144,7 @@
     border-top: 1px solid #eee;
 }
 
-/* Свернутое состояние */
+/* Свернутое состояние содержимого */
 .org-list li.collapsed .org-content {
     max-height: 0;
     border-top: none;
@@ -159,7 +159,7 @@
     background: #f0f0f0;
 }
 
-/* Выпадающий список отчетов */
+/* Выпадающий список отчетов (не используется, но оставлен для расширения) */
 .org-reports {
     max-height: 0;
     overflow: hidden;
@@ -187,7 +187,7 @@
     background: #e9ecef;
 }
 
-/* ✅ Стили для кнопки и иконки — всегда применяются */
+/* Кнопка добавления организации */
 .my-button {
     display: flex;
     align-items: center;
@@ -209,6 +209,38 @@
 
 .my-icon {
     font-size: 40px;
+}
+
+/* Кнопка выхода (logout) фиксирована в правом верхнем углу */
+.logout-bar {
+    position: fixed;
+    top: 16px;
+    right: 24px;
+    z-index: 1001;
+    width: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.logout-button {
+    background: #f5f5f5;
+    color: #1976d2;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.logout-button:hover {
+    background: #1976d2;
+    color: #fff;
 }
 
 /* Стили для таблицы ФХД */

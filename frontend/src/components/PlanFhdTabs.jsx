@@ -119,7 +119,10 @@ const PlanFhdTabs = ({organization}) => {
     const handleExportXml = async () => {
         if (!organization?.id || !year) return alert('Выберите организацию и год');
         try {
-            const res = await fetch(`/api/export-fhd-xml/?org_id=${organization.id}&year=${year}`);
+            const token = localStorage.getItem('access');
+            const res = await fetch(`/api/export-fhd-xml/?org_id=${organization.id}&year=${year}`, {
+                headers: token ? { Authorization: `Bearer ${token}` } : {}
+            });
             if (!res.ok) throw new Error(await res.text());
             const blob = await res.blob();
             const a = document.createElement('a');
@@ -137,12 +140,14 @@ const PlanFhdTabs = ({organization}) => {
     const handleExportXLSX = async () => {
         if (!organization?.id || !year) return alert('Выберите организацию и год');
         try {
+            const token = localStorage.getItem('access');
             const formData = new FormData();
             formData.append('org_id', organization.id);
             formData.append('year', year);
             const response = await fetch('/api/export-fhd-xlsx/', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: token ? { Authorization: `Bearer ${token}` } : {}
             });
             if (!response.ok) return alert(await response.text());
             const blob = await response.blob();
@@ -171,9 +176,11 @@ const PlanFhdTabs = ({organization}) => {
         formData.append('default_codes_list2', JSON.stringify(fhdSchemaList2.defaultPaymentTRU.map(r => r.lineCode)));
 
         try {
+            const token = localStorage.getItem('access');
             const res = await fetch('/api/import-fhd-xlsx/', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: token ? { Authorization: `Bearer ${token}` } : {}
             });
             if (!res.ok) throw new Error(await res.text());
             showNotificationMessage('Файл успешно загружен');

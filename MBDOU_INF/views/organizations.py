@@ -1,8 +1,16 @@
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from ..models import Organization
 from MBDOU_INF.serializers import OrganizationSerializer
 
 
 class OrganizationViewSet(viewsets.ModelViewSet):
-    queryset = Organization.objects.all().order_by('name')
     serializer_class = OrganizationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Organization.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
