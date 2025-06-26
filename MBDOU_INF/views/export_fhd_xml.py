@@ -31,7 +31,10 @@ def export_fhd_xml(request):
         year=year
     ).order_by("lineCode")
 
-    xml_data = generate_xml(index_data, tru_data, organization)
+    try:
+        xml_data = generate_xml(index_data, tru_data, organization)
+    except ValueError as e:
+        return HttpResponse(str(e), status=400, content_type='text/plain; charset=utf-8')
     response = HttpResponse(xml_data, content_type='application/xml; charset=utf-8')
     response['Content-Disposition'] = f'attachment; filename="fhd_{org_id}_{year}.xml"'
     return response

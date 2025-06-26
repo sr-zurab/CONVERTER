@@ -69,13 +69,14 @@ const FhdTable = ({schema, data, onDataChange, onCellUpdate, onDeleteRow, classN
         addRowAfterCodesList1.includes(lineCode) || addRowAfterCodesList2.includes(lineCode);
 
     return (
-        <div className="fhd-table-wrapper">
-            <table className={`fhd-table ${className || ''}`}>
+        <div className="fhd-table-wrapper" style={{overflowX: 'auto'}}>
+            <table className={`fhd-table ${className || ''}`} style={{tableLayout: 'fixed', width: '100%', minWidth: 1100, maxWidth: 1400}}>
                 <thead>
                 <tr>
                     {schema.map(col => (
                         <th key={col.field}>{col.label}</th>
                     ))}
+                    <th key="actions-col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -84,13 +85,8 @@ const FhdTable = ({schema, data, onDataChange, onCellUpdate, onDeleteRow, classN
                         <tr>
                             {schema.map((col, colIndex) => (
                                 <td key={col.field}>
-                                    {col.field === 'actions' ? (
-                                        row.manually === true && (
-                                            <button onClick={() => handleDeleteRow(rowIndex)} className="del-button">
-                                                <FiTrash2/>
-                                            </button>
-                                        )
-                                    ) : decimalFields.includes(col.field) ? (
+                                    {col.field === 'actions' ? null
+                                    : decimalFields.includes(col.field) ? (
                                         <DecimalTextarea
                                             value={row[col.field]}
                                             onChange={(val) => handleChange(rowIndex, col.field, val)}
@@ -99,6 +95,20 @@ const FhdTable = ({schema, data, onDataChange, onCellUpdate, onDeleteRow, classN
                                             onKeyDown={(e) => handleKeyDown(e, rowIndex, colIndex)}
                                             dataCell={`${rowIndex}-${colIndex}`}
                                         />
+                                    ) : col.field === 'name' && row.manually !== true ? (
+                                        <div
+                                            style={{whiteSpace: 'pre-line', wordBreak: 'break-word', width: '100%', minHeight: 30, padding: 4, background: '#f0f0f0'}}
+                                            title={row[col.field]}
+                                        >
+                                            {row[col.field]}
+                                        </div>
+                                    ) : col.field === 'lineCode' && row.manually !== true ? (
+                                        <div
+                                            style={{whiteSpace: 'pre-line', wordBreak: 'break-word', width: '100%', minHeight: 30, padding: 4, background: '#f0f0f0'}}
+                                            title={row[col.field]}
+                                        >
+                                            {row[col.field]}
+                                        </div>
                                     ) : (
                                         <textarea
                                             data-cell={`${rowIndex}-${colIndex}`}
@@ -106,10 +116,18 @@ const FhdTable = ({schema, data, onDataChange, onCellUpdate, onDeleteRow, classN
                                             onChange={e => handleChange(rowIndex, col.field, e.target.value)}
                                             onKeyDown={e => handleKeyDown(e, rowIndex, colIndex)}
                                             rows={1}
+                                            style={{whiteSpace: 'pre-line', wordBreak: 'break-word', width: '100%', minHeight: 30, padding: 4}}
                                         />
                                     )}
                                 </td>
                             ))}
+                            <td key="actions-btn" style={{paddingRight: 12, minWidth: 44, width: 44, textAlign: 'center'}}>
+                                {row.manually === true && (
+                                    <button onClick={() => handleDeleteRow(rowIndex)} className="del-button">
+                                        <FiTrash2/>
+                                    </button>
+                                )}
+                            </td>
                         </tr>
                         {shouldShowAddButton(row.lineCode) && (
                             <tr>

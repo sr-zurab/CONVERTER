@@ -113,6 +113,18 @@ const PlanFhdTabs = ({organization}) => {
         if (rowId) {
             dispatch(deleteAction(rowId));
             showNotificationMessage('Строка успешно удалена');
+            if (activeTab === 'list1') {
+                setIndexData([]);
+            } else {
+                setTruData([]);
+            }
+            setTimeout(() => {
+                if (activeTab === 'list1') {
+                    dispatch(fetchPlanPaymentIndex({organizationId: organization.id, year}));
+                } else {
+                    dispatch(fetchPlanPaymentTru({organizationId: organization.id, year}));
+                }
+            }, 500);
         }
     };
 
@@ -193,10 +205,10 @@ const PlanFhdTabs = ({organization}) => {
     };
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0}}>
+        <div style={{display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, marginTop: 40}}>
             {showNotification && <div style={notificationStyle}>{notificationMessage}</div>}
 
-            <div className="fhd-controls">
+            <div className="fhd-controls" style={{marginBottom: 8, position: 'sticky', top: 0, zIndex: 2, background: '#fff', paddingRight: 60}}>
                 <select value={year} onChange={e => setYear(parseInt(e.target.value, 10))}>
                     {[2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => (
                         <option key={y} value={y}>{y}</option>

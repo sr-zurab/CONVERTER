@@ -43,6 +43,7 @@ const EditOrganizationForm = ({onClose, organization}) => {
             <input name="name" value={formData.name} onChange={handleChange} required/>
             <input name="FIO" value={formData.FIO} onChange={handleChange} required/>
             <input name="UBP" value={formData.UBP} onChange={handleChange} required/>
+            <input name="founderAuthority" value={formData.founderAuthority} onChange={handleChange} required/>
             <input name="INN" value={formData.INN} onChange={handleChange} required/>
             <input name="KPP" value={formData.KPP} onChange={handleChange} required/>
             <input name="address" value={formData.address} onChange={handleChange} required/>

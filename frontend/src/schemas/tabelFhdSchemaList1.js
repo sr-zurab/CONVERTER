@@ -25,7 +25,8 @@ export const fhdSchemaList1 = {
         },
         {
             "name": "Остаток средств на конец текущего финансового года",
-            "lineCode": "0002", "kbk": "X",
+            "lineCode": "0002", 
+	    "kbk": "X",
             "analyticCode": "X",
             "manually": false,
             "financialYearSum": "",
@@ -146,7 +147,7 @@ export const fhdSchemaList1 = {
         {
             "name": "доходы от операций с активами, всего в том числе:",
             "lineCode": "1900",
-            "kbk": "",
+            "kbk": "X",
             "analyticCode": "",
             "manually": false,
             "financialYearSum": "",
@@ -651,7 +652,7 @@ export const fhdSchemaList1 = {
         {
             "name": "налог на прибыль",
             "lineCode": "3010",
-            "kbk": "",
+            "kbk": "X",
             "analyticCode": "",
             "manually": false,
             "financialYearSum": "",
@@ -662,7 +663,7 @@ export const fhdSchemaList1 = {
         {
             "name": "налог на добавленную стоимость",
             "lineCode": "3020",
-            "kbk": "",
+            "kbk": "X",
             "analyticCode": "",
             "manually": false,
             "financialYearSum": "",
@@ -673,7 +674,7 @@ export const fhdSchemaList1 = {
         {
             "name": "прочие налоги, уменьшающие доход",
             "lineCode": "3030",
-            "kbk": "",
+            "kbk": "X",
             "analyticCode": "",
             "manually": false,
             "financialYearSum": "",

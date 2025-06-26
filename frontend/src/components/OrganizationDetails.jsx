@@ -27,6 +27,7 @@ const OrganizationDetails = ({org, onEdit}) => {
             <p><strong>ИНН:</strong> {org.INN}</p>
             <p><strong>КПП:</strong> {org.KPP}</p>
             <p><strong>Номер по сводному реестру:</strong> {org.UBP}</p>
+            <p><strong>Номер по сводному реестру Учредителя:</strong> {org.founderAuthority}</p>
             <p><strong>Адрес:</strong> {org.address}</p>
             <p><strong>Телефон:</strong> {org.phone}</p>
             <p><strong>Банковские реквизиты:</strong> {org.BANK}</p>

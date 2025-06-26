@@ -2,7 +2,8 @@
 # UUID импорт и Datetime
 import uuid
 from xml.dom import minidom
-
+from lxml import etree
+import os
 from MBDOU_INF.models import Organization
 
 uuid.uuid4()
@@ -53,7 +54,7 @@ def generate_xml(index_data, tru_data,org_data):
     # founderAuthority
     generalData_founderAuthority = ET.SubElement(position_generalData, '{http://bus.gov.ru/types/3}founderAuthority')
     founderAuthority_regNum = ET.SubElement(generalData_founderAuthority, '{http://bus.gov.ru/types/1}regNum')
-    founderAuthority_regNum.text = '96301014'
+    founderAuthority_regNum.text = org_data.founderAuthority if org_data and org_data.founderAuthority else '00000000'
 
     # generalData продолжение
     # okei
@@ -69,7 +70,10 @@ def generate_xml(index_data, tru_data,org_data):
         lineCode = ET.SubElement(position_planPaymentIndex, '{http://bus.gov.ru/types/3}lineCode')
         lineCode.text = item.lineCode
         kbk = ET.SubElement(position_planPaymentIndex, '{http://bus.gov.ru/types/3}kbk')
-        kbk.text = '000' if item.kbk == 'X' or item.kbk == '' else str(item.kbk)
+        kbk_value = str(item.kbk)
+        if kbk_value in ('X', '', 'None', 'Non', None):
+            kbk_value = '000'
+        kbk.text = kbk_value[:3] if len(kbk_value) > 3 else kbk_value
         analyticCode = ET.SubElement(position_planPaymentIndex, '{http://bus.gov.ru/types/3}analyticCode')
         analyticCode.text = str(item.analyticCode if item.analyticCode == 'X' else '000')
         manually = ET.SubElement(position_planPaymentIndex, '{http://bus.gov.ru/types/3}manually')
@@ -109,4 +113,29 @@ def generate_xml(index_data, tru_data,org_data):
     rough_string = ET.tostring(financialActivityPlan2020, encoding='utf-8', method='xml')
     reparsed = minidom.parseString(rough_string)
     pretty_xml = reparsed.toprettyxml(indent="  ", encoding='utf-8')
+
+    # === Валидация по XSD ===
+    xsd_path = os.path.join(os.path.dirname(__file__), 'ТФФ 1.8', 'External.xsd')
+    xml_doc = etree.fromstring(rough_string)
+    with open(xsd_path, 'rb') as f:
+        schema_doc = etree.parse(f)
+        schema = etree.XMLSchema(schema_doc)
+    if not schema.validate(xml_doc):
+        error = schema.error_log.last_error
+        # Пытаемся получить имя тега и значение, если возможно
+        tag_info = ''
+        try:
+            error_line = error.line
+            error_column = error.column
+            lines = rough_string.decode('utf-8').split('\n')
+            if 0 < error_line <= len(lines):
+                line = lines[error_line - 1]
+                import re
+                tag_match = re.search(r'<([\w:]+)[^>]*>([^<]*)', line)
+                if tag_match:
+                    tag_info = f"\nТег: <{tag_match.group(1)}>\nЗначение: {tag_match.group(2).strip()}"
+        except Exception:
+            pass
+        raise ValueError(f'Ошибка валидации XML!\nОписание: {error.message}\nСтрока: {error.line}, столбец: {error.column}{tag_info}\nПроверьте корректность заполнения данных.')
+
     return pretty_xml

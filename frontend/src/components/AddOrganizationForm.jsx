@@ -11,7 +11,7 @@ import {TbCancel} from "react-icons/tb";
 const AddOrganizationForm = ({onClose}) => {
     // Состояние формы с пустыми начальными значениями
     const [formData, setFormData] = useState({
-        name: '', address: '', phone: '', UBP: '', BANK: '', KPP: '', INN: '', FIO: ''
+        name: '', address: '', phone: '', UBP: '', BANK: '', KPP: '', INN: '', FIO: '', founderAuthority: ''
     });
     const dispatch = useDispatch();
 
@@ -41,6 +41,7 @@ const AddOrganizationForm = ({onClose}) => {
             <textarea name="address" placeholder="Адрес" onChange={handleChange} required/>
             <input name="phone" placeholder="Телефон" onChange={handleChange} required/>
             <input name="UBP" placeholder="УБП" onChange={handleChange} required/>
+            <input name="founderAuthority" placeholder="Номер по сводному реестру Учредителя" onChange={handleChange} required/>
             <input name="INN" placeholder="ИНН" onChange={handleChange} required/>
             <input name="KPP" placeholder="КПП" onChange={handleChange} required/>
             <textarea name="BANK" placeholder="Банковские реквизиты" onChange={handleChange}/>

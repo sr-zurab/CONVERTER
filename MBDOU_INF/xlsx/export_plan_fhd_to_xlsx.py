@@ -1,6 +1,6 @@
 # Экспорт плана ФХД в XLSX-файл по шаблону
 from openpyxl import load_workbook
-from openpyxl.styles import Border, Side, Alignment
+from openpyxl.styles import Border, Side, Alignment, Font
 from openpyxl.utils import get_column_letter, column_index_from_string
 from MBDOU_INF.models import PlanPaymentIndex, PlanPaymentTRU, Organization
 from copy import copy
@@ -22,6 +22,19 @@ def export_plan_fhd_to_file_object(org_id, year):
 
     wb = load_workbook(template_path)
 
+    # === Заполнение ячеек по заданию ===
+    last_two_digits_year = str(year)[-2:]
+    ws_main = wb['Листы1-5']
+
+    # Ячейки с последними двумя цифрами года (сохраняем стиль)
+    ws_main['AJ13'].value = last_two_digits_year
+    ws_main['BF15'].value = last_two_digits_year
+    ws_main['CJ10'].value = last_two_digits_year
+
+    # Ячейки со следующими годами (сохраняем стиль)
+    ws_main['BE13'].value = str(int(last_two_digits_year) + 1)
+    ws_main['BK13'].value = str(int(last_two_digits_year) + 2)
+
     # === ЛИСТ 1 ===
     ws1 = wb['Листы1-5']
     header_row_1 = 31  # Номер строки с заголовками
@@ -39,21 +52,53 @@ def export_plan_fhd_to_file_object(org_id, year):
         default_rows = json.load(f)
     # Получаем строки из базы
     db_rows = {str(row.lineCode): row for row in PlanPaymentIndex.objects.filter(organization=org, year=year)}
-
-    # Заполняем строки листа 1
-    for i, schema_row in enumerate(default_rows):
+    # Вручную добавленные строки, которых нет в default_rows
+    manual_rows = [
+        row for row in PlanPaymentIndex.objects.filter(organization=org, year=year, manually=True)
+        if str(row.lineCode) not in {str(r['lineCode']) for r in default_rows}
+    ]
+    # Формируем итоговый список для экспорта
+    export_rows = []
+    for schema_row in default_rows:
         line_code = str(schema_row["lineCode"])
         db_row = db_rows.get(line_code)
+        export_rows.append({
+            "name": schema_row["name"],
+            "lineCode": schema_row["lineCode"],
+            "kbk": schema_row.get("kbk", ""),
+            "analyticCode": schema_row.get("analyticCode", ""),
+            "financialYearSum": getattr(db_row, "financialYearSum", "") if db_row else "",
+            "planFirstYearSum": getattr(db_row, "planFirstYearSum", "") if db_row else "",
+            "planLastYearSum": getattr(db_row, "planLastYearSum", "") if db_row else "",
+            "AutPlanYearSumm": getattr(db_row, "AutPlanYearSumm", "") if db_row else ""
+        })
+    # Добавляем вручную добавленные строки
+    for row in manual_rows:
+        export_rows.append({
+            "name": row.name,
+            "lineCode": row.lineCode,
+            "kbk": row.kbk,
+            "analyticCode": row.analyticCode,
+            "financialYearSum": getattr(row, "financialYearSum", ""),
+            "planFirstYearSum": getattr(row, "planFirstYearSum", ""),
+            "planLastYearSum": getattr(row, "planLastYearSum", ""),
+            "AutPlanYearSumm": getattr(row, "AutPlanYearSumm", "")
+        })
+    # Сортируем по lineCode
+    export_rows.sort(key=lambda x: str(x["lineCode"]))
+
+    # Заполняем строки листа 1
+    for i, row in enumerate(export_rows):
         row_index = 32 + i
         values = [
-            schema_row["name"],
-            schema_row["lineCode"],
-            schema_row.get("kbk", ""),
-            schema_row.get("analyticCode", ""),
-            getattr(db_row, "financialYearSum", "") if db_row else "",
-            getattr(db_row, "planFirstYearSum", "") if db_row else "",
-            getattr(db_row, "planLastYearSum", "") if db_row else "",
-            getattr(db_row, "AutPlanYearSumm", "") if db_row else ""
+            row["name"],
+            row["lineCode"],
+            row["kbk"],
+            row["analyticCode"],
+            row["financialYearSum"],
+            row["planFirstYearSum"],
+            row["planLastYearSum"],
+            row["AutPlanYearSumm"]
         ]
         for j, col in enumerate(columns_1):
             src_cell = ws1.cell(row=header_row_1, column=col)

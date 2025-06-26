@@ -13,6 +13,6 @@ class Organization(models.Model):
     phone = models.CharField(max_length=50)  # Телефон
     BANK = models.TextField()  # Банковские реквизиты
     UBP = models.CharField(max_length=8)  # Номер по сводному реестру
-
+    founderAuthority = models.CharField(max_length=8) # Орган, осуществляющий функции и полномочия учредителя
     def __str__(self):
         return self.name  # Отображение организации по названию
