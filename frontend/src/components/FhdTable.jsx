@@ -96,12 +96,39 @@ const FhdTable = ({schema, data, onDataChange, onCellUpdate, onDeleteRow, classN
                                             dataCell={`${rowIndex}-${colIndex}`}
                                         />
                                     ) : col.field === 'name' && row.manually !== true ? (
-                                        <div
-                                            style={{whiteSpace: 'pre-line', wordBreak: 'break-word', width: '100%', minHeight: 30, padding: 4, background: '#f0f0f0'}}
-                                            title={row[col.field]}
-                                        >
-                                            {row[col.field]}
-                                        </div>
+                                        (() => {
+                                            const value = row[col.field] || '';
+                                            const lower = value.toLowerCase();
+                                            let splitWord = null;
+                                            let idx = -1;
+                                            if (lower.includes('в том числе')) {
+                                                splitWord = 'в том числе';
+                                                idx = lower.indexOf(splitWord);
+                                            } else if (lower.includes('из них')) {
+                                                splitWord = 'из них';
+                                                idx = lower.indexOf(splitWord);
+                                            }
+                                            if (splitWord && idx !== -1) {
+                                                const before = value.slice(0, idx).trim();
+                                                const after = value.slice(idx).trim();
+                                                return (
+                                                    <div style={{whiteSpace: 'pre-line', wordBreak: 'break-word', width: '100%', minHeight: 30, padding: 4, background: '#f0f0f0'}} title={value}>
+                                                        {before}
+                                                        <br/>
+                                                        <span style={{display: 'block', textAlign: 'center', fontWeight: 500}}>{after}</span>
+                                                    </div>
+                                                );
+                                            } else {
+                                                return (
+                                                    <div
+                                                        style={{whiteSpace: 'pre-line', wordBreak: 'break-word', width: '100%', minHeight: 30, padding: 4, background: '#f0f0f0'}}
+                                                        title={value}
+                                                    >
+                                                        {value}
+                                                    </div>
+                                                );
+                                            }
+                                        })()
                                     ) : col.field === 'lineCode' && row.manually !== true ? (
                                         <div
                                             style={{whiteSpace: 'pre-line', wordBreak: 'break-word', width: '100%', minHeight: 30, padding: 4, background: '#f0f0f0'}}
