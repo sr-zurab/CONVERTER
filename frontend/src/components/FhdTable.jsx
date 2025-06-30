@@ -78,6 +78,14 @@ const FhdTable = ({schema, data, onDataChange, onCellUpdate, onDeleteRow, classN
                     ))}
                     <th key="actions-col"></th>
                 </tr>
+                <tr>
+                    {schema.map((col, idx) => (
+                        col.field === 'actions'
+                            ? <th key={col.field + '-num'} style={{background: '#f8f9fa'}}></th>
+                            : <th key={col.field + '-num'} style={{fontWeight: 400, background: '#f8f9fa', textAlign: 'center'}}>{idx + 1}</th>
+                    ))}
+                    <th key="actions-col-num" style={{background: '#f8f9fa'}}></th>
+                </tr>
                 </thead>
                 <tbody>
                 {data.map((row, rowIndex) => (

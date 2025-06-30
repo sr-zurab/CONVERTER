@@ -20,6 +20,7 @@ import {BsFiletypeXlsx, BsFiletypeXml} from "react-icons/bs";
 import {RiSave2Fill} from "react-icons/ri";
 import {LuFileSpreadsheet} from "react-icons/lu";
 import {FiUpload} from "react-icons/fi";
+import {MdRefresh} from "react-icons/md";
 
 const notificationStyle = {
     position: 'fixed',
@@ -204,6 +205,15 @@ const PlanFhdTabs = ({organization}) => {
         }
     };
 
+    const handleRefreshData = () => {
+        if (!organization?.id || !year) return alert('Выберите организацию и год');
+        setIndexData([]);
+        setTruData([]);
+        dispatch(fetchPlanPaymentIndex({organizationId: organization.id, year}));
+        dispatch(fetchPlanPaymentTru({organizationId: organization.id, year}));
+        showNotificationMessage('Данные обновлены');
+    };
+
     return (
         <div style={{display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, marginTop: 40}}>
             {showNotification && <div style={notificationStyle}>{notificationMessage}</div>}
@@ -227,6 +237,7 @@ const PlanFhdTabs = ({organization}) => {
                     <FiUpload/> Загрузить XLSX
                     <input type="file" accept=".xlsx" onChange={handleImportXLSX} style={{display: 'none'}} />
                 </label></button>
+                <button onClick={handleRefreshData}><MdRefresh/> Обновить</button>
             </div>
             <div style={{flex: 1, minHeight: 0, overflow: 'auto'}}>
                 {activeTab === 'list1' ? (
