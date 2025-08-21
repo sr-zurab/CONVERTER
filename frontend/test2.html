@@ -5,6 +5,52 @@
     <title>Title</title>
 </head>
 <body>
+    <h1>Раздел: <input type="number" placeholder="" style="width: 100px; height: 30px; font-size: 25px;" ></h1><br>
+    <label style="display: flex; aligen-items: center; gap: 12px;">
+        <span style="font-size: 20px; font-weight: bold;">1. Наименование муниципальной услуги </span>
+        <textarea style="width: 800px; height: 60px; font-size: 18px; text-decoration: underline;"></textarea>
+        <span style="font-size: 20px; font-weight: bold;">Код по общероссийскому<br>базовому перечню или<br>федеральному перечню </span>
+        <textarea style="width: 300px; height: 60px; font-size: 18px; text-decoration: underline;"></textarea>
+    </label>
+    <br>
+    <label style="display: flex; aligen-items: center; gap: 12px;">
+        <span style="font-size: 20px; font-weight: bold;">2. Категории потребителей муниципальной услуги </span>
+        <textarea style="width: 800px; height: 30px; font-size: 18px; text-decoration: underline;"></textarea>
+    </label>
+    <br><p style="font-size: 20px; font-weight: bold">3. Показатели, характеризующие объем и (или) качество муниципальной услуги</p>
+    <p style="font-size: 20px; font-weight: bold">3.1. Показатели, характеризующие качество муниципальной услуги</p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th rowspan="3" colspan="1">Уникальный номер реестровой записи</th>
+                <th rowspan="1" colspan="3">Показатель,характеризующий содержание муниципальной услуги</th>
+                <th rowspan="1" colspan="2">Показатель, характериз. условия (формы) оказания муниц. услуги</th>
+                <th rowspan="1" colspan="3">Показатель качества муниципальной услуги</th>
+                <th rowspan="1" colspan="3">Значение показателя качества муниципальной услуги</th>
+                <th rowspan="1" colspan="2">Допустимые (возможные) отклонения от установленных показателей объема государственной услуги</th>
+            </tr>
+            <tr>
+                <th rowspan="2" colspan="1">наименование показателя</th>
+                <th rowspan="2" colspan="1">наименование показателя</th>
+                <th rowspan="2" colspan="1">наименование показателя</th>
+                <th rowspan="2" colspan="1">наименование показателя</th>
+                <th rowspan="2" colspan="1">наименование показателя</th>
+                <th colspan="1" rowspan="2">наименование показателя</th>
+                <th colspan="2" rowspan="1">единица измерения</th>
+                <th rowspan="2" colspan="1">(очередной финансо-вый год)</th>
+                <th rowspan="2" colspan="1">(1-й год планового периода)</th>
+                <th rowspan="2" colspan="1">(2-й год планового периода)</th>
+                <th rowspan="2" colspan="1">в процентах</th>
+                <th rowspan="2" colspan="1">в абсолютных величинах</th>
+            </tr>
+            <tr>
+                <th>наименование</th>
+                <th>единица измерения по ОКЕИ</th>
+            </tr>
+        </thead>
+    </table>
+    <br>
+    <p style="font-size: 20px; font-weight: bold">3.2. Показатели, характеризующие объем муниципальной услуги</p>
     <table border="1">
         <thead>
             <tr>
@@ -24,20 +70,51 @@
                 <th rowspan="2" colspan="1">наименование показателя</th>
                 <th colspan="1" rowspan="2">наименование показателя</th>
                 <th colspan="2" rowspan="1">единица измерения</th>
-                <th rowspan="2" colspan="1">(очередной финансо-вый год)</th>
+                <th rowspan="2" colspan="1">(очередной финансовый год)</th>
                 <th rowspan="2" colspan="1">(1-й год планового периода)</th>
                 <th rowspan="2" colspan="1">(2-й год планового периода)</th>
-                <th rowspan="2" colspan="1">(очередной финансо-вый год)</th>
+                <th rowspan="2" colspan="1">(очередной финансовый год)</th>
                 <th rowspan="2" colspan="1">(1-й год планового периода)</th>
                 <th rowspan="2" colspan="1">(2-й год планового периода)</th>
                 <th rowspan="2" colspan="1">в процентах</th>
                 <th rowspan="2" colspan="1">в абсолютных величинах</th>
             </tr>
             <tr>
-                <th>наименование</th>
-                <th>единица измерения по ОКЕИ</th>
+                <th rowspan="1" colspan="1">наименование</th>
+                <th rowspan="1" colspan="1">единица измерения по ОКЕИ</th>
             </tr>
         </thead>
     </table>
+<p style="font-size: 20px; font-weight: bold">4. Нормативные правовые акты, устанавливающие размер платы (цену, тариф) либо порядок ее установления</p>
+<table border="1" style="width: 1000px">
+    <thead>
+        <tr>
+            <th rowspan="1" colspan="5">Нормативный правовой акт</th>
+        </tr>
+        <tr>
+            <th rowspan="1" colspan="1">вид</th>
+            <th rowspan="1" colspan="1">принявший орган</th>
+            <th rowspan="1" colspan="1">дата</th>
+            <th rowspan="1" colspan="1">номер</th>
+            <th rowspan="1" colspan="1">наименование</th>
+        </tr>
+    </thead>
+</table>
+<p style="font-size: 20px; font-weight: bold">5. Порядок оказания государственной услуги</p>
+<br><br>
+<label style="display: flex; aligen-items: center; gap: 12px;">
+    <span style="font-size: 20px; font-weight: bold;">5.1. Нормативные правовые акты, регулирующие порядок оказания государственной услуги </span>
+    <textarea style="width: 800px; height: 30px; font-size: 18px;" placeholder="наименование, номер и дата нормативного правового акта"></textarea>
+</label>
+<p style="font-size: 20px; font-weight: bold">5.2. Порядок информирования потенциальных потребителей государственной услуги</p>
+<table border="1" style="width: 1000px">
+    <thead>
+        <tr>
+            <th rowspan="1" colspan="1">Способ информирования</th>
+            <th rowspan="1" colspan="1">Состав размещаемой информации</th>
+            <th rowspan="1" colspan="1">Частота обновления информации</th>
+        </tr>
+    </thead>
+</table>
 </body>
 </html>

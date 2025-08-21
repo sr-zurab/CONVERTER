@@ -1,5 +1,5 @@
 //Таблица: 4. Нормативные правовые акты, устанавливающие размер платы (цену, тариф) либо порядок ее установления
-export const actsSettingThePprice = {
+export const actsSettingThePrice = {
     //Шапка верхнего уровня таблицы
     headers: [
         {label: "Нормативный правовой акт", rowspan: 1, colspan: 5 }

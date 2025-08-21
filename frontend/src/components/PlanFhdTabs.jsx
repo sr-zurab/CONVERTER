@@ -44,7 +44,7 @@ const PlanFhdTabs = ({organization}) => {
     const [showNotification, setShowNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
 
-    const serverIndex = useSelector(state => state.planPaymentIndex.items);
+    const serverIndex = useSelector(state => state.planPaymentIndex.list);
     const serverTru = useSelector(state => state.paymentTru.list);
 
     const [indexData, setIndexData] = useState([]);

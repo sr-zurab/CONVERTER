@@ -83,7 +83,7 @@ export const deletePlanPaymentIndex = createAsyncThunk(
 const planPaymentIndexSlice = createSlice({
     name: 'planPaymentIndex',
     initialState: {
-        items: [],
+        list: [],
         loading: false,
         error: null,
         selectedYear: null,
@@ -100,7 +100,7 @@ const planPaymentIndexSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchPlanPaymentIndex.fulfilled, (state, action) => {
-                state.items = action.payload;
+                state.list = action.payload;
                 state.loading = false;
             })
             .addCase(fetchPlanPaymentIndex.rejected, (state, action) => {
@@ -108,20 +108,20 @@ const planPaymentIndexSlice = createSlice({
                 state.error = action.payload;
             })
             .addCase(addPlanPaymentIndex.fulfilled, (state, action) => {
-                state.items.push(action.payload);
+                state.list.push(action.payload);
             })
             .addCase(addPlanPaymentIndex.rejected, (state, action) => {
                 state.error = action.payload;
             })
             .addCase(updatePlanPaymentIndex.fulfilled, (state, action) => {
-                const idx = state.items.findIndex(i => i.id === action.payload.id);
-                if (idx !== -1) state.items[idx] = action.payload;
+                const idx = state.list.findIndex(i => i.id === action.payload.id);
+                if (idx !== -1) state.list[idx] = action.payload;
             })
             .addCase(updatePlanPaymentIndex.rejected, (state, action) => {
                 state.error = action.payload;
             })
             .addCase(deletePlanPaymentIndex.fulfilled, (state, action) => {
-                state.items = state.items.filter(i => i.id !== action.payload);
+                state.list = state.list.filter(i => i.id !== action.payload);
             })
             .addCase(deletePlanPaymentIndex.rejected, (state, action) => {
                 state.error = action.payload;
