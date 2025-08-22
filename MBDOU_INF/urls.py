@@ -1,14 +1,20 @@
 # urls.py
+from os.path import basename
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from MBDOU_INF.views import OrganizationViewSet, PlanPaymentIndexViewSet, PlanPaymentTRUViewSet, export_fhd_xml, \
-    export_fhd_xlsx, ImportPlanFhdXLSXView, RegisterView, MeView
+    export_fhd_xlsx, ImportPlanFhdXLSXView, RegisterView, MeView, actsSettingThePriceViewSet, \
+    IndicatorsVolumeServiceViewSet, InformingPotentialConsumersOfTheServiceViewSet, IndicatorsQualityServiceViewSet
 from rest_framework_simplejwt.views import TokenRefreshView
 from MBDOU_INF.views.auth_view import MyTokenObtainPairView
 router = DefaultRouter()
 router.register(r'organizations', OrganizationViewSet, basename='organizations')
 router.register(r'plan-payment-index', PlanPaymentIndexViewSet, basename='planPaymentIndex')
 router.register(r'plan-payment-tru', PlanPaymentTRUViewSet, basename='paymentTRU')
+router.register(r'acts-setting-price', actsSettingThePriceViewSet, basename='actsPrice')
+router.register(r'indicators-quality-service', IndicatorsQualityServiceViewSet, basename='indicatorsQuality')
+router.register(r'indicators-volume-service', IndicatorsVolumeServiceViewSet, basename='indicatorsVolume')
+router.register(r'informing-potential-consumers', InformingPotentialConsumersOfTheServiceViewSet, basename='informingConsumers')
 
 urlpatterns = [
     path('', include(router.urls)),
