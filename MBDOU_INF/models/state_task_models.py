@@ -135,11 +135,11 @@ class actsSettingThePrice(models.Model):
     def __str__(self):
         return f"{self.organization}-{self.year}-{self.section}-{self.serviceName}-{self.codeBasicList}"
 
-class InformingPotentialConsumersOfTheService:
+class InformingPotentialConsumersOfTheService(models.Model):
     organization = models.ForeignKey(
         Organization,
         on_delete=models.CASCADE,
-        related_name="acts_setting_price",
+        related_name="informing_potential_consumers",
         verbose_name="Организация"
     )
     year = models.PositiveIntegerField(verbose_name="Год формирования отчета")
@@ -153,9 +153,8 @@ class InformingPotentialConsumersOfTheService:
                                         null=True, default="")
     codeBasicList = models.CharField("Код по общероссийскому базовому перечню или федеральному перечню",
                                      max_length=255, blank=True, null=True, default="")
-    regulatingAct = models.CharField(
-        "Нормативные правовые акты, регулирующие порядок оказания государственной услуги", max_length=255,
-        blank=True, null=True, default="")
+    regulatingAct = models.CharField("Нормативные правовые акты, регулирующие порядок оказания государственной услуги", max_length=255,
+                                        blank=True, null=True, default="")
 
     class Meta:
         verbose_name = "Порядок информирования"
