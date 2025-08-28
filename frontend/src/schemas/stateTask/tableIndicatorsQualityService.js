@@ -2,56 +2,48 @@
 export const IndicatorsQuality  = {
     //Шапка верхнего уровня таблицы
     headers  : [
-        {label: "Уникальный номер реестровой записи", colspan:1, rowspan:3},
-        {label: "Показатель,характеризующий содержание муниципальной услуги", colspan:3, rowspan:1},
-        {label: "Показатель, характериз. условия (формы) оказания муниц. услуги", colspan:2, rowspan:1},
-        {label: "Показатель объема  муниципальной услуги", colspan:3, rowspan:1},
-        {label: "Значение показателя объема муниципальной услуги", colspan:3, rowspan:1},
-        {label: "Допустимые (возможные) отклонения от установленных показателей объема муниципальной услуги", colspan:2, rowspan:1}
+        {field: "uniqueNumber", label: "Уникальный номер реестровой записи", colspan:1, rowspan:3},
+        {field: "indicators-contend", label: "Показатель,характеризующий содержание муниципальной услуги", colspan:3, rowspan:1},
+        {field: "Indicators-condition", label: "Показатель, характериз. условия (формы) оказания муниц. услуги", colspan:2, rowspan:1},
+        {field: "Indicators-quality",label: "Показатель качества муниципальной услуги", colspan:3, rowspan:1},
+        {field: "values-quality",label: "Значение показателя качества муниципальной услуги", colspan:3, rowspan:1},
+        {field: "acceptable-values",label: "Допустимые (возможные) отклонения от установленных показателей объема муниципальной услуги", colspan:2, rowspan:1}
         ],
     //Шапка 2-го уровня таблицы
     subHeaders1: [
-        {label: "наименование показателя", colspan:1, rowspan:2},
-        {label: "наименование показателя", colspan:1, rowspan:2},
-        {label: "наименование показателя", colspan:1, rowspan:2},
-        {label: "наименование показателя", colspan:1, rowspan:2},
-        {label: "наименование показателя", colspan:1, rowspan:2},
-        {label: "наименование показателя", colspan:1, rowspan:2},
-        {label: "единица измерения", colspan:2, rowspan:1},
-        {label: "(очередной финансовый год)", colspan:1, rowspan:2},
-        {label: "(1-й год планового периода)", colspan:1, rowspan:2},
-        {label: "(2-й год планового периода)", colspan:1, rowspan:2},
-        {label: "в процентах", colspan:1, rowspan:2},
-        {label: "в абсолютных величинах", colspan:1, rowspan:2}
+        {field: "contendIndicator1",label: "наименование показателя", colspan:1, rowspan:2},
+        {field: "contendIndicator2",label: "наименование показателя", colspan:1, rowspan:2},
+        {field: "contendIndicator3",label: "наименование показателя", colspan:1, rowspan:2},
+        {field: "conditionIndicator1",label: "наименование показателя", colspan:1, rowspan:2},
+        {field: "conditionIndicator2",label: "наименование показателя", colspan:1, rowspan:2},
+        {field: "qualityIndicator",label: "наименование показателя", colspan:1, rowspan:2},
+        {field: "unit-of-measurement",label: "единица измерения", colspan:2, rowspan:1},
+        {field: "valuesQualityIndicatorNextYear",label: "(очередной финансовый год)", colspan:1, rowspan:2},
+        {field: "valuesQualityIndicatorFirstYear",label: "(1-й год планового периода)", colspan:1, rowspan:2},
+        {field: "valuesQualityIndicatorSecondYear",label: "(2-й год планового периода)", colspan:1, rowspan:2},
+        {field: "percentageDeviations",label: "в процентах", colspan:1, rowspan:2},
+        {field: "absoluteValuesDeviations",label: "в абсолютных величинах", colspan:1, rowspan:2}
     ],
     //Шапка 3-го уровня таблицы
     subHeaders2:[
-        {label: "наименование"},
-        {label: "единица измерения по ОКЕИ"}
+        {field:"unionOfMeasurement", label: "наименование"},
+        {field:"OKEI",label: "единица измерения по ОКЕИ"}
     ],
-    //Строки таблицы
-    rows:[
-        {
-            "uniqueNumber": "", //Уникальный номер реестровой записи
-            "contendIndicator1": "", //Показатель, характеризующий содержание муниципальной услуги 1
-            "contendIndicator2": "", //Показатель, характеризующий содержание муниципальной услуги 2
-            "contendIndicator3": "", //Показатель, характеризующий содержание муниципальной услуги 3
-            "conditionIndicator1": "", //Показатель, характеризующий условия (формы) оказания муниципальной услуги 1
-            "conditionIndicator2": "", //Показатель, характеризующий условия (формы) оказания муниципальной услуги 2
-            "qualityIndicator": "", //Показатель качества муниципальной услуги: наименование показателя
-            "unionOfMeasurement": "", //Показатель качества муниципальной услуги: единица измерения: наименование
-            "OKEI": "", //Показатель качества муниципальной услуги: единица измерения: код по ОКЕИ
-            "valuesQualityIndicatorNextYear": "", //Значение показателя качества муниципальной услуги: (очередной финансовый год)
-            "valuesQualityIndicatorFirstYear": "", //Значение показателя качества муниципальной услуги: (1-й год планового периода)
-            "valuesQualityIndicatorSecondYear": "", //Значение показателя качества муниципальной услуги: (2-й год планового периода)
-            "percentageDeviations": "", //Допустимые (возможные) отклонения от установленных показателей качества муниципальной услуги: в процентах
-            "absoluteValuesDeviations": "", //Допустимые (возможные) отклонения от установленных показателей качества муниципальной услуги: в абсолютных величинах
-            "year": "", //Год формирования
-            "section": "", //Номер раздела
-            "serviceName": "", //Наименование муниципальной услуги
-            "consumerCategory": "", //Категории потребителей муниципальной услуги
-            "codeBasicList": "", //Код по общероссийскому базовому перечню или федеральному перечню
-            "regulatingAct": "" //Нормативные правовые акты, регулирующие порядок оказания государственной услуги
-        }
+    //Ячейки таблицы
+    cols:[
+        {field: "uniqueNumber"}, //Уникальный номер реестровой записи
+        {field: "contendIndicator1"}, //Показатель, характеризующий содержание муниципальной услуги 1
+        {field: "contendIndicator2"}, //Показатель, характеризующий содержание муниципальной услуги 2
+        {field: "contendIndicator3"}, //Показатель, характеризующий содержание муниципальной услуги 3
+        {field: "conditionIndicator1"}, //Показатель, характеризующий условия (формы) оказания муниципальной услуги 1
+        {field: "conditionIndicator2"}, //Показатель, характеризующий условия (формы) оказания муниципальной услуги 2
+        {field: "qualityIndicator"}, //Показатель качества муниципальной услуги: наименование показателя
+        {field: "unionOfMeasurement"}, //Показатель качества муниципальной услуги: единица измерения: наименование
+        {field: "OKEI"}, //Показатель качества муниципальной услуги: единица измерения: код по ОКЕИ
+        {field: "valuesQualityIndicatorNextYear"}, //Значение показателя качества муниципальной услуги: (очередной финансовый год)
+        {field: "valuesQualityIndicatorFirstYear"}, //Значение показателя качества муниципальной услуги: (1-й год планового периода)
+        {field: "valuesQualityIndicatorSecondYear"}, //Значение показателя качества муниципальной услуги: (2-й год планового периода)
+        {field: "percentageDeviations"}, //Допустимые (возможные) отклонения от установленных показателей качества муниципальной услуги: в процентах
+        {field: "absoluteValuesDeviations"} //Допустимые (возможные) отклонения от установленных показателей качества муниципальной услуги: в абсолютных величинах
     ]
 }

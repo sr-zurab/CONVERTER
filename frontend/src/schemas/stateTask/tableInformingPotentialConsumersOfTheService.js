@@ -2,22 +2,14 @@
 export const InformingPotentialConsumersOfTheService = {
     //Шапка верхнего уровня таблицы
     headers: [
-        {label: "Способ информирования", colspan:1, rowspan:1},
-        {label: "Состав размещаемой информации", colspan:1, rowspan:1},
-        {label: "Частота обновления информации", colspan:1, rowspan:1}
+        {field: "informationMethod",label: "Способ информирования", colspan:1, rowspan:1},
+        {field: "compositionInformation",label: "Состав размещаемой информации", colspan:1, rowspan:1},
+        {field: "refreshRate",label: "Частота обновления информации", colspan:1, rowspan:1}
     ],
-    //Строки таблицы
-    rows: [
-        {
-            "informationMethod": "", //Способ информирования
-            "compositionInformation": "", //Состав размещаемой информации
-            "refreshRate": "", //Частота обновления информации
-            "year": "", //Год формирования
-            "section": "", //Номер раздела
-            "serviceName": "", //Наименование муниципальной услуги
-            "consumerCategory": "", //Категории потребителей муниципальной услуги
-            "codeBasicList": "", //Код по общероссийскому базовому перечню или федеральному перечню
-            "regulatingAct": "" //Нормативные правовые акты, регулирующие порядок оказания государственной услуги
-        }
+    //Ячейки таблицы
+    cols: [
+        {field: "informationMethod"}, //Способ информирования
+        {field: "compositionInformation"}, //Состав размещаемой информации
+        {field: "refreshRate"} //Частота обновления информации
     ]
 }

@@ -2,30 +2,22 @@
 export const actsSettingThePrice = {
     //Шапка верхнего уровня таблицы
     headers: [
-        {label: "Нормативный правовой акт", rowspan: 1, colspan: 5 }
+        {field:"Act",label: "Нормативный правовой акт", rowspan: 1, colspan: 5 }
     ],
     //Шапка 2-го уровня таблицы
-    subheaders: [
-        {label: "вид", rowspan: 1, colspan: 1 },
-        {label: "принявший орган", rowspan: 1, colspan: 1 },
-        {label: "дата", rowspan: 1, colspan: 1 },
-        {label: "номер", rowspan: 1, colspan: 1 },
-        {label: "наименование", rowspan: 1, colspan: 1 }
+    subheaders1: [
+        {field:"typeAct", label: "вид", rowspan: 1, colspan: 1 },
+        {field:"receivingBody", label: "принявший орган", rowspan: 1, colspan: 1 },
+        {field:"dateAct", label: "дата", rowspan: 1, colspan: 1 },
+        {field:"numberAct", label: "номер", rowspan: 1, colspan: 1 },
+        {field:"nameAct", label: "наименование", rowspan: 1, colspan: 1 }
     ],
-    //Строки таблицы
-    rows: [
-        {
-            "typeAct": "", // вид нормативно правового акта
-            "receivingBody": "", // Принявший орган
-            "dateAct": "", // Дата
-            "numberAct": "", // Номер
-            "nameAct": "", // Наименование
-            "year": "", //Год формирования
-            "section": "", //Номер раздела
-            "serviceName": "", //Наименование муниципальной услуги
-            "consumerCategory": "", //Категории потребителей муниципальной услуги
-            "codeBasicList": "", //Код по общероссийскому базовому перечню или федеральному перечню
-            "regulationAct": "" //Нормативные правовые акты, регулирующие порядок оказания государственной услуги
-        }
+    //Ячейки таблицы
+    cols: [
+        {field:"typeAct"}, // вид нормативно правового акта
+        {field:"receivingBody"}, // Принявший орган
+        {field:"dateAct"}, // Дата
+        {field:"numberAct"}, // Номер
+        {field:"nameAct"} // Наименование
     ]
 }
