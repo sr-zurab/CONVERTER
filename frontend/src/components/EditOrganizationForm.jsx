@@ -2,7 +2,7 @@
 // Позволяет изменять данные существующей организации
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {updateOrganization} from '../store/organizationSlice';
+import {updateOrganization} from '../store/organizationSlice.js';
 import {RiSave2Fill} from "react-icons/ri";
 import {TbCancel} from "react-icons/tb";
 

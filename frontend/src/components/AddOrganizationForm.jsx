@@ -2,7 +2,7 @@
 // Позволяет создать новую организацию с заполнением всех необходимых полей
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {addOrganization} from '../store/organizationSlice';
+import {addOrganization} from '../store/organizationSlice.js';
 import {IoIosAddCircleOutline} from "react-icons/io";
 import {TbCancel} from "react-icons/tb";
 

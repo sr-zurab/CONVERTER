@@ -8,13 +8,13 @@ import {
     addPlanPaymentIndex,
     updatePlanPaymentIndex,
     deletePlanPaymentIndex
-} from '../store/planPaymentIndexSlice';
+} from '../store/planPaymentIndexSlice.js';
 import {
     fetchPlanPaymentTru,
     addPlanPaymentTru,
     updatePlanPaymentTru,
     deletePlanPaymentTru
-} from '../store/paymentTruSlice';
+} from '../store/paymentTruSlice.js';
 import {mergeDefaultAndServerData} from '../utils/mergeFhdData';
 import {BsFiletypeXlsx, BsFiletypeXml} from "react-icons/bs";
 import {RiSave2Fill} from "react-icons/ri";

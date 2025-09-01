@@ -114,7 +114,7 @@ class actsSettingThePrice(models.Model):
     typeAct = models.CharField("Нормативный правовой акт: вид", max_length=255, blank=True, null=True, default="")
     receivingBody = models.CharField("Нормативный правовой акт: принявший орган", max_length=255, blank=True, null=True, default="")
     dateAct = models.DateField(verbose_name="Нормативный правовой акт: дата", max_length=255, blank=True, null=True, default="")
-    numberAct = models.PositiveIntegerField(verbose_name="Нормативный правовой акт: номер", max_length=255, blank=True, null=True, default="")
+    numberAct = models.PositiveIntegerField(verbose_name="Нормативный правовой акт: номер", blank=True, null=True, default="")
     nameAct = models.CharField("Нормативный правовой акт: наименование", max_length=255, blank=True, null=True, default="")
     section = PositiveIntegerField(verbose_name="Номер раздела")
     serviceName = models.CharField("Наименование муниципальной услуги", max_length=255, blank=True,

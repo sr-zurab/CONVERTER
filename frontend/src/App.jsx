@@ -7,7 +7,7 @@ import {
     fetchOrganizations,
     selectOrganization,
     selectReport
-} from './store/organizationSlice';
+} from './store/organizationSlice.js';
 import AddOrganizationForm from './components/AddOrganizationForm';
 import EditOrganizationForm from './components/EditOrganizationForm';
 import OrganizationDetails from './components/OrganizationDetails';

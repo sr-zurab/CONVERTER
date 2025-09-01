@@ -2,7 +2,7 @@
 // Показывает все поля организации и кнопки для редактирования/удаления
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {deleteOrganization} from '../store/organizationSlice';
+import {deleteOrganization} from '../store/organizationSlice.js';
 import {BsFeather} from "react-icons/bs";
 import {FiTrash2} from "react-icons/fi";
 
