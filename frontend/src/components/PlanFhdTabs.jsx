@@ -22,21 +22,6 @@ import {LuFileSpreadsheet} from "react-icons/lu";
 import {FiUpload} from "react-icons/fi";
 import {MdRefresh} from "react-icons/md";
 
-const notificationStyle = {
-    position: 'fixed',
-    top: '20px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    backgroundColor: '#4CAF50',
-    color: 'white',
-    padding: '15px 30px',
-    borderRadius: '4px',
-    boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
-    zIndex: 1000,
-    animation: 'fadeOut 3s forwards',
-    fontSize: '16px'
-};
-
 const PlanFhdTabs = ({organization}) => {
     const dispatch = useDispatch();
     const [activeTab, setActiveTab] = useState('list1');
@@ -215,10 +200,10 @@ const PlanFhdTabs = ({organization}) => {
     };
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, marginTop: 40}}>
-            {showNotification && <div style={notificationStyle}>{notificationMessage}</div>}
+        <div className="planfhd-container">
+            {showNotification && <div className="planfhd-notification">{notificationMessage}</div>}
 
-            <div className="fhd-controls" style={{marginBottom: 8, position: 'sticky', top: 0, zIndex: 2, background: '#fff', paddingRight: 60}}>
+            <div className="fhd-controls planfhd-controls">
                 <select value={year} onChange={e => setYear(parseInt(e.target.value, 10))}>
                     {[2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => (
                         <option key={y} value={y}>{y}</option>
@@ -235,11 +220,11 @@ const PlanFhdTabs = ({organization}) => {
                 <button onClick={handleExportXLSX}><BsFiletypeXlsx/> Xlsx</button>
                 <button><label className="custom-upload-button">
                     <FiUpload/> Загрузить XLSX
-                    <input type="file" accept=".xlsx" onChange={handleImportXLSX} style={{display: 'none'}} />
+                    <input type="file" accept=".xlsx" onChange={handleImportXLSX} />
                 </label></button>
                 <button onClick={handleRefreshData}><MdRefresh/> Обновить</button>
             </div>
-            <div style={{flex: 1, minHeight: 0, overflow: 'auto'}}>
+            <div className="planfhd-content">
                 {activeTab === 'list1' ? (
                     <FhdTable
                         schema={fhdSchemaList1.planPaymentIndex.filter(col => col.field !== 'manually')}

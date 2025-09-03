@@ -676,3 +676,53 @@ button:focus {
     outline: none !important;
     box-shadow: none !important;
 }
+
+/* ===== PlanFhdTabs specific styles (moved from inline) ===== */
+.planfhd-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    margin-top: 40px;
+}
+
+.planfhd-controls {
+    margin-bottom: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #fff;
+    padding-right: 60px;
+}
+
+.planfhd-content {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+}
+
+.planfhd-notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+    animation: planfhd-fadeOut 3s forwards;
+    font-size: 16px;
+}
+
+@keyframes planfhd-fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Hide file input inside custom upload button */
+.custom-upload-button input[type="file"] {
+    display: none;
+}
