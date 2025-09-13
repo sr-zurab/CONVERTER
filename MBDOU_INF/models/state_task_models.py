@@ -26,13 +26,13 @@ class IndicatorsQualityService(models.Model):
                                            null=True, default="")
     unionOfMeasurement = models.CharField("Показатель качества муниципальной услуги: единица измерения: наименование",max_length=255, blank=True,
                                            null=True, default="")
-    OKEI = models.PositiveIntegerField(verbose_name="Показатель качества муниципальной услуги: единица измерения: код по ОКЕИ")
-    valuesQualityIndicatorNextYear= models.PositiveIntegerField(verbose_name="Значение показателя качества муниципальной услуги: (очередной финансовый год)")
-    valuesQualityIndicatorFirstYear = models.PositiveIntegerField(verbose_name="Значение показателя качества муниципальной услуги: (1-й год планового периода)")
-    valuesQualityIndicatorSecondYear = models.PositiveIntegerField(verbose_name="Значение показателя качества муниципальной услуги: (2-й год планового периода)")
-    percentageDeviations = models.PositiveIntegerField(verbose_name="Допустимые (возможные) отклонения от установленных показателей качества муниципальной услуги: в процентах")
-    absoluteValuesDeviations = models.PositiveIntegerField(verbose_name="Допустимые (возможные) отклонения от установленных показателей качества муниципальной услуги: в абсолютных величинах")
-    section = PositiveIntegerField(verbose_name="Номер раздела")
+    OKEI = models.PositiveIntegerField(verbose_name="Показатель качества муниципальной услуги: единица измерения: код по ОКЕИ", default=0)
+    valuesQualityIndicatorNextYear= models.PositiveIntegerField(verbose_name="Значение показателя качества муниципальной услуги: (очередной финансовый год)", default=0)
+    valuesQualityIndicatorFirstYear = models.PositiveIntegerField(verbose_name="Значение показателя качества муниципальной услуги: (1-й год планового периода)", default=0)
+    valuesQualityIndicatorSecondYear = models.PositiveIntegerField(verbose_name="Значение показателя качества муниципальной услуги: (2-й год планового периода)", default=0)
+    percentageDeviations = models.PositiveIntegerField(verbose_name="Допустимые (возможные) отклонения от установленных показателей качества муниципальной услуги: в процентах", default=0)
+    absoluteValuesDeviations = models.PositiveIntegerField(verbose_name="Допустимые (возможные) отклонения от установленных показателей качества муниципальной услуги: в абсолютных величинах", default=0)
+    section = models.PositiveIntegerField(verbose_name="Номер раздела")
     serviceName = models.CharField("Наименование муниципальной услуги",max_length=255, blank=True,
                                            null=True, default="")
     consumerCategory = models.CharField("Категории потребителей муниципальной услуги",max_length=255, blank=True,
@@ -73,18 +73,18 @@ class IndicatorsVolumeService(models.Model):
                                            max_length=255, blank=True, null=True, default="")
         unitOfMeasurement = models.CharField("Показатель объема муниципальной услуги: единица измерения: наименование", max_length=255, blank=True,
                                              null=True, default="")
-        OKEI= models.PositiveIntegerField(verbose_name="Показатель объема муниципальной услуги:	единица измерения: единица измерения по ОКЕИ")
-        valuesVolumeIndicatorNextYear = models.PositiveIntegerField(verbose_name="Значение показателя объема государственной услуги: (очередной финансовый год)")
-        valuesVolumeIndicatorFirstYear = models.PositiveIntegerField(verbose_name="Значение показателя объема государственной услуги: (1-й год планового периода)")
-        valuesVolumeIndicatorSecondYear = models.PositiveIntegerField(verbose_name="Значение показателя объема государственной услуги: (2-й год планового периода)")
-        amountFeeNextYear = models.PositiveIntegerField(verbose_name="Размер платы (цена, тариф): (очередной финансовый год)")
-        amountFeeFirstYear = models.PositiveIntegerField(verbose_name="Размер платы (цена, тариф): (1-й год планового периода)")
-        amountFeeSecondYear = models.PositiveIntegerField(verbose_name="Размер платы (цена, тариф): (2-й год планового периода)")
+        OKEI= models.PositiveIntegerField(verbose_name="Показатель объема муниципальной услуги:	единица измерения: единица измерения по ОКЕИ", default=0)
+        valuesVolumeIndicatorNextYear = models.PositiveIntegerField(verbose_name="Значение показателя объема государственной услуги: (очередной финансовый год)", default=0)
+        valuesVolumeIndicatorFirstYear = models.PositiveIntegerField(verbose_name="Значение показателя объема государственной услуги: (1-й год планового периода)", default=0)
+        valuesVolumeIndicatorSecondYear = models.PositiveIntegerField(verbose_name="Значение показателя объема государственной услуги: (2-й год планового периода)", default=0)
+        amountFeeNextYear = models.PositiveIntegerField(verbose_name="Размер платы (цена, тариф): (очередной финансовый год)", default=0)
+        amountFeeFirstYear = models.PositiveIntegerField(verbose_name="Размер платы (цена, тариф): (1-й год планового периода)", default=0)
+        amountFeeSecondYear = models.PositiveIntegerField(verbose_name="Размер платы (цена, тариф): (2-й год планового периода)", default=0)
         percentageDeviations = models.PositiveIntegerField(
-            verbose_name="Допустимые (возможные) отклонения от установленных показателей объема муниципальной услуги: в процентах")
+            verbose_name="Допустимые (возможные) отклонения от установленных показателей объема муниципальной услуги: в процентах", default=0)
         absoluteValuesDeviations = models.PositiveIntegerField(
-            verbose_name="Допустимые (возможные) отклонения от установленных показателей объема муниципальной услуги: в абсолютных величинах")
-        section = PositiveIntegerField(verbose_name="Номер раздела")
+            verbose_name="Допустимые (возможные) отклонения от установленных показателей объема муниципальной услуги: в абсолютных величинах", default=0)
+        section = models.PositiveIntegerField(verbose_name="Номер раздела")
         serviceName = models.CharField("Наименование муниципальной услуги", max_length=255, blank=True,
                                        null=True, default="")
         consumerCategory = models.CharField("Категории потребителей муниципальной услуги", max_length=255, blank=True,
@@ -113,19 +113,18 @@ class actsSettingThePrice(models.Model):
     year = models.PositiveIntegerField(verbose_name="Год формирования отчета")
     typeAct = models.CharField("Нормативный правовой акт: вид", max_length=255, blank=True, null=True, default="")
     receivingBody = models.CharField("Нормативный правовой акт: принявший орган", max_length=255, blank=True, null=True, default="")
-    dateAct = models.DateField(verbose_name="Нормативный правовой акт: дата", max_length=255, blank=True, null=True, default="")
-    numberAct = models.PositiveIntegerField(verbose_name="Нормативный правовой акт: номер", blank=True, null=True, default="")
+    dateAct = models.CharField(verbose_name="Нормативный правовой акт: дата", max_length=255, blank=True, null=True, default="")
+    numberAct = models.CharField(verbose_name="Нормативный правовой акт: номер", max_length=255, blank=True, null=True, default="")
     nameAct = models.CharField("Нормативный правовой акт: наименование", max_length=255, blank=True, null=True, default="")
-    section = PositiveIntegerField(verbose_name="Номер раздела")
+    section = models.PositiveIntegerField(verbose_name="Номер раздела")
     serviceName = models.CharField("Наименование муниципальной услуги", max_length=255, blank=True,
                                    null=True, default="")
     consumerCategory = models.CharField("Категории потребителей муниципальной услуги", max_length=255, blank=True,
                                         null=True, default="")
     codeBasicList = models.CharField("Код по общероссийскому базовому перечню или федеральному перечню",
                                      max_length=255, blank=True, null=True, default="")
-    regulatingAct = models.CharField(
-        "Нормативные правовые акты, регулирующие порядок оказания государственной услуги", max_length=255,
-        blank=True, null=True, default="")
+    regulatingAct = models.CharField("Нормативные правовые акты, регулирующие порядок оказания государственной услуги",
+                                     max_length=255, blank=True, null=True, default="")
 
 
     class Meta:
@@ -146,7 +145,7 @@ class InformingPotentialConsumersOfTheService(models.Model):
     informationMethod = models.CharField("Способ информирования", max_length=255, blank=True, null=True, default="")
     compositionInformation = models.CharField("Состав размещаемой информации", max_length=255, blank=True, null=True, default="")
     refreshRate = models.CharField("Частота обновления информации", max_length=255, blank=True, null=True, default="")
-    section = PositiveIntegerField(verbose_name="Номер раздела")
+    section = models.PositiveIntegerField(verbose_name="Номер раздела")
     serviceName = models.CharField("Наименование муниципальной услуги", max_length=255, blank=True,
                                    null=True, default="")
     consumerCategory = models.CharField("Категории потребителей муниципальной услуги", max_length=255, blank=True,

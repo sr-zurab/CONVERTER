@@ -22,21 +22,21 @@ class InformingPotentialConsumersOfTheServiceViewSet(viewsets.ModelViewSet):
             organization_id=org_id,
             year=year,
             section=section)
-        if not queryset.exists():
-            raw_data = dict(self.request.query_params)
-            data = {k: v[0] if isinstance(v,list) else v for k, v in raw_data.items()}
-            data.pop('organization', None)
-            data.pop('year', None)
-            data.pop('section', None)
-            InformingPotentialConsumersOfTheService.objects.create(
-                organization_id=org_id,
-                year=year,
-                section=section,
-                **data)
-            queryset = InformingPotentialConsumersOfTheService.objects.filter(
-                organization_id=org_id,
-                year=year,
-                section=section)
+        # if not queryset.exists():
+        #     raw_data = dict(self.request.query_params)
+        #     data = {k: v[0] if isinstance(v,list) else v for k, v in raw_data.items()}
+        #     data.pop('organization', None)
+        #     data.pop('year', None)
+        #     data.pop('section', None)
+        #     InformingPotentialConsumersOfTheService.objects.create(
+        #         organization_id=org_id,
+        #         year=year,
+        #         section=section,
+        #         **data)
+        #     queryset = InformingPotentialConsumersOfTheService.objects.filter(
+        #         organization_id=org_id,
+        #         year=year,
+        #         section=section)
         return queryset.order_by('section')
 
     def get_object(self):

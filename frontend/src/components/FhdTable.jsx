@@ -69,8 +69,8 @@ const FhdTable = ({schema, data, onDataChange, onCellUpdate, onDeleteRow, classN
         addRowAfterCodesList1.includes(lineCode) || addRowAfterCodesList2.includes(lineCode);
 
     return (
-        <div className="fhd-table-wrapper" style={{overflowX: 'auto'}}>
-            <table className={`fhd-table ${className || ''}`} style={{tableLayout: 'fixed', width: '100%', minWidth: 1100, maxWidth: 1400}}>
+        <div className="table-wrapper" style={{overflowX: 'auto'}}>
+            <table className={`table ${className || ''}`} style={{tableLayout: 'fixed', width: '100%', minWidth: 1100, maxWidth: 1400}}>
                 <thead>
                 <tr>
                     {schema.map(col => (
@@ -167,7 +167,7 @@ const FhdTable = ({schema, data, onDataChange, onCellUpdate, onDeleteRow, classN
                         {shouldShowAddButton(row.lineCode) && (
                             <tr>
                                 <td colSpan={schema.length}>
-                                    <div className="fhd-add-row">
+                                    <div className="add-row">
                                         <button onClick={() => handleAddRow(rowIndex)}>
                                             <IoIosAddCircleOutline/> Добавить строку
                                         </button>

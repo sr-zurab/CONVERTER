@@ -203,7 +203,7 @@ const PlanFhdTabs = ({organization}) => {
         <div className="planfhd-container">
             {showNotification && <div className="planfhd-notification">{notificationMessage}</div>}
 
-            <div className="fhd-controls planfhd-controls">
+            <div className="controls planfhd-controls">
                 <select value={year} onChange={e => setYear(parseInt(e.target.value, 10))}>
                     {[2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030].map(y => (
                         <option key={y} value={y}>{y}</option>
@@ -224,7 +224,7 @@ const PlanFhdTabs = ({organization}) => {
                 </label></button>
                 <button onClick={handleRefreshData}><MdRefresh/> Обновить</button>
             </div>
-            <div className="planfhd-content">
+            <div className="planfhd-content table-wrapper">
                 {activeTab === 'list1' ? (
                     <FhdTable
                         schema={fhdSchemaList1.planPaymentIndex.filter(col => col.field !== 'manually')}

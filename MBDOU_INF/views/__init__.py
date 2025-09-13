@@ -6,7 +6,7 @@ from .export_fhd_xml import export_fhd_xml
 from .export_fhd_xlsx import export_fhd_xlsx
 from .import_fhd_xlsx import ImportPlanFhdXLSXView
 from .auth_view import RegisterView, MeView
-from .acts_setting_the_price import actsSettingThePriceViewSet
+from .acts_setting_the_price import ActsSettingThePriceViewSet
 from .informing_potential_consumers_of_the_service import InformingPotentialConsumersOfTheServiceViewSet
 from . indicators_volume_service import IndicatorsVolumeServiceViewSet
 __all__ = [
@@ -19,7 +19,7 @@ __all__ = [
     'RegisterView',
     'MeView',
     'IndicatorsQualityServiceViewSet',
-    'actsSettingThePriceViewSet',
+    'ActsSettingThePriceViewSet',
     'InformingPotentialConsumersOfTheServiceViewSet',
     'IndicatorsVolumeServiceViewSet'
 ]

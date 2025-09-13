@@ -3,11 +3,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from ..models import Organization, IndicatorsQualityService
-from MBDOU_INF.serializers import indicators_quality_service_serializer
+from MBDOU_INF.serializers import IndicatorsQualityServiceSerializer
 
 class IndicatorsQualityServiceViewSet(viewsets.ModelViewSet):
     queryset = IndicatorsQualityService.objects.all()
-    serializer_class = indicators_quality_service_serializer
+    serializer_class = IndicatorsQualityServiceSerializer
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
         org_id = self.request.query_params.get('organization')
@@ -22,22 +22,28 @@ class IndicatorsQualityServiceViewSet(viewsets.ModelViewSet):
             organization_id=org_id,
             year=year,
             section=section)
-        if not queryset.exists():
-            raw_data = dict(self.request.query_params)
-            data = {k: v[0] if isinstance(v,list) else v for k, v in raw_data.items()}
-            data.pop('organization', None)
-            data.pop('year', None)
-            data.pop('section', None)
-            IndicatorsQualityService.objects.create(
-                organization_id=org_id,
-                year=year,
-                section=section,
-                **data)
-            queryset = IndicatorsQualityService.objects.filter(
-                organization_id=org_id,
-                year=year,
-                section=section)
-            return queryset.order_by('section')
+        # if not queryset.exists():
+        #     raw_data = dict(self.request.query_params)
+        #     data = {k: v[0] if isinstance(v,list) else v for k, v in raw_data.items()}
+        #     data.pop('organization', None)
+        #     data.pop('year', None)
+        #     data.pop('section', None)
+        #     IndicatorsQualityService.objects.create(
+        #         organization_id=org_id,
+        #         year=year,
+        #         section=section,
+        #         **data)
+        #     queryset = IndicatorsQualityService.objects.filter(
+        #         organization_id=org_id,
+        #         year=year,
+        #         section=section)
+        return queryset.order_by('section')
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def get_object(self):
         return get_object_or_404(IndicatorsQualityService, pk=self.kwargs['pk'])

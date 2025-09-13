@@ -18,7 +18,7 @@ import RegisterPage from './components/RegisterPage';
 import './App.css';
 import {IoIosAddCircleOutline} from "react-icons/io";
 import {FiLogOut} from "react-icons/fi";
-
+import StateTaskTabs from './components/componentsStateTask/StateTaskTabs';
 // Основной компонент приложения (левая панель, контент, модальные окна)
 const MainApp = () => {
     const dispatch = useDispatch();
@@ -119,9 +119,14 @@ const MainApp = () => {
                                 </div>
                                 <div className="org-content">
                                     {selectedOrg?.id === org.id && (
-                                        <div className="report-item" onClick={() => dispatch(selectReport('planFhd'))}>
-                                            📄 План ФХД
-                                        </div>
+                                        <>
+                                            <div className="report-item" onClick={() => dispatch(selectReport('planFhd'))}>
+                                                📄 План ФХД
+                                            </div>
+                                            <div className="report-item" onClick={() => dispatch(selectReport('stateTask'))}>
+                                                🧩 Госзадание
+                                            </div>
+                                        </>
                                     )}
                                 </div>
                             </li>
@@ -137,6 +142,8 @@ const MainApp = () => {
                     {selectedOrg ? (
                         selectedReport === 'planFhd' ? (
                             <PlanFhdTabs organization={selectedOrg}/>
+                        ) : selectedReport === 'stateTask' ? (
+                            <StateTaskTabs organization={selectedOrg} section={1} />
                         ) : (
                             <OrganizationDetails org={selectedOrg} onEdit={() => setShowEditModal(true)}/>
                         )

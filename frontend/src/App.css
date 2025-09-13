@@ -726,3 +726,173 @@ button:focus {
 .custom-upload-button input[type="file"] {
     display: none;
 }
+
+/* ===== Universal aliases for former .fhd-* classes (non-breaking) ===== */
+/* Controls */
+.controls {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    background: white;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+}
+.controls select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    font-size: 14px;
+    background-color: white;
+    min-width: 120px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.controls select:hover { border-color: #09c; }
+.controls button {
+    padding: 8px 8px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+    min-width: 120px;
+    font-size: 15px;
+}
+.controls button:hover { background-color: green; transform: translateY(-1px); }
+.controls .active { background-color: green; }
+
+/* Table wrapper */
+.table-wrapper {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Table */
+.table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-bottom: 20px; }
+
+/* First sheet widths */
+.table:not(.second-sheet) th:nth-child(1) { width: 35%; }
+.table:not(.second-sheet) th:nth-child(2) { width: 10%; }
+.table:not(.second-sheet) th:nth-child(3) { width: 15%; }
+.table:not(.second-sheet) th:nth-child(4) { width: 8%; }
+.table:not(.second-sheet) th:nth-child(5),
+.table:not(.second-sheet) th:nth-child(6),
+.table:not(.second-sheet) th:nth-child(7),
+.table:not(.second-sheet) th:nth-child(8) { width: 8%; }
+
+.table th {
+    background: #f8f9fa;
+    padding: 12px 8px;
+    font-weight: 600;
+    text-align: left;
+    border: 1px solid #dee2e6;
+    color: #495057;
+    font-size: 13px;
+    white-space: normal;
+    height: auto;
+    vertical-align: top;
+}
+
+/* Чёткое выравнивание заголовков для госзадания */
+.state-task-table th { text-align: center; vertical-align: middle; }
+.state-task-table thead th {
+    white-space: normal; /* перенос по пробелам */
+    word-break: normal;  /* не ломаем слова без необходимости */
+    overflow-wrap: break-word; /* длинные токены ломаем только как запасной вариант */
+    hyphens: none; /* без переносов по слогам */
+    line-height: 1.25;
+    padding: 10px 12px;
+}
+
+/* увеличиваем минимальную высоту заголовков, чтобы многострочный текст помещался красиво */
+.state-task-table thead tr th { min-height: 40px; }
+
+/* делаем ячейки данных переносящимися по словам, чтобы ширина колонок соответствовала шапке */
+.state-task-table td { word-break: normal; overflow-wrap: anywhere; }
+
+/* Кнопка удаления вынесена поверх содержимого последней ячейки, но визуально справа в строке */
+/* Рельса с кнопками удаления справа от таблицы */
+.row-actions-rail {
+    position: absolute;
+    top: 0;
+    right: 6px;
+    bottom: 40px; /* под кнопкой Добавить */
+    width: 32px;
+    pointer-events: none; /* клики только по кнопкам */
+}
+.row-actions-rail .row-rail-btn {
+    position: absolute;
+    right: 0;
+    transform: translateY(-50%);
+    pointer-events: auto;
+}
+.table td { border: 1px solid #dee2e6; padding: 4px; vertical-align: top; background: white; height: auto; }
+.table textarea {
+    width: 100%;
+    min-height: 28px;
+    resize: vertical;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    padding: 4px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    transition: all 0.2s;
+    font-size: 13px;
+    line-height: 1.3;
+    max-height: 300px;
+}
+.table textarea:focus { background-color: #f8f9fa; outline: none; box-shadow: inset 0 0 0 2px #09c; min-height: 60px; }
+.table td:nth-child(5) textarea,
+.table td:nth-child(6) textarea,
+.table td:nth-child(7) textarea,
+.table td:nth-child(8) textarea { text-align: right; font-family: 'Consolas', monospace; font-size: 13px; }
+.table td:first-child textarea { white-space: pre-wrap; word-wrap: break-word; min-height: 28px; }
+.table tr:hover td { background-color: #f8f9fa; }
+
+/* Second sheet */
+.table.second-sheet { width: 100%; table-layout: fixed; }
+.table.second-sheet th,
+.table.second-sheet td { border: 1px solid #dee2e6; padding: 4px; font-size: 12px; }
+.table.second-sheet th:nth-child(1) { width: 5%; }
+.table.second-sheet th:nth-child(2) { width: 8%; }
+.table.second-sheet th:nth-child(3) { width: 22%; }
+.table.second-sheet th:nth-child(4) { width: 5%; }
+.table.second-sheet th:nth-child(5) { width: 6%; }
+.table.second-sheet th:nth-child(7),
+.table.second-sheet th:nth-child(8),
+.table.second-sheet th:nth-child(9),
+.table.second-sheet th:nth-child(10) { width: 9%; }
+.table.second-sheet th:nth-child(11) { width: 4%; }
+.table.second-sheet td:nth-child(7) textarea,
+.table.second-sheet td:nth-child(8) textarea,
+.table.second-sheet td:nth-child(9) textarea,
+.table.second-sheet td:nth-child(10) textarea { text-align: right; font-family: 'Consolas', monospace; }
+
+/* Add-row block */
+.add-row { display: flex; justify-content: flex-start; padding: 4px; }
+.add-row button {
+    padding: 6px 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    min-width: auto;
+}
+.add-row button:hover { background-color: #218838; transform: translateY(-1px); }
