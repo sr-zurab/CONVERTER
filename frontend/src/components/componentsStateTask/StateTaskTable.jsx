@@ -4,7 +4,6 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 
 const TableStateTask = ({ schema, data, onDataChange, onCellUpdate, onDeleteRow, onAddRow }) => {
 	 	 const saveTimeouts = useRef({});
-
 	 	 const handleChange = (rowIndex, field, value) => {
 	 	 	 	 const updated = [...data];
 	 	 	 	 const currentRow = updated[rowIndex];
@@ -168,7 +167,6 @@ const TableStateTask = ({ schema, data, onDataChange, onCellUpdate, onDeleteRow,
 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 onChange={e => handleChange(rowIndex, col.field, e.target.value)}
 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 onBlur={e => handleBlur(rowIndex, col.field, e.target.value)}
 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 onKeyDown={e => handleKeyDown(e, rowIndex, colIndex)}
-	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 onFocus={() => setFocusedRow(rowIndex)}
 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 data-cell={`${rowIndex}-${colIndex}`}
 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 />
 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 </td>

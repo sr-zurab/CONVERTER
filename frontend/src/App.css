@@ -776,7 +776,7 @@ button:focus {
 }
 
 /* Table */
-.table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-bottom: 20px; }
+.table { width: 100%; border-collapse: collapse; table-layout: auto; margin-bottom: 20px; }
 
 /* First sheet widths */
 .table:not(.second-sheet) th:nth-child(1) { width: 35%; }
@@ -856,7 +856,7 @@ button:focus {
 .table td:nth-child(5) textarea,
 .table td:nth-child(6) textarea,
 .table td:nth-child(7) textarea,
-.table td:nth-child(8) textarea { text-align: right; font-family: 'Consolas', monospace; font-size: 13px; }
+.table td:nth-child(8) textarea { text-align: left; font-family: 'Consolas', monospace; font-size: 13px; }
 .table td:first-child textarea { white-space: pre-wrap; word-wrap: break-word; min-height: 28px; }
 .table tr:hover td { background-color: #f8f9fa; }
 
@@ -877,7 +877,7 @@ button:focus {
 .table.second-sheet td:nth-child(7) textarea,
 .table.second-sheet td:nth-child(8) textarea,
 .table.second-sheet td:nth-child(9) textarea,
-.table.second-sheet td:nth-child(10) textarea { text-align: right; font-family: 'Consolas', monospace; }
+.table.second-sheet td:nth-child(10) textarea { text-align: left; font-family: 'Consolas', monospace; }
 
 /* Add-row block */
 .add-row { display: flex; justify-content: flex-start; padding: 4px; }
@@ -896,3 +896,13 @@ button:focus {
     min-width: auto;
 }
 .add-row button:hover { background-color: #218838; transform: translateY(-1px); }
+.table td.actions-btn {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    width: 44px;
+    min-width: 44px;
+    text-align: center;
+    vertical-align: middle;
+}

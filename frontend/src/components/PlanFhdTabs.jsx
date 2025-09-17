@@ -227,7 +227,7 @@ const PlanFhdTabs = ({organization}) => {
             <div className="planfhd-content table-wrapper">
                 {activeTab === 'list1' ? (
                     <FhdTable
-                        schema={fhdSchemaList1.planPaymentIndex.filter(col => col.field !== 'manually')}
+                        schema={fhdSchemaList1.planPaymentIndex.filter(col => !['manually', 'actions'].includes(col.field))}
                         data={indexData}
                         onDataChange={setIndexData}
                         onCellUpdate={handleCellUpdate}
@@ -235,7 +235,7 @@ const PlanFhdTabs = ({organization}) => {
                     />
                 ) : (
                     <FhdTable
-                        schema={fhdSchemaList2.planPaymentTRU.filter(col => col.field !== 'manually')}
+                        schema={fhdSchemaList2.planPaymentTRU.filter(col => !['manually', 'actions'].includes(col.field))}
                         data={truData}
                         onDataChange={setTruData}
                         onCellUpdate={handleCellUpdate}

@@ -88,12 +88,26 @@ const StateTaskTabs = ({ organization, section }) => {
                 <button onClick={handleRefreshData}>Обновить</button>
             </div>
             <div style={{flex: 1, minHeight: 0, overflow: 'auto'}}>
-                <TableStateTask schema={schemaActs} data={actsSettingThePriceData} onDataChange={setActsSettingThePriceData} onCellUpdate={onUpdateActs} onDeleteRow={onDeleteActs} onAddRow={onAddActs} />
-                <TableStateTask schema={schemaInform} data={informingPotentialConsumersOfTheServiceData} onDataChange={setInformingPotentialConsumersOfTheServiceData} onCellUpdate={onUpdateInform} onDeleteRow={onDeleteInform} onAddRow={onAddInform}/>
-                <TableStateTask schema={qualitySchemaNorm} data={indicatorsQualityData} onDataChange={setIndicatorsQualityData} onCellUpdate={onUpdateQuality} onDeleteRow={onDeleteQuality} onAddRow={onAddQuality} />
-                <TableStateTask schema={volumeSchemaNorm} data={indicatorsVolumeData} onDataChange={setIndicatorsVolumeData} onCellUpdate={onUpdateVolume} onDeleteRow={onDeleteVolume} onAddRow={onAddVolume} />
+                <p style={{fontSize: '20px', fontWeight: 'bold'}}>3. Показатели, характеризующие объем и (или) качество
+                    муниципальной услуги</p>
+                <p style={{fontSize: '20px', fontWeight: 'bold'}}>3.1. Показатели, характеризующие качество муниципальной услуги</p>
+                <TableStateTask schema={qualitySchemaNorm} data={indicatorsQualityData}
+                                onDataChange={setIndicatorsQualityData}
+                                onCellUpdate={onUpdateQuality} onDeleteRow={onDeleteQuality}
+                                onAddRow={onAddQuality}/><br/>
+                <p style={{fontSize: '20px', fontWeight: 'bold'}}>3.2. Показатели, характеризующие объём муниципальной услуги</p>
+                <TableStateTask schema={volumeSchemaNorm} data={indicatorsVolumeData}
+                                onDataChange={setIndicatorsVolumeData}
+                                onCellUpdate={onUpdateVolume} onDeleteRow={onDeleteVolume} onAddRow={onAddVolume}/><br/>
+                <p style={{fontSize: '20px', fontWeight: 'bold'}}>4. Нормативные правовые акты, устанавливающие размер платы (цену, тариф) либо порядок ее установления</p>
+                <TableStateTask schema={schemaActs} data={actsSettingThePriceData}
+                                onDataChange={setActsSettingThePriceData}
+                                onCellUpdate={onUpdateActs} onDeleteRow={onDeleteActs} onAddRow={onAddActs}/><br/>
+                <p style={{fontSize: '20px', fontWeight: 'bold'}}>5.2. Порядок информирования потенциальных потребителей государственной услуги</p>
+                <TableStateTask schema={schemaInform} data={informingPotentialConsumersOfTheServiceData} onDataChange={setInformingPotentialConsumersOfTheServiceData}
+                                onCellUpdate={onUpdateInform} onDeleteRow={onDeleteInform} onAddRow={onAddInform}/>
             </div>
-        </div>      
+        </div>
     );
 }
 

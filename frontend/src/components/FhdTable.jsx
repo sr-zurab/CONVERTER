@@ -70,13 +70,12 @@ const FhdTable = ({schema, data, onDataChange, onCellUpdate, onDeleteRow, classN
 
     return (
         <div className="table-wrapper" style={{overflowX: 'auto'}}>
-            <table className={`table ${className || ''}`} style={{tableLayout: 'fixed', width: '100%', minWidth: 1100, maxWidth: 1400}}>
+            <table className={`table ${className || ''}`} style={{tableLayout: 'auto', width: '100%', minWidth: 1100, maxWidth: 1400}}>
                 <thead>
                 <tr>
                     {schema.map(col => (
                         <th key={col.field}>{col.label}</th>
                     ))}
-                    <th key="actions-col"></th>
                 </tr>
                 <tr>
                     {schema.map((col, idx) => (
@@ -84,7 +83,6 @@ const FhdTable = ({schema, data, onDataChange, onCellUpdate, onDeleteRow, classN
                             ? <th key={col.field + '-num'} style={{background: '#f8f9fa'}}></th>
                             : <th key={col.field + '-num'} style={{fontWeight: 400, background: '#f8f9fa', textAlign: 'center'}}>{idx + 1}</th>
                     ))}
-                    <th key="actions-col-num" style={{background: '#f8f9fa'}}></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -156,7 +154,7 @@ const FhdTable = ({schema, data, onDataChange, onCellUpdate, onDeleteRow, classN
                                     )}
                                 </td>
                             ))}
-                            <td key="actions-btn" style={{paddingRight: 12, minWidth: 44, width: 44, textAlign: 'center'}}>
+                            <td key="actions-btn" className="actions-btn">
                                 {row.manually === true && (
                                     <button onClick={() => handleDeleteRow(rowIndex)} className="del-button">
                                         <FiTrash2/>
