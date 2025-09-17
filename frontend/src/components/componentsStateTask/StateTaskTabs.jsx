@@ -77,34 +77,61 @@ const StateTaskTabs = ({ organization, section }) => {
                         <option key={y} value={y}>{y}</option>
                     ))}
                 </select>
+                <label>
+                    Номер раздела:
                 <input
                     type="number"
                     min={1}
                     value={currentSection}
                     onChange={e => setCurrentSection(e.target.value === '' ? '' : parseInt(e.target.value, 10))}
-                    placeholder="Секция"
-                    style={{width: 120, padding: '8px 12px', borderRadius: 8, border: '1px solid #dee2e6'}}
-                />
+                    placeholder="Раздел"
+                    style={{width: 120, padding: '8px 12px', borderRadius: 8, border: '1px solid #dee2e6'}}/>
+                </label>
                 <button onClick={handleRefreshData}>Обновить</button>
             </div>
             <div style={{flex: 1, minHeight: 0, overflow: 'auto'}}>
-                <p style={{fontSize: '20px', fontWeight: 'bold'}}>3. Показатели, характеризующие объем и (или) качество
+                <label style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                    <span style={{fontSize: '14px', fontWeight: 'bold'}}>1. Наименование муниципальной услуги </span>
+                    <textarea
+                        style={{width: '800px', height: '45px', fontSize: '14px'}}></textarea>
+                    <span
+                        style={{
+                            fontSize: '14px',
+                            fontWeight: 'bold'
+                        }}>Код по общероссийскому<br/>базовому перечню или<br/>федеральному перечню </span>
+                    <textarea
+                        style={{width: '80px', height: '30px', fontSize: '14px'}}></textarea>
+                </label>
+                <br/>
+                <label style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                    <span
+                        style={{fontSize: '14px', fontWeight: 'bold'}}>2. Категории потребителей муниципальной услуги </span>
+                    <textarea
+                        style={{width: '800px', height: '30px', fontSize: '18px'}}></textarea>
+                </label>
+
+                <p style={{fontSize: '14px', fontWeight: 'bold'}}>3. Показатели, характеризующие объем и (или) качество
                     муниципальной услуги</p>
-                <p style={{fontSize: '20px', fontWeight: 'bold'}}>3.1. Показатели, характеризующие качество муниципальной услуги</p>
+                <p style={{fontSize: '14px', fontWeight: 'bold'}}>3.1. Показатели, характеризующие качество
+                    муниципальной услуги</p>
                 <TableStateTask schema={qualitySchemaNorm} data={indicatorsQualityData}
                                 onDataChange={setIndicatorsQualityData}
                                 onCellUpdate={onUpdateQuality} onDeleteRow={onDeleteQuality}
                                 onAddRow={onAddQuality}/><br/>
-                <p style={{fontSize: '20px', fontWeight: 'bold'}}>3.2. Показатели, характеризующие объём муниципальной услуги</p>
+                <p style={{fontSize: '14px', fontWeight: 'bold'}}>3.2. Показатели, характеризующие объём муниципальной
+                    услуги</p>
                 <TableStateTask schema={volumeSchemaNorm} data={indicatorsVolumeData}
                                 onDataChange={setIndicatorsVolumeData}
                                 onCellUpdate={onUpdateVolume} onDeleteRow={onDeleteVolume} onAddRow={onAddVolume}/><br/>
-                <p style={{fontSize: '20px', fontWeight: 'bold'}}>4. Нормативные правовые акты, устанавливающие размер платы (цену, тариф) либо порядок ее установления</p>
+                <p style={{fontSize: '14px', fontWeight: 'bold'}}>4. Нормативные правовые акты, устанавливающие размер
+                    платы (цену, тариф) либо порядок ее установления</p>
                 <TableStateTask schema={schemaActs} data={actsSettingThePriceData}
                                 onDataChange={setActsSettingThePriceData}
                                 onCellUpdate={onUpdateActs} onDeleteRow={onDeleteActs} onAddRow={onAddActs}/><br/>
-                <p style={{fontSize: '20px', fontWeight: 'bold'}}>5.2. Порядок информирования потенциальных потребителей государственной услуги</p>
-                <TableStateTask schema={schemaInform} data={informingPotentialConsumersOfTheServiceData} onDataChange={setInformingPotentialConsumersOfTheServiceData}
+                <p style={{fontSize: '14px', fontWeight: 'bold'}}>5.2. Порядок информирования потенциальных потребителей
+                    государственной услуги</p>
+                <TableStateTask schema={schemaInform} data={informingPotentialConsumersOfTheServiceData}
+                                onDataChange={setInformingPotentialConsumersOfTheServiceData}
                                 onCellUpdate={onUpdateInform} onDeleteRow={onDeleteInform} onAddRow={onAddInform}/>
             </div>
         </div>
