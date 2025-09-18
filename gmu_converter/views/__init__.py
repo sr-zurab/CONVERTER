@@ -9,6 +9,7 @@ from .auth_view import RegisterView, MeView
 from .acts_setting_the_price import ActsSettingThePriceViewSet
 from .informing_potential_consumers_of_the_service import InformingPotentialConsumersOfTheServiceViewSet
 from .indicators_volume_service import IndicatorsVolumeServiceViewSet
+from .regulating_act import RegulatingActViewSet
 __all__ = [
     "OrganizationViewSet",
     "PlanPaymentIndexViewSet",
@@ -21,5 +22,6 @@ __all__ = [
     'IndicatorsQualityServiceViewSet',
     'ActsSettingThePriceViewSet',
     'InformingPotentialConsumersOfTheServiceViewSet',
-    'IndicatorsVolumeServiceViewSet'
+    'IndicatorsVolumeServiceViewSet',
+    'RegulatingActViewSet'
 ]

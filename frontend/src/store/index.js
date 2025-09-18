@@ -6,6 +6,7 @@ import indicatorsQualityServiceReducer from './qualityServiceSlice'
 import indicatorsVolumeServiceReducer from './volumeServiceSlice'
 import actsSettingPriceReducer from './actsSettingThePriceSlice.js'
 import informingPotentialConsumerReducer from './informingPotentialConsumersSlice.js'
+import regulatingActReducer from './regulatingActSlice.js'
 
 export const store = configureStore({
     reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
         qualityService: indicatorsQualityServiceReducer,
         volumeService: indicatorsVolumeServiceReducer,
         actsSettingPrice: actsSettingPriceReducer,
-        informingPotentialConsumers: informingPotentialConsumerReducer
+        informingPotentialConsumers: informingPotentialConsumerReducer,
+        regulatingAct: regulatingActReducer
     },
 });
 

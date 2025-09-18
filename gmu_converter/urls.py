@@ -4,7 +4,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from gmu_converter.views import OrganizationViewSet, PlanPaymentIndexViewSet, PlanPaymentTRUViewSet, export_fhd_xml, \
     export_fhd_xlsx, ImportPlanFhdXLSXView, RegisterView, MeView, ActsSettingThePriceViewSet, \
-    IndicatorsVolumeServiceViewSet, InformingPotentialConsumersOfTheServiceViewSet, IndicatorsQualityServiceViewSet
+    IndicatorsVolumeServiceViewSet, InformingPotentialConsumersOfTheServiceViewSet, IndicatorsQualityServiceViewSet, RegulatingActViewSet
 from rest_framework_simplejwt.views import TokenRefreshView
 from gmu_converter.views.auth_view import MyTokenObtainPairView
 router = DefaultRouter()
@@ -15,6 +15,7 @@ router.register(r'acts-setting-price', ActsSettingThePriceViewSet, basename='act
 router.register(r'indicators-quality-service', IndicatorsQualityServiceViewSet, basename='indicatorsQuality')
 router.register(r'indicators-volume-service', IndicatorsVolumeServiceViewSet, basename='indicatorsVolume')
 router.register(r'informing-potential-consumers', InformingPotentialConsumersOfTheServiceViewSet, basename='informingConsumers')
+router.register(r'regulating-act', RegulatingActViewSet, basename='RegulatingActs')
 
 urlpatterns = [
     path('', include(router.urls)),

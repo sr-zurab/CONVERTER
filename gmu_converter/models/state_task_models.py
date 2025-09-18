@@ -39,8 +39,6 @@ class IndicatorsQualityService(models.Model):
                                            null=True, default="")
     codeBasicList = models.CharField("Код по общероссийскому базовому перечню или федеральному перечню",max_length=255, blank=True,
                                            null=True, default="")
-    regulatingAct= models.CharField("Нормативные правовые акты, регулирующие порядок оказания государственной услуги",max_length=255, blank=True,
-                                           null=True, default="")
     class Meta:
         verbose_name = "Показатель характеризующий качество услуги"
         verbose_name_plural = "Показатели, характеризующие качество муниципальной услуги"
@@ -92,10 +90,6 @@ class IndicatorsVolumeService(models.Model):
         codeBasicList = models.CharField("Код по общероссийскому базовому перечню или федеральному перечню",
                                          max_length=255, blank=True,
                                          null=True, default="")
-        regulatingAct = models.CharField(
-            "Нормативные правовые акты, регулирующие порядок оказания государственной услуги", max_length=255,
-            blank=True,
-            null=True, default="")
 
         class Meta:
             verbose_name = "Показатель характеризующий объём услуги"
@@ -103,7 +97,8 @@ class IndicatorsVolumeService(models.Model):
 
         def __str__(self):
             return f"{self.organization}-{self.year}-{self.section}-{self.serviceName}-{self.codeBasicList}"
-class actsSettingThePrice(models.Model):
+
+class ActsSettingThePrice(models.Model):
     organization = models.ForeignKey(
         Organization,
         on_delete=models.CASCADE,
@@ -123,9 +118,6 @@ class actsSettingThePrice(models.Model):
                                         null=True, default="")
     codeBasicList = models.CharField("Код по общероссийскому базовому перечню или федеральному перечню",
                                      max_length=255, blank=True, null=True, default="")
-    regulatingAct = models.CharField("Нормативные правовые акты, регулирующие порядок оказания государственной услуги",
-                                     max_length=255, blank=True, null=True, default="")
-
 
     class Meta:
         verbose_name = "Нормативные правовые акты, устанавливающие размер платы"
@@ -152,12 +144,38 @@ class InformingPotentialConsumersOfTheService(models.Model):
                                         null=True, default="")
     codeBasicList = models.CharField("Код по общероссийскому базовому перечню или федеральному перечню",
                                      max_length=255, blank=True, null=True, default="")
-    regulatingAct = models.CharField("Нормативные правовые акты, регулирующие порядок оказания государственной услуги", max_length=255,
-                                        blank=True, null=True, default="")
 
     class Meta:
         verbose_name = "Порядок информирования"
         verbose_name_plural = "Порядок информирования потенциальных потребителей государственной услуги"
+
+    def __str__(self):
+        return f"{self.organization}-{self.year}-{self.section}-{self.serviceName}-{self.codeBasicList}"
+
+class RegulatingAct(models.Model):
+    organization = models.ForeignKey(
+        Organization,
+        on_delete=models.CASCADE,
+        related_name="regulating_act",
+        verbose_name="Организация"
+    )
+    year = models.PositiveIntegerField(verbose_name="Год формирования отчета")
+    typeAct = models.CharField("Нормативный правовой акт: вид", max_length=255, blank=True, null=True, default="")
+    receivingBody = models.CharField("Нормативный правовой акт: принявший орган", max_length=255, blank=True, null=True, default="")
+    dateAct = models.CharField(verbose_name="Нормативный правовой акт: дата", max_length=255, blank=True, null=True, default="")
+    numberAct = models.CharField(verbose_name="Нормативный правовой акт: номер", max_length=255, blank=True, null=True, default="")
+    nameAct = models.CharField("Нормативный правовой акт: наименование", max_length=255, blank=True, null=True, default="")
+    section = models.PositiveIntegerField(verbose_name="Номер раздела")
+    serviceName = models.CharField("Наименование муниципальной услуги", max_length=255, blank=True,
+                                   null=True, default="")
+    consumerCategory = models.CharField("Категории потребителей муниципальной услуги", max_length=255, blank=True,
+                                        null=True, default="")
+    codeBasicList = models.CharField("Код по общероссийскому базовому перечню или федеральному перечню",
+                                     max_length=255, blank=True, null=True, default="")
+
+    class Meta:
+        verbose_name = "Нормативные правовые акты, регулирующие порядок оказания государственной услуги"
+        verbose_name_plural = "Нормативные правовые акты, регулирующие порядок оказания государственной услуги"
 
     def __str__(self):
         return f"{self.organization}-{self.year}-{self.section}-{self.serviceName}-{self.codeBasicList}"

@@ -4,11 +4,13 @@ import { actsSettingThePrice as schemaActs } from '../../schemas/stateTask/table
 import { InformingPotentialConsumersOfTheService as schemaInform } from '../../schemas/stateTask/tableInformingPotentialConsumersOfTheService';
 import { IndicatorsQuality as schemaQuality } from '../../schemas/stateTask/tableIndicatorsQualityService';
 import { IndicatorsVolume as schemaVolume } from '../../schemas/stateTask/tableIndicatorsVolumeService';
+import {regulatingAct as schemaRegulatingAct} from '../../schemas/stateTask/tableRegulatingAct.js';
 import TableStateTask from './StateTaskTable';
 import { fetchActsSettingPrice, addActsSettingPrice, updateActsSettingPrice, deleteActsSettingPrice } from '../../store/actsSettingThePriceSlice.js';
 import { fetchInformingPotentialConsumers, addInformingPotentialConsumers, updateInformingPotentialConsumers, deleteInformingPotentialConsumers } from '../../store/informingPotentialConsumersSlice.js';
 import { fetchIndicatorsQualityService, addIndicatorsQualityService, updateIndicatorsQualityService, deleteIndicatorsQualityService } from '../../store/qualityServiceSlice.js';
 import { fetchIndicatorsVolumeService, addIndicatorsVolumeService, updateIndicatorsVolumeService, deleteIndicatorsVolumeService } from '../../store/volumeServiceSlice.js';
+import {fetchRegulatingAct, addRegulatingAct, updateRegulatingAct, deleteRegulatingAct} from "../../store/regulatingActSlice.js";
 
 const StateTaskTabs = ({ organization, section }) => {
     const dispatch = useDispatch();
@@ -18,10 +20,12 @@ const StateTaskTabs = ({ organization, section }) => {
     const serverInformingPotentialConsumersOfTheService = useSelector(state => state.informingPotentialConsumers.list);
     const serverIndicatorsQuality = useSelector(state => state.qualityService.list);
     const serverIndicatorsVolume = useSelector(state => state.volumeService.list);
+    const serverRegulatingAct = useSelector(state => state.regulatingAct.list);
     const [actsSettingThePriceData, setActsSettingThePriceData] = useState([]);
     const [informingPotentialConsumersOfTheServiceData, setInformingPotentialConsumersOfTheServiceData] = useState([]);
     const [indicatorsQualityData, setIndicatorsQualityData] = useState([]);
     const [indicatorsVolumeData, setIndicatorsVolumeData] = useState([]);
+    const [regulatingActData, setRegulatingActData] = useState([]);
     
     // Синхронизация локальной секции с пропом
     useEffect(() => {
@@ -34,6 +38,7 @@ const StateTaskTabs = ({ organization, section }) => {
             dispatch(fetchInformingPotentialConsumers({organizationId: organization.id, year, section: currentSection}));
             dispatch(fetchIndicatorsQualityService({organizationId: organization.id, year, section: currentSection}));
             dispatch(fetchIndicatorsVolumeService({organizationId: organization.id, year, section: currentSection}));
+            dispatch(fetchRegulatingAct({organizationId: organization.id, year, section: currentSection}));
         }
     }, [organization, year, currentSection, dispatch]);
 
@@ -41,22 +46,25 @@ const StateTaskTabs = ({ organization, section }) => {
     useEffect(() => { setInformingPotentialConsumersOfTheServiceData(serverInformingPotentialConsumersOfTheService || []); }, [serverInformingPotentialConsumersOfTheService]);
     useEffect(() => { setIndicatorsQualityData(serverIndicatorsQuality || []); }, [serverIndicatorsQuality]);
     useEffect(() => { setIndicatorsVolumeData(serverIndicatorsVolume || []); }, [serverIndicatorsVolume]);
+    useEffect(() => { setRegulatingActData(serverRegulatingAct || []); }, [serverRegulatingAct]);
     
    const onAddActs = () => dispatch(addActsSettingPrice({organization: organization.id, year, section: currentSection}));
    const onAddInform = () => dispatch(addInformingPotentialConsumers({organization: organization.id,year, section: currentSection}));
    const onAddQuality = () => dispatch((addIndicatorsQualityService({organization: organization.id,year, section: currentSection}))) ;
    const onAddVolume = () => dispatch(addIndicatorsVolumeService({organization: organization.id,year, section: currentSection}));
+   const onAddRegulatingAct = () => dispatch(addRegulatingAct({organization: organization.id, year, section: currentSection}));
     
     const onUpdateActs = (id, field, value) => dispatch(updateActsSettingPrice({ id, data: { [field]: value } }));
     const onUpdateInform = (id, field, value) => dispatch(updateInformingPotentialConsumers({ id, data: { [field]: value } }));
     const onUpdateQuality = (id, field, value) => dispatch(updateIndicatorsQualityService({ id, data: { [field]: value } }));
     const onUpdateVolume = (id, field, value) => dispatch(updateIndicatorsVolumeService({ id, data: { [field]: value } }));
-    
+    const onUpdateRegulatingAct = (id, field, value) => dispatch(updateRegulatingAct({ id, data: { [field]: value } }));
     
     const onDeleteActs = (id) => dispatch(deleteActsSettingPrice(id));
     const onDeleteInform = (id) => dispatch(deleteInformingPotentialConsumers(id));
     const onDeleteQuality = (id) => dispatch(deleteIndicatorsQualityService(id));
     const onDeleteVolume = (id) => dispatch(deleteIndicatorsVolumeService(id));
+    const onDeleteRegulatingAct= (id) => dispatch(deleteRegulatingAct(id));
     
     const handleRefreshData = () => {
         if (!organization?.id || currentSection == null) return;
@@ -64,6 +72,7 @@ const StateTaskTabs = ({ organization, section }) => {
         dispatch(fetchInformingPotentialConsumers({organizationId: organization.id, year, section: currentSection}));
         dispatch(fetchIndicatorsQualityService({organizationId: organization.id, year, section: currentSection}));
         dispatch(fetchIndicatorsVolumeService({organizationId: organization.id, year, section: currentSection}));
+        dispatch(fetchRegulatingAct({organizationId: organization.id, year, section: currentSection}));
     }
     
     const qualitySchemaNorm = { headers: schemaQuality.headers, subheaders1: schemaQuality.subHeaders1, subheaders2: schemaQuality.subHeaders2, cols: schemaQuality.cols };
@@ -105,7 +114,10 @@ const StateTaskTabs = ({ organization, section }) => {
                 <br/>
                 <label style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
                     <span
-                        style={{fontSize: '14px', fontWeight: 'bold'}}>2. Категории потребителей муниципальной услуги </span>
+                        style={{
+                            fontSize: '14px',
+                            fontWeight: 'bold'
+                        }}>2. Категории потребителей муниципальной услуги </span>
                     <textarea
                         style={{width: '800px', height: '30px', fontSize: '18px'}}></textarea>
                 </label>
@@ -128,6 +140,12 @@ const StateTaskTabs = ({ organization, section }) => {
                 <TableStateTask schema={schemaActs} data={actsSettingThePriceData}
                                 onDataChange={setActsSettingThePriceData}
                                 onCellUpdate={onUpdateActs} onDeleteRow={onDeleteActs} onAddRow={onAddActs}/><br/>
+                <p style={{fontSize: '14px', fontWeight: 'bold'}}>5. Порядок оказания государственной услуги</p>
+                <p style={{fontSize: '14px', fontWeight: 'bold'}}>5.1. Нормативные правовые акты, регулирующие порядок
+                    оказания государственной услуги</p>
+                <TableStateTask schema={schemaRegulatingAct} data={regulatingActData}
+                                onDataChange={setRegulatingActData}
+                                onCellUpdate={onUpdateRegulatingAct} onDeleteRow={onDeleteRegulatingAct} onAddRow={onAddRegulatingAct}/><br/>
                 <p style={{fontSize: '14px', fontWeight: 'bold'}}>5.2. Порядок информирования потенциальных потребителей
                     государственной услуги</p>
                 <TableStateTask schema={schemaInform} data={informingPotentialConsumersOfTheServiceData}
