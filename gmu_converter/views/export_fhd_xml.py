@@ -1,6 +1,4 @@
 from django.http import HttpResponse
-from django.views.decorators.http import require_GET
-from django.utils.decorators import method_decorator
 from gmu_converter.models import PlanPaymentIndex, PlanPaymentTRU, Organization
 from gmu_converter.xml.generate_fhd import generate_xml
 from rest_framework.permissions import IsAuthenticated

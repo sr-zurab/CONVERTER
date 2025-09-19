@@ -1,6 +1,4 @@
 from django.db import models
-from django.utils.translation import trim_whitespace
-
 from .organization_models import Organization
 
 

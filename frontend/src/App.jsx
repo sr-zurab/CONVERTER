@@ -18,7 +18,7 @@ import RegisterPage from './components/RegisterPage';
 import './App.css';
 import {IoIosAddCircleOutline} from "react-icons/io";
 import {FiLogOut} from "react-icons/fi";
-import StateTaskTabs from './components/componentsStateTask/StateTaskTabs';
+import StateTaskControls from "./components/componentsStateTask/StateTaskTableControls.jsx";
 // Основной компонент приложения (левая панель, контент, модальные окна)
 const MainApp = () => {
     const dispatch = useDispatch();
@@ -143,7 +143,7 @@ const MainApp = () => {
                         selectedReport === 'planFhd' ? (
                             <PlanFhdTabs organization={selectedOrg}/>
                         ) : selectedReport === 'stateTask' ? (
-                            <StateTaskTabs organization={selectedOrg} section={1} />
+                            <StateTaskControls organization={selectedOrg}/>
                         ) : (
                             <OrganizationDetails org={selectedOrg} onEdit={() => setShowEditModal(true)}/>
                         )

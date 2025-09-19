@@ -12,9 +12,7 @@ const TableStateTask = ({ schema, data, onDataChange, onCellUpdate, onDeleteRow,
 	 	 	 	 	 	 ...currentRow,
 	 	 	 	 	 	 [field]: value,
 	 	 	 	 };
-
 	 	 	 	 onDataChange(updated);
-
 	 	 	 	 const key = `${rowIndex}-${field}`;
 	 	 	 	 if (saveTimeouts.current[key]) {
 	 	 	 	 	 	 clearTimeout(saveTimeouts.current[key]);
@@ -27,7 +25,6 @@ const TableStateTask = ({ schema, data, onDataChange, onCellUpdate, onDeleteRow,
 	 	 	 	 	 	 }
 	 	 	 	 }, 1000);
 	 	 };
-
 	 	 const handleKeyDown = (e, rowIndex, colIndex) => {
 	 	 	 	 const value = e.target.value;
 	 	 	 	 const field = schema.cols[colIndex].field;
@@ -37,10 +34,8 @@ const TableStateTask = ({ schema, data, onDataChange, onCellUpdate, onDeleteRow,
 	 	 	 	 	 	 handleChange(rowIndex, field, value);
 	 	 	 	 	 	 handleBlur(rowIndex, field, value);
 	 	 	 	 }
-
 	 	 	 	 let nextRow = rowIndex;
 	 	 	 	 let nextCol = colIndex;
-
 	 	 	 	 switch (e.key) {
 	 	 	 	 	 	 case "Enter":
 	 	 	 	 	 	 case "ArrowRight":

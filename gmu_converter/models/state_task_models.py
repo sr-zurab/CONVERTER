@@ -1,6 +1,4 @@
 from django.db import models
-from django.db.models import PositiveIntegerField
-
 from .organization_models import Organization
 
 class IndicatorsQualityService(models.Model):
